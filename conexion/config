@@ -1,0 +1,9 @@
+{
+    "conexion":{
+        "server" : "localhost",
+        "user" :  "root",
+        "password" : "",
+        "database" : "biblioteca_genesis",
+        "port" : "3306"
+    }
+}
