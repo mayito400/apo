@@ -97,19 +97,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 	}
 	
-	// if($_SERVER['REQUEST_METHOD'] == 'PUT')
-	// {		
-	// 	$sql = "UPDATE provedor SET nombre=:nombre, telefono=:telefono, correo=:correo WHERE id=:id"; //consulta 
-	// 	$stmt = $pdo->prepare($sql);
-	// 	$stmt->bindValue(':nombre', $_GET['nombre']);
-	// 	$stmt->bindValue(':telefono', $_GET['telefono']);
-	// 	$stmt->bindValue(':correo', $_GET['email']);
-	// 	$stmt->bindValue(':id', $_GET['id']);
-	// 	$stmt->execute();
-	// 	header("HTTP/1.1 200 Ok");
-	// 		echo json_encode($_GET['id']);
-	// 	exit;
-	// }
+	if($_SERVER['REQUEST_METHOD'] == 'PUT')
+	{		
+		$sql = "UPDATE enc_prestamo SET FECHA_PRESTAMO=:fecha_prestamo ,CANT_LIBRO=:cantidad_libro, DNI_USUARIO=:id_usuario WHERE COD_ENC_PRESTAMO=:id"; //consulta 
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindValue(':fecha_prestamo', $_GET['fecha_prestamo']);
+		$stmt->bindValue(':cantidad_libro', $_GET['cantidad_libro']);
+		$stmt->bindValue(':id_usuario', $_GET['id_usuario']);
+		$stmt->bindValue(':id', $_GET['id']);
+		$stmt->execute();
+		header("HTTP/1.1 200 Ok");
+			echo json_encode($_GET['id']);
+		exit;
+	}
 	
 	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['eli']))
 	{
