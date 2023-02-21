@@ -5,14 +5,13 @@ require_once "conexion/conexion.php";
 $pdo = new Conexion();
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dato1'])){
-    	$sql = "INSERT INTO datos_usuario(NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO) VALUES (:nombres, :apellidos, :fecha_nac,:contraseña,:correo, :sexo)"; //listo
+    	$sql = "INSERT INTO usuario (nombres, correo, contrasena, Estado) VALUES (:nombres, :correo, :contrasena, :Estado)";
     	$stmt = $pdo->prepare($sql);
     	$stmt->bindValue(':nombres', $_GET['dato1']);
-		$stmt->bindValue(':apellidos', $_GET['dato2']);
-		$stmt->bindValue(':fecha_nac', $_GET['dato3']);
-		$stmt->bindValue(':contraseña', $_GET['dato4']);
-		$stmt->bindValue(':correo', $_GET['dato5']);
-		$stmt->bindValue(':sexo', $_GET['dato6']);
+		$stmt->bindValue(':correo', $_GET['dato2']);
+		//$stmt->bindValue(':contrasena', md5($_GET['dato3']));
+		$stmt->bindValue(':contrasena', $_GET['dato3']);
+		$stmt->bindValue(':Estado', "Activo");
 		$stmt->execute();
 		$idPost = $pdo->lastInsertId();
 		if($idPost){
@@ -26,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dato1'])){
 }
 
 	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['page'])){
-	    $query = "SELECT DNI_USUARIO, `NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO FROM datos_usuario"; //listo
+	    $query = "SELECT UsuarioId, nombres, correo, contrasena, Estado FROM usuario";
 			
 			$sql = $pdo->prepare($query);
 			$sql->execute();
@@ -40,14 +39,11 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dato1'])){
 
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['modi'])){
-    $sql = "UPDATE datos_usuario SET DNI_USUARIO=:UsuarioId,NOM_USUARIO=:nombres,APELL_USUARIO=:apellidos,FECHA_NAC=:fecha_nac,CONTRASEÑA=:contraseña,CORREO=:correo,SEXO=:sexo WHERE DNI_USUARIO=:UsuarioId; //listo
+    $sql = "UPDATE usuario SET nombres=:nombres, correo=:correo, correo=:correo, contrasena=:contrasena WHERE UsuarioId=:UsuarioId";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':nombres', $_GET['dato1']);
-		$stmt->bindParam(':apellidos', $_GET['dato2']);
-		$stmt->bindParam(':fecha_nac', $_GET['dato3']);
-		$stmt->bindParam(':contraseña', $_GET['dato4']);
-		$stmt->bindParam(':correo', $_GET['dato5']);
-		$stmt->bindParam(':sexo', $_GET['dato6']);
+		$stmt->bindParam(':correo', $_GET['dato2']);
+		$stmt->bindParam(':correo', $_GET['dato3']);
 		$stmt->bindParam(':UsuarioId', $_GET['modi']);
 		$stmt->execute();
 		header("HTTP/1.1 200 Ok");
@@ -57,8 +53,8 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['modi'])){
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])){
-    $query = " SELECT DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO FROM datos_usuario "; //listo
-  $sql = $pdo->prepare($query."WHERE DNI_USUARIO = :UsuarioId");
+    $query = "SELECT UsuarioId, nombres, correo, contrasena, Estado FROM usuario";
+  $sql = $pdo->prepare($query."WHERE UsuarioId = :UsuarioId");
 			$sql->bindValue(':UsuarioId', $_GET['id']);
 			$sql->execute();
 			$sql->setFetchMode(PDO::FETCH_ASSOC);
@@ -74,15 +70,13 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])){
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 	   // $uri = "http://" . $_POST['uri']."?metodo=vista" ;
-	   $sql = "INSERT INTO datos_usuario(NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO) VALUES (:nombres, :apellidos, :fecha_nac,:contraseña,:correo, :sexo)"; //consulta
+		$sql = "INSERT INTO usuario ( nombres, correo, contrasena, Estado) VALUES(:nombres, :correo, :contrasena, :Estado)";
 		$stmt = $pdo->prepare($sql);
 		//$stmt->bindValue(':id', "null");
-		$stmt->bindValue(':nombres', $_GET['dato1']);
-		$stmt->bindValue(':apellidos', $_GET['dato2']);
-		$stmt->bindValue(':fecha_nac', $_GET['dato3']);
-		$stmt->bindValue(':contraseña', $_GET['dato4']);
-		$stmt->bindValue(':correo', $_GET['dato5']);
-		$stmt->bindValue(':sexo', $_GET['dato6']);
+		$stmt->bindValue(':nombre', $_POST['dato1']);
+		$stmt->bindValue(':correo', $_POST['dato2']);
+		$stmt->bindValue(':contrasena', $_POST['dato3']);
+		$stmt->bindValue(':Estado', "Activo");
 		$stmt->execute();
 		$idPost = $pdo->lastInsertId(); 
 		if($idPost)
@@ -97,13 +91,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 	}
 	
+	
 	if($_SERVER['REQUEST_METHOD'] == 'PUT')
 	{		
-		$sql = "UPDATE enc_prestamo SET FECHA_PRESTAMO=:fecha_prestamo ,CANT_LIBRO=:cantidad_libro, DNI_USUARIO=:id_usuario WHERE COD_ENC_PRESTAMO=:id"; //consulta 
+		$sql = "UPDATE provedor SET nombre=:nombre, telefono=:telefono, correo=:correo WHERE id=:id";
 		$stmt = $pdo->prepare($sql);
-		$stmt->bindValue(':fecha_prestamo', $_GET['fecha_prestamo']);
-		$stmt->bindValue(':cantidad_libro', $_GET['cantidad_libro']);
-		$stmt->bindValue(':id_usuario', $_GET['id_usuario']);
+		$stmt->bindValue(':nombre', $_GET['nombre']);
+		$stmt->bindValue(':telefono', $_GET['telefono']);
+		$stmt->bindValue(':correo', $_GET['email']);
 		$stmt->bindValue(':id', $_GET['id']);
 		$stmt->execute();
 		header("HTTP/1.1 200 Ok");
@@ -113,7 +108,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	
 	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['eli']))
 	{
-		$sql = "DELETE FROM datos_usuario WHERE DNI_USUARIO=:UsuarioId"; //consulta 
+		$sql = "DELETE FROM usuario WHERE UsuarioId=:UsuarioId";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindValue(':UsuarioId', $_GET['eli']);
 		$stmt->execute();
@@ -121,5 +116,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 		echo json_encode(0);
 		exit;
 	}
+	
+
 
 ?>

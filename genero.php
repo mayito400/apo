@@ -5,7 +5,7 @@ require_once "conexion/conexion.php";
 $pdo = new Conexion();
 
 	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['page'])){
-	    $query = "SELECT idProvedor,nit, nombre, telefono, correo, estado FROM provedor";
+	    $query = "SELECT cod_genero, nombre,  FROM genero";
 			
 			$sql = $pdo->prepare($query);
 			$sql->execute();
@@ -17,13 +17,10 @@ $pdo = new Conexion();
     }
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dato1'])){
-    	$sql = "INSERT INTO provedor ( nit, nombre, telefono, correo, estado) VALUES(:nit, :nombre, :telefono, :correo, :estado)";
+    	$sql = "INSERT INTO genero (COD_GENERO, NOMBRE,) VALUES(:cod_genero, :nombre)";
     	$stmt = $pdo->prepare($sql);
-    	$stmt->bindValue(':nit', $_GET['dato1']);
+    	$stmt->bindValue(':cod_genero', $_GET['dato1']);
 		$stmt->bindValue(':nombre', $_GET['dato2']);
-		$stmt->bindValue(':telefono', $_GET['dato3']);
-		$stmt->bindValue(':correo', $_GET['dato4']);
-		$stmt->bindValue(':estado', "Activo");
 		$stmt->execute();
 		$idPost = $pdo->lastInsertId();
 		if($idPost){
@@ -37,12 +34,10 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dato1'])){
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['modi'])){
-    $sql = "UPDATE provedor SET nombre=:nombre, telefono=:telefono, correo=:correo WHERE idProvedor=:idProvedor";
+    $sql = "UPDATE genero SET COD_GENERO=:cod_genero, NOMBRE=:nombre WHERE COD_GENERO=:codigo:_genero";
 		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':nombre', $_GET['dato2']);
-		$stmt->bindParam(':telefono', $_GET['dato3']);
-		$stmt->bindParam(':correo', $_GET['dato4']);
-		$stmt->bindParam(':idProvedor', $_GET['modi']);
+		$stmt->bindParam(':nombre', $_GET['dato1']);
+		$stmt->bindParam(':cod_genero', $_GET['modi']);
 		$stmt->execute();
 		header("HTTP/1.1 200 Ok");
 			echo json_encode($_GET['modi']);
@@ -51,9 +46,9 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['modi'])){
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])){
-    $query = "SELECT idProvedor, nit, nombre, telefono, correo, estado FROM provedor";
-  $sql = $pdo->prepare($query."WHERE idProvedor = :idProvedor");
-			$sql->bindValue(':idProvedor', $_GET['id']);
+    $query = "SELECT cod_genero, nombre,  FROM genero";
+  $sql = $pdo->prepare($query."WHERE  COD_GENERO=:cod_genero");
+			$sql->bindValue(':cod_genero', $_GET['id']);
 			$sql->execute();
 			$sql->setFetchMode(PDO::FETCH_ASSOC);
 			header("HTTP/1.1 200 hay datos");
@@ -68,14 +63,11 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])){
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 	   // $uri = "http://" . $_POST['uri']."?metodo=vista" ;
-		$sql = "INSERT INTO provedor ( nit, nombre, telefono, correo, estado) VALUES(:nit, :nombre, :telefono, :correo, :estado)";
+		$sql = "INSERT INTO enc_prestamo ( COD_GENERO, NOMBRE) VALUES(:codigo_genero, :nombre)";
 		$stmt = $pdo->prepare($sql);
 		//$stmt->bindValue(':id', "null");
-		$stmt->bindValue(':nit', $_POST['dato1']);
-		$stmt->bindValue(':nombre', $_POST['dato2']);
-		$stmt->bindValue(':telefono', $_POST['dato3']);
-		$stmt->bindValue(':correo', $_POST['dato4']);
-		$stmt->bindValue(':estado', "Activo");
+		$stmt->bindValue(':cod_genero', $_GET['dato1']);
+		$stmt->bindValue(':nombre', $_GET['dato2']);
 		$stmt->execute();
 		$idPost = $pdo->lastInsertId(); 
 		if($idPost)
@@ -93,12 +85,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	
 	if($_SERVER['REQUEST_METHOD'] == 'PUT')
 	{		
-		$sql = "UPDATE provedor SET nombre=:nombre, telefono=:telefono, correo=:correo WHERE id=:id";
+		$sql = "UPDATE genero SET COD_GENERO=:cod_genero, NOMBRE=:nombre WHERE COD_GENERO=:codigo_genero";
 		$stmt = $pdo->prepare($sql);
-		$stmt->bindValue(':nombre', $_GET['nombre']);
-		$stmt->bindValue(':telefono', $_GET['telefono']);
-		$stmt->bindValue(':correo', $_GET['email']);
-		$stmt->bindValue(':id', $_GET['id']);
+		$stmt->bindParam(':nombre', $_GET['dato1']);
+		$stmt->bindParam(':cod_genero', $_GET['modi']);
 		$stmt->execute();
 		header("HTTP/1.1 200 Ok");
 			echo json_encode($_GET['id']);
@@ -107,23 +97,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	
 	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['eli']))
 	{
-		$sql = "DELETE FROM provedor WHERE idProvedor=:idProvedor";
+		$sql = "DELETE FROM genero WHERE COD_GENERO=:codigo_genero";
 		$stmt = $pdo->prepare($sql);
-		$stmt->bindValue(':idProvedor', $_GET['eli']);
+		$stmt->bindValue(':cod_enc_prestamo', $_GET['eli']);
 		$stmt->execute();
 		header("HTTP/1.1 200 Ok");
 		echo json_encode(0);
 		exit;
 	}
 	
-	if($_SERVER['REQUEST_METHOD'] == 'DELETE')
-	{
-		$sql = "DELETE FROM provedor WHERE idProvedor=:idProvedor";
-		$stmt = $pdo->prepare($sql);
-		$stmt->bindValue(':idProvedor', $_GET['eli']);
-		$stmt->execute();
-		header("HTTP/1.1 200 Ok");
-		exit;
-	}
 
 ?>

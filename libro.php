@@ -1,12 +1,11 @@
 <?php
 require_once "conexion/conexion.php";
-
+//$uri = $_SERVER['REQUEST_URI'];
 
 $pdo = new Conexion();
-// Reemplazar "producto" por "libro"
 
 	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['page'])){
-	    $query = "SELECT COD_LIBRO, SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR FROM libro"; // listo
+	    $query = "SELECT cod_editorial_libros, cod_libro, cod_editorial FROM editorial_libros";
 			
 			$sql = $pdo->prepare($query);
 			$sql->execute();
@@ -18,14 +17,11 @@ $pdo = new Conexion();
     }
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dato1'])){
-    	$sql = "INSERT INTO libro (SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR) VALUES (:sinopsis,:titulo ,:fecha_publicacion ,:numero_serie ,:codigo_genero , :codigo_autor)"; // listo
+    	$sql = "INSERT INTO editorial_libros ( COD_EDITORIAL_LIBROS, COD_LIBROS, COD_EDITORIAL) VALUES(:codigo_editorial_libros, :codigo_libros, :codigo_editorial)";
     	$stmt = $pdo->prepare($sql);
-    	$stmt->bindValue(':sinopsis', $_GET['dato1']);
-    	$stmt->bindValue(':titulo', $_GET['dato2']);
-    	$stmt->bindValue(':fecha_publicacion', $_GET['dato3']);
-    	$stmt->bindValue(':numero_serie', $_GET['dato4']);
-    	$stmt->bindValue(':codigo_genero', $_GET['dato5']);
-    	$stmt->bindValue(':codigo_autor', $_GET['dato6']);
+    	$stmt->bindValue(':cod_editorial_libros', $_GET['dato1']);
+		$stmt->bindValue(':cod_libros', $_GET['dato2']);
+		$stmt->bindValue(':cod_editorial', $_GET['dato3']);
 		$stmt->execute();
 		$idPost = $pdo->lastInsertId();
 		if($idPost){
@@ -39,15 +35,12 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dato1'])){
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['modi'])){
-    $sql = "UPDATE libro SET SIPNOPSIS=:sinopsis,TITULO=:titulo,FECHA_PUBLICACION=:fecha:publicacion,NUM_SERIE=:numero_serie,COD_GENERO=:codigo_genero,COD_AUTOR=:codigo_autor WHERE COD_LIBRO=:codigo_libro;"; //listo
+    $sql = "UPDATE editorial_libros SET COD_EDITORIAL_LIBROS=:cod_editorial_libros, COD_LIBROS=:cod_libros, COD_EDITORIAL=:cod_editorial WHERE COD_EDITORIAL_LIBROS=:cod_editorial_libros";
 		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':sinopsis', $_GET['dato1']);
-    	$stmt->bindParam(':titulo', $_GET['dato2']);
-    	$stmt->bindParam(':fecha_publicacion', $_GET['dato3']);
-    	$stmt->bindParam(':numero_serie', $_GET['dato4']);
-    	$stmt->bindParam(':codigo_genero', $_GET['dato5']);
-    	$stmt->bindParam(':codigo_autor', $_GET['dato6']);
-    	$stmt->bindParam(':codigo_libro', $_GET['modi']);
+		$stmt->bindParam(':cod_editorial_libros', $_GET['dato2']);
+		$stmt->bindParam(':cod_libros', $_GET['dato3']);
+		$stmt->bindParam(':cod_editorial', $_GET['dato4']);
+		$stmt->bindParam(':cod_editorial_libros', $_GET['modi']);
 		$stmt->execute();
 		header("HTTP/1.1 200 Ok");
 			echo json_encode($_GET['modi']);
@@ -56,9 +49,9 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['modi'])){
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])){
-   $query = "SELECT COD_LIBRO, SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR FROM libro"; //listo
-  $sql = $pdo->prepare($query."COD_LIBRO = :codigo_libro");
-			$sql->bindValue(':codigo_libro', $_GET['id']);
+    $query = "SELECT cod_editorial_libros, cod_libro, cod_editorial FROM editorial_libros";
+  $sql = $pdo->prepare($query."WHERE  COD_EDITORIAL_LIBROS=:cod_editorial_libros");
+			$sql->bindValue(':cod_editorial_libros', $_GET['id']);
 			$sql->execute();
 			$sql->setFetchMode(PDO::FETCH_ASSOC);
 			header("HTTP/1.1 200 hay datos");
@@ -67,59 +60,57 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])){
 			//http_response_code(200);
 			exit;				
 }
+			
 
 
-// if($_SERVER['REQUEST_METHOD'] == 'POST')
-// 	{
-// 	   // $uri = "http://" . $_POST['uri']."?metodo=vista" ;
-// 		$sql = "INSERT INTO provedor (descripcion, idProvedor) VALUES(:descripcion, :idProvedor)";
-// 		$stmt = $pdo->prepare($sql);
-// 		$stmt->bindValue(':descripcion', $_POST['dato1']);
-// 		$stmt->bindValue(':idProvedor', $_POST['dato2']);
-// 		$stmt->execute();
-// 		$idPost = $pdo->lastInsertId(); 
-// 		if($idPost)
-// 		{
-// 			header("HTTP/1.1 200 Ok");
-// 			echo json_encode($idPost);
-// 			exit;
-// 		}
-// 	}
+if($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+	   // $uri = "http://" . $_POST['uri']."?metodo=vista" ;
+		$sql = "INSERT INTO editorial_libros ( COD_EDITORIAL_LIBROS, COD_LIBROS, COD_EDITORIAL) VALUES(:codigo_editorial_libros, :codigo_libros, :codigo_editorial)";
+		$stmt = $pdo->prepare($sql);
+		//$stmt->bindValue(':id', "null");
+		$stmt->bindValue(':cod_editorial_libros', $_GET['dato1']);
+		$stmt->bindValue(':cod_libros', $_GET['dato2']);
+		$stmt->bindValue(':cod_editorial', $_GET['dato3']);
+		$stmt->execute();
+		$idPost = $pdo->lastInsertId(); 
+		if($idPost)
+		{
+			header("HTTP/1.1 200 Ok");
+			//header('Content-type: text/html');
+			echo json_encode($idPost);
+			//echo $uri;
+			//file_get_contents($uri . "?metodo=vista");
+			// header("Location: $uri");
+			exit;
+		}
+	}
 	
 	
 	if($_SERVER['REQUEST_METHOD'] == 'PUT')
 	{		
-		$sql = "UPDATE producto SET descripcion=:descripcion, idProvedor=:idProvedor WHERE idProducto=:idProducto";
+		$sql = "UPDATE editorial_libros SET COD_EDITORIAL_LIBROS=:cod_editorial_libros, COD_LIBROS=:cod_libros, COD_EDITORIAL=:cod_editorial WHERE COD_EDITORIAL_LIBROS=:cod_editorial_libros";
 		$stmt = $pdo->prepare($sql);
-		$stmt->bindValue(':descripcion', $_GET['dato1']);
-		$stmt->bindValue(':idProvedor', $_GET['dato2']);
-		$stmt->bindValue(':correo', $_GET['email']);
-		$stmt->bindValue(':idProducto', $_GET['id']);
+		$stmt->bindParam(':cod_editorial_libros', $_GET['dato2']);
+		$stmt->bindParam(':cod_libros', $_GET['dato3']);
+		$stmt->bindParam(':cod_editorial', $_GET['dato4']);
+		$stmt->bindParam(':cod_editorial_libros', $_GET['modi']);
 		$stmt->execute();
 		header("HTTP/1.1 200 Ok");
 			echo json_encode($_GET['id']);
 		exit;
 	}
 	
-	// if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['eli']))
-	// {
-	// 	$sql = "DELETE FROM provedor WHERE idProducto=:idProducto";
-	// 	$stmt = $pdo->prepare($sql);
-	// 	$stmt->bindValue(':idProducto', $_GET['eli']);
-	// 	$stmt->execute();
-	// 	header("HTTP/1.1 200 Ok");
-	// 	echo json_encode(0);
-	// 	exit;
-	// }
+	if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['eli']))
+	{
+		$sql = "DELETE FROM editorial_libros WHERE cod_editorial_libros=:cod_editorial_libros";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindValue(':cod_editorial_libros', $_GET['eli']);
+		$stmt->execute();
+		header("HTTP/1.1 200 Ok");
+		echo json_encode(0);
+		exit;
+	}
 	
-	// if($_SERVER['REQUEST_METHOD'] == 'DELETE')
-	// {
-	// 	$sql = "DELETE FROM provedor WHERE idProducto=:idProducto";
-	// 	$stmt = $pdo->prepare($sql);
-	// 	$stmt->bindValue(':idProducto', $_GET['eli']);
-	// 	$stmt->execute();
-	// 	header("HTTP/1.1 200 Ok");
-	// 	exit;
-	// }
 
 ?>

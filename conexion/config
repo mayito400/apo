@@ -1,9 +1,9 @@
 {
     "conexion":{
         "server" : "localhost",
-        "user" :  "root",
+        "user" :  "id18486786_guillo84",
         "password" : "",
-        "database" : "biblioteca_genesis",
+        "database" : "id18486786_api",
         "port" : "3306"
     }
 }
