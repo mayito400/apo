@@ -1,0 +1,9 @@
+{
+    "conexion":{
+        "server" : "localhost",
+        "user" :  "id18486786_guillo84",
+        "password" : "",
+        "database" : "id18486786_api",
+        "port" : "3306"
+    }
+}
