@@ -1,0 +1,9 @@
+// funcion principal
+import app from "./app";
+
+const main=()=>{
+    app.listen(app.get("port"));
+    console.log(`server on http://localhost:${app.get("port")}`);
+};
+
+main();
