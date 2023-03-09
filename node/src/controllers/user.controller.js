@@ -1,7 +1,7 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//* funcion de peticion GET
+//* GET
 const getUsers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
@@ -29,13 +29,13 @@ const getUser = async (req, res) => { // Get for DNI
     }
 };
 
-//* funcion de peticion POST
+//* POST
 const addUser = async (req, res) => { // POST
     try {
         const { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
 
         if (DNI_USUARIO === undefined || NOM_USUARIO === undefined || APELL_USUARIO === undefined || FECHA_NAC === undefined || CONTRASEÑA === undefined || CORREO === undefined || SEXO === undefined || ESTADO === undefined || COD_ROL === undefined) {
-            res.status(400).json({ message: "Bad request. Please fill all field." })
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
         const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
@@ -52,7 +52,7 @@ const addUser = async (req, res) => { // POST
     }
 };
 
-//* funcion de peticion DELETE
+//* DELETE
 const deleteUser = async (req, res) => {
     try {
         console.log(req.params);
@@ -76,7 +76,7 @@ const updateUser = async (req, res) => {
         const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
 
         if (DNI_USUARIO === undefined || NOM_USUARIO === undefined || APELL_USUARIO === undefined || FECHA_NAC === undefined || CONTRASEÑA === undefined || CORREO === undefined || SEXO === undefined || ESTADO === undefined || COD_ROL === undefined) {
-            res.status(400).json({ message: "Bad request. Please fill all field." })
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
         };
 
         const connection = await getConnection();

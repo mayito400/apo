@@ -1,7 +1,7 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-// funcion de peticion GET
+//! funcion de peticion GET
 const getTemplates = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
@@ -29,13 +29,13 @@ const getTemplate = async (req, res) => { // Get for ID
     }
 };
 
-//* funcion de peticion POST
+//! POST
 const addTemplate = async (req, res) => { // POST
     try {
         const { row1,row2 } = req.body;
 
         if (row1 === undefined) {
-            res.status(400).json({ message: "Bad request. Please fill all field." })
+           return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
         const Template = { row1,row2 };
@@ -52,7 +52,7 @@ const addTemplate = async (req, res) => { // POST
     }
 };
 
-//* funcion de peticion DELETE
+//! DELETE
 const deleteTemplate = async (req, res) => {
     try {
         console.log(req.params);
@@ -68,6 +68,8 @@ const deleteTemplate = async (req, res) => {
     }
 };
 
+//! PUT
+
 const updateTemplate = async (req, res) => {
     try {
         const { id } = req.params;
@@ -75,7 +77,7 @@ const updateTemplate = async (req, res) => {
         const Template = { row1,row2 }
 
         if (id === undefined || row1 === undefined) {
-            res.status(400).json({ message: "Bad request. Please fill all field." })
+           return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
         const connection = await getConnection();
         const result = await connection.query("UPDATE Template SET ? WHERE id = ?", [Template, id]);
