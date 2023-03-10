@@ -5,6 +5,7 @@ import userRoutes from './routes/user.routes';
 import loanHeaderRoutes from './routes/loan-header.routes';
 import penaltyRoutes from './routes/penalty.routes';
 import genreRoutes from './routes/genre.routes';
+import roleRoutes from './routes/role.routes';
 import templateRoutes from './routes/template.routes';
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/api/user',userRoutes);
 app.use('/api/loan-header',loanHeaderRoutes);
 app.use('/api/penalty',penaltyRoutes);
 app.use('/api/genre',genreRoutes);
+app.use('/api/role',roleRoutes);
 // app.use('/api/template',templateRoutes);
 
 export default app;
