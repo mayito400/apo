@@ -1,11 +1,11 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//! funcion de peticion GET
+//! GET
 const getTemplates = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM Template"); // GET = SELECT
+        const result = await connection.query("SELECT * FROM Table"); // GET = SELECT
         console.log(result);
 
         res.json(result);
@@ -20,7 +20,7 @@ const getTemplate = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM Template WHERE id = ?", id); // GET = SELECT
+        const result = await connection.query("SELECT * FROM Table WHERE id = ?", id); // GET = SELECT
 
         res.json(result);
     } catch (error) {
@@ -30,7 +30,7 @@ const getTemplate = async (req, res) => { // Get for ID
 };
 
 //! POST
-const addTemplate = async (req, res) => { // POST
+const addTemplate = async (req, res) => {
     try {
         const { row1,row2 } = req.body;
 
@@ -41,7 +41,7 @@ const addTemplate = async (req, res) => { // POST
         const Template = { row1,row2 };
         const connection = await getConnection();
 
-        const result = await connection.query('INSERT INTO Template SET ?', Template);
+        const result = await connection.query('INSERT INTO Table SET ?', Template);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Template Added" });
@@ -59,7 +59,7 @@ const deleteTemplate = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM Template WHERE id = ?", id);
+        const result = await connection.query("DELETE FROM Table WHERE id = ?", id);
 
         res.json(result);
     } catch (error) {
@@ -69,7 +69,6 @@ const deleteTemplate = async (req, res) => {
 };
 
 //! PUT
-
 const updateTemplate = async (req, res) => {
     try {
         const { id } = req.params;
@@ -79,8 +78,9 @@ const updateTemplate = async (req, res) => {
         if (id === undefined || row1 === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
+
         const connection = await getConnection();
-        const result = await connection.query("UPDATE Template SET ? WHERE id = ?", [Template, id]);
+        const result = await connection.query("UPDATE Table SET ? WHERE id = ?", [Template, id]);
 
         res.json(result);
     } catch (error) {
