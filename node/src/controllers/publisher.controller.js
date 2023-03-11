@@ -35,7 +35,7 @@ const addPublisher = async (req, res) => {
         const { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
 
         if (NOM_EDITORIAL === undefined || PAIS === undefined || CIUDAD === undefined || TELEFONO === undefined || DIRECCION === undefined) {
-           return res.status(400).json({ message: "Bad request. Please fill all field." })
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
         const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
@@ -68,15 +68,15 @@ const deletePublisher = async (req, res) => {
     }
 };
 
-//! PUT
+//* PUT
 const updatePublisher = async (req, res) => {
     try {
         const { id } = req.params;
-        const { row1,row2 } = req.body;
-        const Publisher = { row1,row2 }
+        const { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
+        const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION }
 
-        if (id === undefined || row1 === undefined) {
-           return res.status(400).json({ message: "Bad request. Please fill all field." })
+        if (NOM_EDITORIAL === undefined || PAIS === undefined || CIUDAD === undefined || TELEFONO === undefined || DIRECCION === undefined) {
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
         const connection = await getConnection();
