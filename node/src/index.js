@@ -1,9 +1,9 @@
 // funcion principal
 import app from "./app";
+import { caseEntorno } from "./config";
 
 const main=()=>{
-    app.listen(app.get("port"));
-    console.log(`server on http://localhost:${app.get("port")}`);
+    app.listen(app.get("PORT"),caseEntorno);
 };
 
 main();

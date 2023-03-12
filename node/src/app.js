@@ -7,12 +7,15 @@ import penaltyRoutes from './routes/penalty.routes';
 import genreRoutes from './routes/genre.routes';
 import roleRoutes from './routes/role.routes';
 import publisherRoutes from './routes/publisher.routes';
+// Enviroment Config
+import message from "./config/message";
+import enviroment from "./config/enviroment";
 const app = express();
 
 // settings
-app.set("port",6491);
+app.set("PORT",process.env.PORT || 4321);
 
-// middlewares: funciones intermedias ???
+// middlewares: funciones intermedias para que la aplicacion funcione
 app.use(morgan('dev'));
 app.use(express.json()); // especifica que el servidor entienda json
 
