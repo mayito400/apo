@@ -1,0 +1,13 @@
+[
+    {
+        "COD_AUTOR": 1,
+        "NOM_AUTOR": "Gabriel Garcia Marquez",
+        "FECHA_NACIMIENTO": "1927-03-06T05:00:00.000Z",
+        "LUGAR_NACIMIENTO": "Aracataca, Colombia",
+        "LENGUA_NATIVA": "Español",
+        "OCUPACIONES": "Escritor, Guinista, Periodista y Editor",
+        "AÑOS_ACTIVO": "1947-2010",
+        "MOVIMIENTO_LITERARIO": "Boom Latinoamericano, Realismo Magico",
+        "COD_GENERO": 1
+    }
+]
