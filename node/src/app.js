@@ -7,7 +7,7 @@ import penaltyRoutes from './routes/penalty.routes';
 import genreRoutes from './routes/genre.routes';
 import roleRoutes from './routes/role.routes';
 import publisherRoutes from './routes/publisher.routes';
-import authorRoutes from './routes/author.routes';
+// import authorRoutes from './routes/author.routes';
 // Enviroment Config
 import message from "./config/message";
 import enviroment from "./config/enviroment";
@@ -27,7 +27,7 @@ app.use('/api/penalty',penaltyRoutes);
 app.use('/api/genre',genreRoutes);
 app.use('/api/role',roleRoutes);
 app.use('/api/publisher',publisherRoutes);
-app.use('/api/author',authorRoutes);
+// app.use('/api/author',authorRoutes);
 // app.use('/api/template',templateRoutes);
 
 export default app;
