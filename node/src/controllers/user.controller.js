@@ -5,7 +5,7 @@ import { getConnection } from "../db/database"
 const getUsers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `datos_usuario`"); // GET = SELECT
+        const result = await connection.query("CALL `spGetAllUsers`()"); // GET = SELECT
         console.log(result);
 
         res.json(result);
@@ -20,9 +20,9 @@ const getUser = async (req, res) => { // Get for DNI
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `datos_usuario` WHERE DNI_USUARIO = ?", id); // GET = SELECT
+        const result = await connection.query("CALL `spGetUser`(?)", id); // GET = SELECT
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -41,7 +41,7 @@ const addUser = async (req, res) => { // POST
         const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
         const connection = await getConnection();
 
-        const result = await connection.query('INSERT INTO datos_usuario SET ?', user);
+        const result = await connection.query('CALL `spAddUser`(?);', user);
 
         // res.json(result); 
         res.json({ message: "User Added" });
@@ -59,7 +59,7 @@ const deleteUser = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM `datos_usuario` WHERE DNI_USUARIO = ?", id);
+        const result = await connection.query("CALL `spDeleteUser`(?)", id);
 
         res.json(result);
     } catch (error) {
@@ -68,7 +68,7 @@ const deleteUser = async (req, res) => {
     }
 };
 
-//* Put
+//! Put
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,12 +80,12 @@ const updateUser = async (req, res) => {
         };
 
         const connection = await getConnection();
-        const result = await connection.query("UPDATE `datos_usuario` SET ? WHERE id = ?", [user, id]);
+        const result = await connection.query("CALL `spUpdateUser`(?,?);", [id, user]);
 
         res.json(result);
     } catch (error) {
         res.status(500);
-        res.send(error.message);
+        res.send(error);
     }
 };
 
