@@ -133,10 +133,50 @@ CREATE TABLE `multa` (
   `VALOR` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DELIMITER $$
+CREATE PROCEDURE `spGetPenaltys`()
+BEGIN
+SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR FROM multa;
+END$$
+DELIMITER ;
+CALL `spGetPenaltys`()
 
+DELIMITER $$
+CREATE PROCEDURE `spGetPenaltysForId`(IN `_id` INT)
+BEGIN
+SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR
+FROM multa
+WHERE COD_MULTA = _id;
+END$$
+DELIMITER ;
+CALL `spGetPenaltysForId`(_id)
 
+DELIMITER $$
+CREATE PROCEDURE `spInsertPenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
+BEGIN
+INSERT INTO multa (COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR)
+VALUES (_COD_MULTA, _FECHA_INICIO, _FECHA_FIN, _VALOR);
+END$$
+DELIMITER ;
+CALL `spInsertPenaltys`(_COD_MULTA, _FECHA_INICIO, _FECHA_FIN, _VALOR)
 
+DELIMITER $$
+CREATE PROCEDURE `spUpdatePenaltys`(IN _id INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
+BEGIN
+UPDATE multa
+SET FECHA_INICIO = FECHA_INICIO, FECHA_FIN = FECHA_FIN, VALOR = VALOR
+WHERE COD_MULTA = _id;
+END$$
+DELIMITER ;
+CALL `spUpdatePenaltys`(_cod_multa, _fecha_inicio, _fecha_fin, _valor)
 
+DELIMITER $$
+CREATE PROCEDURE `spDeletePenaltys`(IN _id INT)
+BEGIN
+DELETE FROM multa WHERE COD_MULTA = _id;
+END$$
+DELIMITER ;
+CALL `spDeletePenaltys`(_id)
 -- --------------------------------------------------------
 
 --! Table structure for table `rol`
@@ -146,7 +186,45 @@ CREATE TABLE `rol` (
   `rol` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DELIMITER $$
+CREATE PROCEDURE `spGetRoles`()
+BEGIN
+SELECT cod_rol, rol FROM rol;
+END$$
+DELIMITER ;
+CALL `spGetRoles`()
 
+DELIMITER $$
+CREATE PROCEDURE `spGetRolesForId`(IN _id INT)
+BEGIN
+SELECT cod_rol, rol FROM rol WHERE cod_rol = _id;
+END$$
+DELIMITER ;
+CALL `spGetRolesForId`(_id)
+
+DELIMITER $$
+CREATE PROCEDURE `spInsertRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
+BEGIN
+INSERT INTO rol (cod_rol, rol) VALUES (_cod_rol, _rol);
+END$$
+DELIMITER ;
+CALL `spInsertRoles`(_cod_rol, _rol)
+
+DELIMITER $$
+CREATE PROCEDURE `spUpdateRoles`(IN _id INT, IN _rol VARCHAR(50))
+BEGIN
+UPDATE rol SET rol = rol WHERE cod_rol = _id;
+END$$
+DELIMITER ;
+CALL `spUpdateRoles`(_cod_rol, _rol)
+
+DELIMITER $$
+CREATE PROCEDURE `spDeleteRoles`(IN _id INT)
+BEGIN
+DELETE FROM rol WHERE cod_rol = _id;
+END$$
+DELIMITER ;
+CALL `spDeleteRoles`(_id)
 
 
 -- --------------------------------------------------------
