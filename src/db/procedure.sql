@@ -109,14 +109,14 @@ DELIMITER ;
 CALL `spGetPenaltys`()
 
 DELIMITER $$
-CREATE PROCEDURE `spGetPenaltysForId`(IN `_id` INT)
+CREATE PROCEDURE `spGetPenaltysForId`(IN `_COD_MULTA` INT)
 BEGIN
 SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR
 FROM multa
-WHERE COD_MULTA = _id;
+WHERE COD_MULTA = _COD_MULTA;
 END$$
 DELIMITER ;
-CALL `spGetPenaltysForId`(_id)
+CALL `spGetPenaltysForId`(_COD_MULTA)
 
 DELIMITER $$
 CREATE PROCEDURE `spInsertPenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
@@ -128,22 +128,22 @@ DELIMITER ;
 CALL `spInsertPenaltys`(_COD_MULTA, _FECHA_INICIO, _FECHA_FIN, _VALOR)
 
 DELIMITER $$
-CREATE PROCEDURE `spUpdatePenaltys`(IN _id INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
+CREATE PROCEDURE `spUpdatePenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
 BEGIN
 UPDATE multa
-SET FECHA_INICIO = FECHA_INICIO, FECHA_FIN = FECHA_FIN, VALOR = VALOR
-WHERE COD_MULTA = _id;
+SET FECHA_INICIO = _FECHA_INICIO, FECHA_FIN = _FECHA_FIN, VALOR = _VALOR
+WHERE COD_MULTA = _COD_MULTA;
 END$$
 DELIMITER ;
-CALL `spUpdatePenaltys`(_cod_multa, _fecha_inicio, _fecha_fin, _valor)
+CALL `spUpdatePenaltys`(_COD_MULTA,_FECHA_INICIO,_FECHA_FIN,_VALOR )
 
 DELIMITER $$
-CREATE PROCEDURE `spDeletePenaltys`(IN _id INT)
+CREATE PROCEDURE `spDeletePenaltys`(IN _COD_MULTA INT)
 BEGIN
-DELETE FROM multa WHERE COD_MULTA = _id;
+DELETE FROM multa WHERE COD_MULTA = _COD_MULTA;
 END$$
 DELIMITER ;
-CALL `spDeletePenaltys`(_id)
+CALL `spDeletePenaltys`(_COD_MULTA)
 -- --------------------------------------------------------
 
 --! Table structure for table `rol`
@@ -162,12 +162,12 @@ DELIMITER ;
 CALL `spGetRoles`()
 
 DELIMITER $$
-CREATE PROCEDURE `spGetRolesForId`(IN _id INT)
+CREATE PROCEDURE `spGetRolesForId`(IN _cod_rol INT)
 BEGIN
-SELECT cod_rol, rol FROM rol WHERE cod_rol = _id;
+SELECT cod_rol, rol FROM rol WHERE cod_rol = _cod_rol;
 END$$
 DELIMITER ;
-CALL `spGetRolesForId`(_id)
+CALL `spGetRolesForId`(_cod_rol)
 
 DELIMITER $$
 CREATE PROCEDURE `spInsertRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
@@ -178,20 +178,20 @@ DELIMITER ;
 CALL `spInsertRoles`(_cod_rol, _rol)
 
 DELIMITER $$
-CREATE PROCEDURE `spUpdateRoles`(IN _id INT, IN _rol VARCHAR(50))
+CREATE PROCEDURE `spUpdateRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
 BEGIN
-UPDATE rol SET rol = rol WHERE cod_rol = _id;
+UPDATE rol SET rol = _rol WHERE cod_rol = _cod_rol;
 END$$
 DELIMITER ;
 CALL `spUpdateRoles`(_cod_rol, _rol)
 
 DELIMITER $$
-CREATE PROCEDURE `spDeleteRoles`(IN _id INT)
+CREATE PROCEDURE `spDeleteRoles`(IN _cod_rol INT)
 BEGIN
-DELETE FROM rol WHERE cod_rol = _id;
+DELETE FROM rol WHERE cod_rol = _cod_rol;
 END$$
 DELIMITER ;
-CALL `spDeleteRoles`(_id)
+CALL `spDeleteRoles`(_cod_rol)
 
 
 -- --------------------------------------------------------
