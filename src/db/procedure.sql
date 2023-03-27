@@ -54,9 +54,25 @@ CREATE TABLE `enc_prestamo` (
   `DNI_USUARIO` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DELIMITER //
+CREATE PROCEDURE `spGetLoanHeaders` () BEGIN SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo; END // DELIMITER ;
+CALL `spGetLoanHeaders`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
 
+DELIMITER //
+CREATE PROCEDURE `spGetLoanHeadersForId` (IN p_COD_ENC_PRESTAMO INT) BEGIN SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; END //DELIMITER ;
+CALL `spGetLoanHeadersForId`()
 
+DELIMITER //
+CREATE PROCEDURE `SPInsertEncPrestamo`(IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT) BEGIN INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) VALUES (p_FECHA_PRESTAMO, p_CANT_LIBRO, p_DNI_USUARIO); END // DELIMITER ;
+CALL `SPInsertEncPrestamo`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
 
+DELIMITER //
+CREATE PROCEDURE `SPupdateEncPrestamo`(IN p_COD_ENC_PRESTAMO INT, IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT) BEGIN UPDATE enc_prestamo SET FECHA_PRESTAMO = p_FECHA_PRESTAMO, CANT_LIBRO = p_CANT_LIBRO, DNI_USUARIO = p_DNI_USUARIO WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; END // DELIMITER ;
+CALL `SPupdateEncPrestamo`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
+
+DELIMITER //
+CREATE PROCEDURE `SPdeleteEncPrestamo`(IN p_COD_ENC_PRESTAMO INT) BEGIN DELETE FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; END // DELIMITER ;
+CALL `SPdeleteEncPrestamo`(_dni)
 
 -- --------------------------------------------------------
 
@@ -84,10 +100,27 @@ CREATE TABLE `infoautor` (
   `OCUPACIONES` varchar(40) NOT NULL,
   `MOVIMIENTO_LITERARIO` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ 
 
+DELIMITER //
+CREATE PROCEDURE  `spGetAuthor`() BEGIN SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor; END // DELIMITER ;
+CALL `spGetAuthor`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
 
+DELIMITER //
+CREATE PROCEDURE `spGetAuthorForId`(IN id INT) BEGIN SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor WHERE COD_AUTOR = id; END // DELIMITER ;
+CALL `spGetAuthorForId`()
 
+DELIMITER //
+CREATE PROCEDURE `spInsertAuthor`(IN id INT, IN nom VARCHAR(40), IN fecha DATE, IN lugar VARCHAR(50), IN muerte DATE, IN ocup VARCHAR(40), IN mov VARCHAR(50)) BEGIN INSERT INTO infoautor (COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO) VALUES (id, nom, fecha, lugar, muerte, ocup, mov);END // DELIMITER ;
+CALL `spInsertAuthor`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
 
+DELIMITER //
+CREATE PROCEDURE `spUpdateAuthor`(IN id INT, IN nom VARCHAR(40), IN fecha DATE, IN lugar VARCHAR(50), IN muerte DATE, IN ocup VARCHAR(40), IN mov VARCHAR(50)) BEGIN UPDATE infoautor SET NOM_AUTOR = nom, FECHA_NACIMIENTO = fecha, LUGAR_NACIMIENTO = lugar, FECHA_MUERTE = muerte, OCUPACIONES = ocup, MOVIMIENTO_LITERARIO = mov WHERE COD_AUTOR = id;END // DELIMITER ;
+CALL `spupdatefoAuthor`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
+
+DELIMITER //
+CREATE PROCEDURE `spDeleteAuthor`(IN id INT) BEGIN DELETE FROM infoautor WHERE COD_AUTOR = id;END // DELIMITER ;
+CALL `spDeleteAuthor`(_dni)
 
 -- --------------------------------------------------------
 
