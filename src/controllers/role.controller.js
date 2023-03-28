@@ -5,10 +5,10 @@ import { getConnection } from "../db/database"
 const getRoles = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `rol`"); // GET = SELECT
-        console.log(result);
+        const result = await connection.query(`CALL spGetRoles()`); // GET = SELECT
+        // console.log(result);
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -16,13 +16,13 @@ const getRoles = async (req, res) => { // GET ALL
 };
 const getRole = async (req, res) => { // Get for ID
     try {
-        console.log(req.params);
+        // console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `rol` WHERE `cod_rol` = ?", id); // GET = SELECT
+        const result = await connection.query(`CALL spGetRolesForId(${id})`); // GET = SELECT
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -41,9 +41,9 @@ const addRole = async (req, res) => {
         const Role = { rol };
         const connection = await getConnection();
 
-        const result = await connection.query('INSERT INTO `rol` SET ?', Role);
+        const result = await connection.query(`CALL spInsertRoles('${Role.rol}')`);
 
-        // res.json(result); //* Ver informacion completa de la consulta
+        // res.json(result); //Ver informacion completa de la consulta
         res.json({ message: "Role Added" });
     } catch (error) {
         res.status(500);
@@ -59,7 +59,7 @@ const deleteRole = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM `rol` WHERE `cod_rol` = ?", id);
+        const result = await connection.query(`CALL spDeleteRoles(${id})`);
 
         res.json(result);
     } catch (error) {
@@ -80,7 +80,7 @@ const updateRole = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query("UPDATE `rol` SET ? WHERE `cod_rol` = ?", [Role, id]);
+        const result = await connection.query(`CALL spUpdateRoles(${id},'${Role.rol}')`);
 
         res.json(result);
     } catch (error) {
