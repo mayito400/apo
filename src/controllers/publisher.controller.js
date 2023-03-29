@@ -5,7 +5,7 @@ import { getConnection } from "../db/database"
 const getPublishers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `editorial`"); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllPublisher`()'); // GET = SELECT
         console.log(result);
 
         res.json(result);
@@ -20,7 +20,7 @@ const getPublisher = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `editorial` WHERE `COD_EDITORIAL` = ?", id); // GET = SELECT
+        const result = await connection.query("CALL `spGetPublisher`(?)", id); // GET = SELECT
 
         res.json(result);
     } catch (error) {
@@ -32,16 +32,16 @@ const getPublisher = async (req, res) => { // Get for ID
 //* POST
 const addPublisher = async (req, res) => {
     try {
-        const { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
+        const { COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
 
-        if (NOM_EDITORIAL === undefined || PAIS === undefined || CIUDAD === undefined || TELEFONO === undefined || DIRECCION === undefined) {
+        if (COD_EDITORIAL === undefined || NOM_EDITORIAL === undefined || PAIS === undefined || CIUDAD === undefined || TELEFONO === undefined || DIRECCION === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
+        const Publisher = { COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
         const connection = await getConnection();
 
-        const result = await connection.query('INSERT INTO `editorial` SET ?', Publisher);
+        const result = await connection.query(`CALL spAddPublisher('${Publisher.COD_EDITORIAL}','${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Publisher Added" });
@@ -59,7 +59,7 @@ const deletePublisher = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM `editorial` WHERE `COD_EDITORIAL` = ?", id);
+        const result = await connection.query("CALL `spDeleteUser`(?)", id);
 
         res.json(result);
     } catch (error) {
@@ -80,7 +80,7 @@ const updatePublisher = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query("UPDATE `editorial` SET ? WHERE `COD_EDITORIAL` = ?", [Publisher, id]);
+        const result = await connection.query(`CALL spUpdatePublisher('${id}','${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
 
         res.json(result);
     } catch (error) {
