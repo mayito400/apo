@@ -124,7 +124,7 @@ CALL `spDeleteAuthor`(_dni)
 
 -- --------------------------------------------------------
 
---! Table structure for table `multa`
+--* Table structure for table `multa`
 
 CREATE TABLE `multa` (
   `COD_MULTA` int(4) NOT NULL,
@@ -152,13 +152,13 @@ DELIMITER ;
 CALL `spGetPenaltysForId`(_COD_MULTA)
 
 DELIMITER $$
-CREATE PROCEDURE `spInsertPenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
+CREATE PROCEDURE `spInsertPenaltys`(IN `_FECHA_INICIO` DATE, IN `_FECHA_FIN` DATE, IN `_VALOR` INT)
 BEGIN
-INSERT INTO multa (COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR)
-VALUES (_COD_MULTA, _FECHA_INICIO, _FECHA_FIN, _VALOR);
+INSERT INTO multa(FECHA_INICIO,FECHA_FIN,VALOR)
+VALUES(_FECHA_INICIO,_FECHA_FIN,_VALOR);
 END$$
 DELIMITER ;
-CALL `spInsertPenaltys`(_COD_MULTA, _FECHA_INICIO, _FECHA_FIN, _VALOR)
+CALL `spInsertPenaltys`(_FECHA_INICIO, _FECHA_FIN, _VALOR)
 
 DELIMITER $$
 CREATE PROCEDURE `spUpdatePenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
