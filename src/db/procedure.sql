@@ -1,4 +1,4 @@
---! Table structure for table `datos_usuario`
+--* Table structure for table `datos_usuario`
 
 CREATE TABLE `datos_usuario` (
   `DNI_USUARIO` int(20) NOT NULL,
@@ -12,10 +12,7 @@ CREATE TABLE `datos_usuario` (
   `COD_ROL` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE PROCEDURE `spAddUser`(IN `_dni` INT, IN `_nom` VARCHAR(50), IN `_apell` VARCHAR(50), IN `_naci` DATE, IN `_contra` VARCHAR(50), IN `_correo` VARCHAR(20), IN `_sexo` VARCHAR(10), IN `_estado` VARCHAR(10), IN `_cod_rol` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
-BEGIN 
-INSERT INTO datos_usuario( DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL ) VALUES( _dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol ) ; 
-END
+CREATE  PROCEDURE `spAddUser`(IN `_dni` INT, IN `_nom` VARCHAR(50), IN `_apell` VARCHAR(50), IN `_naci` DATE, IN `_contra` VARCHAR(50), IN `_correo` VARCHAR(20), IN `_sexo` VARCHAR(10), IN `_estado` VARCHAR(10), IN `_cod_rol` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO datos_usuario( DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL ) VALUES( _dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol ) ; END
 CALL `spAddUser`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
 
 CREATE PROCEDURE `spGetAllUsers`() NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
@@ -43,7 +40,7 @@ END
 CALL `spDeleteUser`(_dni)
 -- --------------------------------------------------------
 
---! Table structure for table `editorial`
+--* Table structure for table `editorial`
 
 CREATE TABLE `editorial` (
   `COD_EDITORIAL` int(20) NOT NULL,
@@ -341,7 +338,7 @@ DELIMITER ;
 CALL `spDeletePenaltys`(_COD_MULTA)
 -- --------------------------------------------------------
 
---! Table structure for table `rol`
+--* Table structure for table `rol`
 
 CREATE TABLE `rol` (
   `cod_rol` int(4) NOT NULL,
@@ -354,7 +351,7 @@ BEGIN
 SELECT cod_rol, rol FROM rol;
 END$$
 DELIMITER ;
-CALL `spGetRoles`()
+CALL spGetRoles()
 
 DELIMITER $$
 CREATE PROCEDURE `spGetRolesForId`(IN _cod_rol INT)
@@ -362,15 +359,15 @@ BEGIN
 SELECT cod_rol, rol FROM rol WHERE cod_rol = _cod_rol;
 END$$
 DELIMITER ;
-CALL `spGetRolesForId`(_cod_rol)
+CALL spGetRolesForId(_cod_rol)
 
 DELIMITER $$
-CREATE PROCEDURE `spInsertRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
+CREATE PROCEDURE `spInsertRoles`(IN `_rol` VARCHAR(50))
 BEGIN
-INSERT INTO rol (cod_rol, rol) VALUES (_cod_rol, _rol);
+INSERT INTO rol (rol) VALUES (_rol);
 END$$
 DELIMITER ;
-CALL `spInsertRoles`(_cod_rol, _rol)
+CALL spInsertRoles(_rol)
 
 DELIMITER $$
 CREATE PROCEDURE `spUpdateRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
@@ -378,7 +375,7 @@ BEGIN
 UPDATE rol SET rol = _rol WHERE cod_rol = _cod_rol;
 END$$
 DELIMITER ;
-CALL `spUpdateRoles`(_cod_rol, _rol)
+CALL spUpdateRoles(_cod_rol, _rol)
 
 DELIMITER $$
 CREATE PROCEDURE `spDeleteRoles`(IN _cod_rol INT)
@@ -386,7 +383,7 @@ BEGIN
 DELETE FROM rol WHERE cod_rol = _cod_rol;
 END$$
 DELIMITER ;
-CALL `spDeleteRoles`(_cod_rol)
+CALL spDeleteRoles(_cod_rol)
 
 
 -- --------------------------------------------------------
