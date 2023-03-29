@@ -5,10 +5,10 @@ import { getConnection } from "../db/database"
 const getPenaltys = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `multa`"); // GET = SELECT
+        const result = await connection.query(`CALL spGetPenaltys()`); // GET = SELECT
         console.log(result);
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -20,9 +20,9 @@ const getPenalty = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `multa` WHERE `COD_MULTA` = ?", id); // GET = SELECT
+        const result = await connection.query(`CALL spGetPenaltysForId(${id})`); // GET = SELECT
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -34,16 +34,16 @@ const addPenalty = async (req, res) => { // POST
     try {
         const { FECHA_INICIO, FECHA_FIN, VALOR } = req.body;
 
-        if ( FECHA_INICIO === undefined || FECHA_FIN === undefined || VALOR === undefined ) {
+        if (FECHA_INICIO === undefined || FECHA_FIN === undefined || VALOR === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         };
 
         const Penalty = { FECHA_INICIO, FECHA_FIN, VALOR }
         const connection = await getConnection();
 
-        const result = await connection.query('INSERT INTO `multa` SET ?', Penalty);
+        const result = await connection.query(`CALL spInsertPenaltys('${FECHA_INICIO}', '${FECHA_FIN}', ${VALOR})`);
 
-        // res.json(result); //* Ver informacion completa de la consulta
+        // res.json(result); //! Ver informacion completa de la consulta
         res.json({ message: "Penalty Added" });
     } catch (error) {
         res.status(500);
@@ -59,7 +59,7 @@ const deletePenalty = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM `multa` WHERE `COD_MULTA` = ?", id);
+        const result = await connection.query(`CALL spDeletePenaltys(${id})`);
 
         res.json(result);
     } catch (error) {
@@ -75,12 +75,12 @@ const updatePenalty = async (req, res) => {
         const { FECHA_INICIO, FECHA_FIN, VALOR } = req.body;
         const Penalty = { FECHA_INICIO, FECHA_FIN, VALOR }
 
-        if ( FECHA_INICIO === undefined || FECHA_FIN === undefined || VALOR === undefined ) {
+        if (FECHA_INICIO === undefined || FECHA_FIN === undefined || VALOR === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         };
 
         const connection = await getConnection();
-        const result = await connection.query("UPDATE `multa` SET ? WHERE `COD_MULTA` = ?", [Penalty, id]);
+        const result = await connection.query(`CALL spUpdatePenaltys(${id},'${FECHA_INICIO}','${FECHA_FIN}',${VALOR})`);
 
         res.json(result);
     } catch (error) {
