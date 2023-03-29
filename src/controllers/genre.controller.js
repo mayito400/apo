@@ -5,7 +5,7 @@ import { getConnection } from "../db/database"
 const getGenres = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `genero`"); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllGeners`()'); // GET = SELECT
         console.log(result);
 
         res.json(result);
@@ -20,7 +20,7 @@ const getGenre = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `genero` WHERE COD_GENERO = ?", id); // GET = SELECT
+        const result = await connection.query('CALL `spGetGener`(?)', id); // GET = SELECT
 
         res.json(result);
     } catch (error) {
@@ -29,7 +29,7 @@ const getGenre = async (req, res) => { // Get for ID
     }
 };
 
-//* POST
+//! POST
 const addGenre = async (req, res) => {
     try {
         const { NOMBRE } = req.body;
@@ -41,7 +41,7 @@ const addGenre = async (req, res) => {
         const Genre = { NOMBRE };
         const connection = await getConnection();
 
-        const result = await connection.query('INSERT INTO `genero` SET ?', Genre);
+        const result = await connection.query(`CALL spAddGener('${Genre.NOMBRE}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Genre Added" });
@@ -59,7 +59,7 @@ const deleteGenre = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM `genero` WHERE COD_GENERO = ?", id);
+        const result = await connection.query('CALL `spDeleteGener`(?)', id);
 
         res.json(result);
     } catch (error) {
@@ -68,7 +68,7 @@ const deleteGenre = async (req, res) => {
     }
 };
 
-//* PUT
+//! PUT
 const updateGenre = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,8 +80,7 @@ const updateGenre = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query("UPDATE `genero` SET ? WHERE COD_GENERO = ?", [Genre, id]);
-        // ISNULL(?)
+        const result = await connection.query(`CALL spAddGener('${id}','${Genre.NOMBRE}');`);
 
         res.json(result);
     } catch (error) {

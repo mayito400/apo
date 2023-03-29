@@ -33,12 +33,12 @@ const getUser = async (req, res) => { // Get for DNI
 const addUser = async (req, res) => { // POST
     try {
         const { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
+        const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
 
         if (DNI_USUARIO === undefined || NOM_USUARIO === undefined || APELL_USUARIO === undefined || FECHA_NAC === undefined || CONTRASEÑA === undefined || CORREO === undefined || SEXO === undefined || ESTADO === undefined || COD_ROL === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
         const connection = await getConnection();
 
         const result = await connection.query(`CALL spAddUser('${user.DNI_USUARIO}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
