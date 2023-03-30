@@ -5,7 +5,7 @@ import { getConnection } from "../db/database"
 const getLoanHeaders = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `enc_prestamo`"); // GET = SELECT
+        const result = await connection.query(`CALL spGetAllHeaders()`); // GET = SELECT
         console.log(result);
 
         res.json(result);
@@ -21,7 +21,7 @@ const getLoanHeader = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("SELECT * FROM `enc_prestamo` WHERE COD_ENC_PRESTAMO = ?", id); // GET = SELECT
+        const result = await connection.query(`CALL spGetHeader(?)`,id); // GET = SELECT
 
         res.json(result);
     } catch (error) {
@@ -30,7 +30,7 @@ const getLoanHeader = async (req, res) => { // Get for ID
     }
 };
 
-//* funcion de peticion POST
+//! funcion de peticion POST
 const addLoanHeader = async (req, res) => { // POST
     try {
         const { FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO } = req.body;
@@ -42,7 +42,7 @@ const addLoanHeader = async (req, res) => { // POST
         const LoanHeader = { FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO };
         const connection = await getConnection();
 
-        const result = await connection.query('INSERT INTO `enc_prestamo` SET ?', LoanHeader);
+        const result = await connection.query(`CALL spAddHeader('${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.CANT_LIBRO}','${LoanHeader.DNI_USUARIO}';`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "LoanHeader Added" });
@@ -60,7 +60,7 @@ const deleteLoanHeader = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM `enc_prestamo` WHERE COD_ENC_PRESTAMO = ?", id);
+        const result = await connection.query("CALL `spDeleteHeader`(?)", id);
 
         res.json(result);
     } catch (error) {
@@ -68,7 +68,7 @@ const deleteLoanHeader = async (req, res) => {
         res.send(error.message);
     }
 };
-
+//! funcion de peticion PUT
 const updateLoanHeader = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,7 +80,7 @@ const updateLoanHeader = async (req, res) => {
         };
 
         const connection = await getConnection();
-        const result = await connection.query("UPDATE `enc_prestamo` SET ? WHERE COD_ENC_PRESTAMO = ?", [LoanHeader, id]);
+        const result = await connection.query(`CALL spUpdateHeader('${id}','${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.CANT_LIBRO}','${LoanHeader.DNI_USUARIO}';`);
 
         res.json(result);
     } catch (error) {
