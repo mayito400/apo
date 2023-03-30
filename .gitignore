@@ -1,2 +1,4 @@
 node_modules
-src/config/enviroment/.env
+src/config/enviroment/developer.env
+src/config/enviroment/qa.env
+src/config/enviroment/production.env
