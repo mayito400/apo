@@ -111,7 +111,7 @@
   CALL `spDeletePublisher`(_COD_EDITORIAL)
 -- --------------------------------------------------------
 
---! Table structure for table `enc_prestamo`
+-- TODO: Pending Table structure for table `enc_prestamo`
 
   CREATE TABLE `enc_prestamo` (
     `COD_ENC_PRESTAMO` int(20) NOT NULL,
@@ -121,44 +121,51 @@
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
   DELIMITER //
-  CREATE PROCEDURE `spGetLoanHeaders`() 
+  CREATE PROCEDURE `spGetAllHeaders`() 
   BEGIN
-    SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo;
-  END
-   // DELIMITER ;
-  CALL `spGetLoanHeaders`();
+    SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO 
+    FROM enc_prestamo;
+  END //
+  DELIMITER ;
+  CALL `spGetAllHeaders`();
 
   DELIMITER //
-  CREATE PROCEDURE `spGetLoanHeadersForId` (IN p_COD_ENC_PRESTAMO INT) 
+  CREATE PROCEDURE `spGetHeader` (IN _COD_ENC_PRESTAMO INT) 
   BEGIN 
-      SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
-  END
-  //DELIMITER ;
-  CALL `spGetLoanHeadersForId`(_cod_enc_prestamo)
+    SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO
+    FROM enc_prestamo 
+    WHERE COD_ENC_PRESTAMO = _COD_ENC_PRESTAMO; 
+  END //
+  DELIMITER ;
+  CALL `spGetHeader`(_COD_ENC_PRESTAMO)
 
   DELIMITER //
-  CREATE PROCEDURE `spInsertEncPrestamo`(IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT)
+  CREATE PROCEDURE `spAddHeader`(IN _FECHA_PRESTAMO DATE, IN _CANT_LIBRO INT, IN _DNI_USUARIO INT)
    BEGIN
-      INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) VALUES (p_FECHA_PRESTAMO, p_CANT_LIBRO, p_DNI_USUARIO);
-   END
-   // DELIMITER ;
-  CALL `SPInsertEncPrestamo`(_fecha_prestamo, _cant_libro, _dni_usuario);
+      INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) 
+      VALUES (_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
+   END //
+  DELIMITER ;
+  CALL `spAddHeader`(_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
 
   DELIMITER //
-  CREATE PROCEDURE `spupdateEncPrestamo`(IN p_COD_ENC_PRESTAMO INT, IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT) 
+  CREATE PROCEDURE `spUpdateHeader`(IN _COD_ENC_PRESTAMO INT, IN _FECHA_PRESTAMO DATE, IN _CANT_LIBRO INT, IN _DNI_USUARIO INT) 
   BEGIN 
-    UPDATE enc_prestamo SET FECHA_PRESTAMO = p_FECHA_PRESTAMO, CANT_LIBRO = p_CANT_LIBRO, DNI_USUARIO = p_DNI_USUARIO WHERE COD_ENC_PRESTAMO =  p_COD_ENC_PRESTAMO; 
-  END 
-  // DELIMITER ;
-  CALL `spupdateEncPrestamo`(_cod_enc_prestamo, _fecha_prestamo, _fecha_prestamo, _dni_usuario);
+    UPDATE enc_prestamo 
+    SET FECHA_PRESTAMO = _FECHA_PRESTAMO, CANT_LIBRO = _CANT_LIBRO, DNI_USUARIO = _DNI_USUARIO 
+    WHERE COD_ENC_PRESTAMO =  _COD_ENC_PRESTAMO; 
+  END //
+  DELIMITER ;
+  CALL `spUpdateHeader`(_COD_ENC_PRESTAMO, _FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
 
-  DELIMITER //
-  CREATE PROCEDURE `spdeleteEncPrestamo`(IN p_COD_ENC_PRESTAMO INT) 
+   DELIMITER //
+  CREATE PROCEDURE `spDeleteHeader`(IN _COD_ENC_PRESTAMO INT) 
   BEGIN 
-      DELETE FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
-  END 
-  // DELIMITER ;
-  CALL `SPdeleteEncPrestamo`(_dni)
+      DELETE FROM enc_prestamo
+      WHERE COD_ENC_PRESTAMO = _COD_ENC_PRESTAMO; 
+  END //
+  DELIMITER ;
+  CALL `spDeleteHeader`(_COD_ENC_PRESTAMO)
 
 -- --------------------------------------------------------
 
