@@ -6,9 +6,8 @@ const getPublishers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetAllPublisher`()'); // GET = SELECT
-        console.log(result);
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -16,13 +15,13 @@ const getPublishers = async (req, res) => { // GET ALL
 };
 const getPublisher = async (req, res) => { // Get for ID
     try {
-        console.log(req.params);
+        // console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
         const result = await connection.query("CALL `spGetPublisher`(?)", id); // GET = SELECT
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -32,16 +31,16 @@ const getPublisher = async (req, res) => { // Get for ID
 //* POST
 const addPublisher = async (req, res) => {
     try {
-        const { COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
+        const { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
 
-        if (COD_EDITORIAL === undefined || NOM_EDITORIAL === undefined || PAIS === undefined || CIUDAD === undefined || TELEFONO === undefined || DIRECCION === undefined) {
+        if (NOM_EDITORIAL === undefined || PAIS === undefined || CIUDAD === undefined || TELEFONO === undefined || DIRECCION === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const Publisher = { COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
+        // const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddPublisher('${Publisher.COD_EDITORIAL}','${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
+        const result = await connection.query(`CALL spAddPublisher('${NOM_EDITORIAL}','${PAIS}','${CIUDAD}','${TELEFONO}','${DIRECCION}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Publisher Added" });
@@ -55,11 +54,12 @@ const addPublisher = async (req, res) => {
 //* DELETE
 const deletePublisher = async (req, res) => {
     try {
-        console.log(req.params);
+        // console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("CALL `spDeleteUser`(?)", id);
+        const result = await connection.query(`CALL spDeletePublisher(${id})`);
+        console.log(result);
 
         res.json(result);
     } catch (error) {
