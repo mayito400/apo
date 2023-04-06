@@ -169,7 +169,7 @@
 
 -- --------------------------------------------------------
 
---! Table structure for table `genero`
+--* Table structure for table `genero`
 
   CREATE TABLE `genero` (
     `COD_GENERO` int(20) NOT NULL,
@@ -177,62 +177,59 @@
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-            /* All Dates for table //GetAllGeners */
+            /* All Dates for table //GetAllGenres */
   DELIMITER //
-  CREATE PROCEDURE `spGetAllGeners`()
+  CREATE PROCEDURE `spGetAllGenre`()
   BEGIN
     SELECT COD_GENERO, NOMBRE
     FROM genero;
   END //
-
-  CALL `spGetAllGeners`();
   DELIMITER ;
+  CALL `spGetAllGenre`();
 
             /* Buscar por ID: */
   DELIMITER //
-  CREATE PROCEDURE `spGetGener`(IN p_COD_GENERO int(20))
+  CREATE PROCEDURE `spGetGenre`(IN _COD_GENERO int(20))
   BEGIN
     SELECT COD_GENERO, NOMBRE
     FROM genero
-    WHERE COD_GENERO = p_COD_GENERO;
+    WHERE COD_GENERO = _COD_GENERO;
   END //
 
-  CALL `spGetGener`(p_cod_genero);
+  CALL `spGetGenre`(_COD_GENERO);
   DELIMITER ;
 
             /* Insertar datos: */
   DELIMITER //
-  CREATE PROCEDURE `spAddGener`(IN p_COD_GENERO int(20), IN p_NOMBRE varchar(50))
+  CREATE PROCEDURE `spAddGenre`(IN _NOMBRE varchar(50))
   BEGIN
-    INSERT INTO genero (COD_GENERO, NOMBRE)
-    VALUES (p_COD_GENERO, p_NOMBRE);
+    INSERT INTO genero (NOMBRE)
+    VALUES (_NOMBRE);
   END //
-
-  CALL  `spAddGener`(p_cod_genero, p_nombre);
   DELIMITER ;
+  CALL  `spAddGenre`(_NOMBRE);
 
             /* Actualizar datos: */
   DELIMITER //
-  CREATE PROCEDURE `spUpdateGener`(IN p_COD_GENERO int(20), IN p_NOMBRE varchar(50))
+  CREATE PROCEDURE `spUpdateGenre`(IN _COD_GENERO int(20), IN _NOMBRE varchar(50))
   BEGIN
     UPDATE genero
-    SET NOMBRE = p_NOMBRE
-    WHERE COD_GENERO = p_COD_GENERO;
+    SET NOMBRE = _NOMBRE
+    WHERE COD_GENERO = _COD_GENERO;
   END //
-
-  CALL  `spUpdateGener`(p_nombre);
   DELIMITER ;
+  CALL  `spUpdateGenre`(_COD_GENERO, _NOMBRE);
 
             /* Eliminar una fila de datos por ID: */
   DELIMITER //
-  CREATE PROCEDURE `spDeleteGener`(IN p_COD_GENERO int(20))
+  CREATE PROCEDURE `spDeleteGenre`(IN _COD_GENERO int(20))
   BEGIN
     DELETE FROM genero
-    WHERE COD_GENERO = p_COD_GENERO;
+    WHERE COD_GENERO = _COD_GENERO;
   END //
 
-  CALL  `spDeleteGener`(p_cod_genero);
   DELIMITER ;
+  CALL  `spDeleteGenre`(_COD_GENERO);
 
 
 
