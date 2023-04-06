@@ -68,7 +68,7 @@ const deleteLoanHeader = async (req, res) => {
         res.send(error.message);
     }
 };
-//*? funcion de peticion PUT
+//* funcion de peticion PUT
 const updateLoanHeader = async (req, res) => {
     try {
         const { id } = req.params;

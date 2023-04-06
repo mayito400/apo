@@ -37,10 +37,10 @@ const addPublisher = async (req, res) => {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        // const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
+        const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddPublisher('${NOM_EDITORIAL}','${PAIS}','${CIUDAD}','${TELEFONO}','${DIRECCION}');`);
+        const result = await connection.query(`CALL spAddPublisher('${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Publisher Added" });
