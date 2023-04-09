@@ -1,17 +1,17 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//TODO: Solucionar error, el get por id funciona pero el general no
+//* GET
 const getAuthors = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetAllAuthor();`); // GET = SELECT
+        const result = await connection.query('CALL spGetAllAuthor()'); // GET = SELECT
         console.log(result);
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
-        res.send(error);
+        res.send(error.message);
     }
 };
 const getAuthor = async (req, res) => { // Get for ID
