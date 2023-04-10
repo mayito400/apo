@@ -399,3 +399,43 @@
   
   
 -- --------------------------------------------------------
+
+--! Table structure for table `det_prestamo`
+
+  CREATE TABLE `det_prestamo` (
+    `COD_DETALLE` int(20) NOT NULL,
+    `DESCRIPCION` text NOT NULL,
+    `COD_LIBRO` int(20) NOT NULL,
+    `COD_ENC_PRESTAMO` int(20) NOT NULL,
+    `COD_MULTA` int(4) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+--! Table structure for table `editorial_libros`
+
+  CREATE TABLE `editorial_libros` (
+    `COD_EDITORIAL_LIBROS` int(20) NOT NULL,
+    `COD_LIBRO` int(20) NOT NULL,
+    `COD_EDITORIAL` int(20) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- --------------------------------------------------------
+
+--
+--! Table structure for table `libro`
+
+  CREATE TABLE `libro` (
+    `COD_LIBRO` int(20) NOT NULL,
+    `SIPNOPSIS` text NOT NULL,
+    `TITULO` varchar(50) NOT NULL,
+    `FECHA_PUBLICACION` date NOT NULL,
+    `NUM_SERIE` int(20) NOT NULL,
+    `COD_GENERO` int(20) NOT NULL,
+    `COD_AUTOR` int(20) NOT NULL,
+    `IMAGEN` mediumblob DEFAULT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
