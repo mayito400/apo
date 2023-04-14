@@ -7,7 +7,10 @@ import penaltyRoutes from './routes/penalty.routes';
 import genreRoutes from './routes/genre.routes';
 import roleRoutes from './routes/role.routes';
 import publisherRoutes from './routes/publisher.routes';
-// import authorRoutes from './routes/author.routes';
+import authorRoutes from './routes/author.routes';
+import publisherRoutes from './routes/Publishing.routes';
+import booksRoutes from './routes/books.routes';
+import detailloanRoutes from './routes/detail-loan.routes';
 // Enviroment Config
 import message from "./config/message";
 import enviroment from "./config/enviroment";
@@ -27,7 +30,10 @@ app.use('/api/penalty',penaltyRoutes);
 app.use('/api/genre',genreRoutes);
 app.use('/api/role',roleRoutes);
 app.use('/api/publisher',publisherRoutes);
-// app.use('/api/author',authorRoutes);
+app.use('/api/author',authorRoutes);
+app.use('/api/publishing', publishingRoutes);
+app.use('/api/books', booksRoutes);
+app.use('/api/detail-loan', detailloanRoutes);
 // app.use('/api/template',templateRoutes);
 
 export default app;

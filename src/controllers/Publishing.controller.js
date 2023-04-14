@@ -1,11 +1,11 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//* GET
-const getGenres = async (req, res) => { // GET ALL
+//! GET
+const getPublishings = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllGenre`()'); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllPublishing`()'); // GET = SELECT
         console.log(result);
 
         res.json(result[0]);
@@ -14,13 +14,13 @@ const getGenres = async (req, res) => { // GET ALL
         res.send(error.message);
     }
 };
-const getGenre = async (req, res) => { // Get for ID
+const getPublishing = async (req, res) => { // Get for ID
     try {
         console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetGenre`(?)', id); // GET = SELECT
+        const result = await connection.query('CALL `spGetPublishing`(?)', id); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
@@ -29,19 +29,19 @@ const getGenre = async (req, res) => { // Get for ID
     }
 };
 
-//* POST
-const addGenre = async (req, res) => {
+//! POST
+const addPublishing = async (req, res) => {
     try {
-        const { NOMBRE } = req.body;
+        const { COD_LIBRO, COD_EDITORIAL } = req.body;
+        const Publishing = { COD_LIBRO, COD_EDITORIAL };
 
-        if (NOMBRE === undefined) {
+        if (COD_LIBRO === undefined || COD_EDITORIAL === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const Genre = { NOMBRE };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddGenre('${Genre.NOMBRE}');`);
+        const result = await connection.query(`CALL spAddPublishing('${Publishing.COD_LIBRO},','${Publishing.COD_EDITORIAL},');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Genre Added" });
@@ -52,14 +52,14 @@ const addGenre = async (req, res) => {
     }
 };
 
-//* DELETE
-const deleteGenre = async (req, res) => {
+//! DELETE
+const deletePublishing = async (req, res) => {
     try {
         console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query('CALL `spDeleteGenre`(?)', id);
+        const result = await connection.query('CALL `spDeletePublishing`(?)', id);
 
         res.json(result);
     } catch (error) {
@@ -68,19 +68,20 @@ const deleteGenre = async (req, res) => {
     }
 };
 
-//* PUT
-const updateGenre = async (req, res) => {
+//! PUT
+const updatePublishing = async (req, res) => {
     try {
         const { id } = req.params;
-        const { NOMBRE } = req.body;
-        const Genre = { NOMBRE }
+        const { COD_LIBRO, COD_EDITORIAL } = req.body;
+        const Publishing = { COD_LIBRO, COD_EDITORIAL };
 
-        if (NOMBRE === undefined) {
+        if (COD_LIBRO === undefined || COD_EDITORIAL === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateGenre('${id}', '${Genre.NOMBRE}');`);
+
+        const result = await connection.query(`CALL spAddPublishing('${id},''${Publishing.COD_LIBRO},','${Publishing.COD_EDITORIAL},');`);
 
 
         res.json(result);
@@ -91,9 +92,9 @@ const updateGenre = async (req, res) => {
 };
 
 export const methods = {
-    getGenres,
-    getGenre,
-    addGenre,
-    deleteGenre,
-    updateGenre
+    getPublishings,
+    getPublishing,
+    addPublishing,
+    deletePublishing,
+    updatePublishing
 };

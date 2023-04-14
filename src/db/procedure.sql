@@ -1,394 +1,605 @@
 --* Table structure for table `datos_usuario`
 
-CREATE TABLE `datos_usuario` (
-  `DNI_USUARIO` int(20) NOT NULL,
-  `NOM_USUARIO` varchar(50) NOT NULL,
-  `APELL_USUARIO` varchar(50) NOT NULL,
-  `FECHA_NAC` date DEFAULT NULL,
-  `CONTRASEÑA` varchar(50) NOT NULL,
-  `CORREO` varchar(20) NOT NULL,
-  `SEXO` varchar(10) DEFAULT NULL,
-  `ESTADO` varchar(10) NOT NULL,
-  `COD_ROL` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CREATE TABLE `datos_usuario` (
+    `DNI_USUARIO` int(20) NOT NULL,
+    `NOM_USUARIO` varchar(50) NOT NULL,
+    `APELL_USUARIO` varchar(50) NOT NULL,
+    `FECHA_NAC` date DEFAULT NULL,
+    `CONTRASEÑA` varchar(50) NOT NULL,
+    `CORREO` varchar(20) NOT NULL,
+    `SEXO` varchar(10) DEFAULT NULL,
+    `ESTADO` varchar(10) NOT NULL,
+    `COD_ROL` int(4) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE  PROCEDURE `spAddUser`(IN `_dni` INT, IN `_nom` VARCHAR(50), IN `_apell` VARCHAR(50), IN `_naci` DATE, IN `_contra` VARCHAR(50), IN `_correo` VARCHAR(20), IN `_sexo` VARCHAR(10), IN `_estado` VARCHAR(10), IN `_cod_rol` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN INSERT INTO datos_usuario( DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL ) VALUES( _dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol ) ; END
-CALL `spAddUser`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
+  CREATE  PROCEDURE `spAddUser`(IN `_dni` INT, IN `_nom` VARCHAR(50), IN `_apell` VARCHAR(50), IN `_naci` DATE, IN `_contra` VARCHAR(50), IN  `_correo` VARCHAR(20), IN `_sexo` VARCHAR(10), IN `_estado` VARCHAR(10), IN `_cod_rol` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER  BEGIN INSERT INTO datos_usuario( DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL ) VALUES( _dni,   _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol ) ; END
+  CALL `spAddUser`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
 
-CREATE PROCEDURE `spGetAllUsers`() NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
-BEGIN 
-SELECT DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL FROM datos_usuario; 
-END
-CALL `spGetAllUsers`()
+  CREATE PROCEDURE `spGetAllUsers`() NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
+  BEGIN 
+  SELECT DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL FROM datos_usuario; 
+  END
+  CALL `spGetAllUsers`()
 
-CREATE PROCEDURE `spGetUser`(IN `_dni` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
-BEGIN 
-SELECT DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL FROM datos_usuario WHERE DNI_USUARIO = _dni ; 
-END
-CALL `spGetUser`(_dni)
+  CREATE PROCEDURE `spGetUser`(IN `_dni` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
+  BEGIN 
+  SELECT DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL FROM datos_usuario WHERE DNI_USUARIO =   _dni ; 
+  END
+  CALL `spGetUser`(_dni)
 
-CREATE PROCEDURE `spUpdateUser`(IN `_dni` INT, IN `_nom` VARCHAR(50), IN `_apell` VARCHAR(50), IN `_fecha` DATE, IN `_contra` VARCHAR(50), IN `_correo` VARCHAR(20), IN `_sexo` VARCHAR(10), IN `_estado` VARCHAR(10), IN `_cod_rol` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
-BEGIN 
-UPDATE datos_usuario SET NOM_USUARIO = _nom, APELL_USUARIO = _apell, FECHA_NAC = _fecha, CONTRASEÑA = _contra, CORREO = _correo, SEXO = _sexo, ESTADO = _estado, COD_ROL = _cod_rol WHERE DNI_USUARIO = _dni ; 
-END
-CALL `spUpdateUser`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
+  CREATE PROCEDURE `spUpdateUser`(IN `_dni` INT, IN `_nom` VARCHAR(50), IN `_apell` VARCHAR(50), IN `_fecha` DATE, IN `_contra` VARCHAR(50), IN   `_correo` VARCHAR(20), IN `_sexo` VARCHAR(10), IN `_estado` VARCHAR(10), IN `_cod_rol` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
+  BEGIN 
+  UPDATE datos_usuario SET NOM_USUARIO = _nom, APELL_USUARIO = _apell, FECHA_NAC = _fecha, CONTRASEÑA = _contra, CORREO = _correo, SEXO = _sexo,  ESTADO = _estado, COD_ROL = _cod_rol WHERE DNI_USUARIO = _dni ; 
+  END
+  CALL `spUpdateUser`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
 
-CREATE PROCEDURE `spDeleteUser`(IN `_dni` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
-BEGIN 
-DELETE FROM datos_usuario WHERE DNI_USUARIO = _dni ; 
-END
-CALL `spDeleteUser`(_dni)
+  CREATE PROCEDURE `spDeleteUser`(IN `_dni` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER 
+  BEGIN 
+  DELETE FROM datos_usuario WHERE DNI_USUARIO = _dni ; 
+  END
+  CALL `spDeleteUser`(_dni)
 -- --------------------------------------------------------
 
 --* Table structure for table `editorial`
 
-CREATE TABLE `editorial` (
-  `COD_EDITORIAL` int(20) NOT NULL,
-  `NOM_EDITORIAL` varchar(50) NOT NULL,
-  `PAIS` varchar(50) NOT NULL,
-  `CIUDAD` varchar(50) NOT NULL,
-  `TELEFONO` varchar(35) NOT NULL,
-  `DIRECCION` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CREATE TABLE `editorial` (
+    `COD_EDITORIAL` int(20) NOT NULL,
+    `NOM_EDITORIAL` varchar(50) NOT NULL,
+    `PAIS` varchar(50) NOT NULL,
+    `CIUDAD` varchar(50) NOT NULL,
+    `TELEFONO` varchar(35) NOT NULL,
+    `DIRECCION` varchar(30) DEFAULT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-            /* Seleccionar todos los datos de la tabla */
-DELIMITER //
-CREATE PROCEDURE `spGetAllPublisher`()
-BEGIN
-  SELECT COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION
-  FROM editorial;
-END //
+              /* Seleccionar todos los datos de la tabla */
+  DELIMITER $$
+  CREATE PROCEDURE `spGetAllPublisher`()
+  BEGIN
+    SELECT COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION
+    FROM editorial;
+  END$$
+  DELIMITER ;
+  CALL `spGetAllPublisher`()
 
-CALL `spGetAllPublisher`()
-DELIMITER ;
+             /* Realizar la búsqueda por ID */
+  DELIMITER $$
+  CREATE PROCEDURE `spGetPublisher`(IN _COD_EDITORIAL INT)
+  BEGIN
+    SELECT COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION
+    FROM editorial
+    WHERE COD_EDITORIAL = _COD_EDITORIAL ;
+  END$$
+  DELIMITER ;
 
-           /* Realizar la búsqueda por ID */
-DELIMITER //
-CREATE PROCEDURE `spGetPublisher`(IN id INT)
-BEGIN
-  SELECT COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION
-  FROM editorial
-  WHERE COD_EDITORIAL = id;
-END //
+  CALL `spGetPublisher`(_COD_EDITORIAL)
 
-CALL `spGetPublisher`(id)
-DELIMITER ;
+              /*  Insertar datos */
+  DELIMITER $$
+  CREATE PROCEDURE `spAddPublisher`(IN `_NOM_EDITORIAL` VARCHAR(50), IN `_PAIS` VARCHAR(50), IN `_CIUDAD` VARCHAR(50), IN `_TELEFONO` VARCHAR(35),  IN `_DIRECCION` VARCHAR(30))
+  BEGIN
+    INSERT INTO editorial (NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION)
+    VALUES (_NOM_EDITORIAL, _PAIS, _CIUDAD, _TELEFONO, _DIRECCION);
+  END$$
+  DELIMITER ;
 
-            /*  Insertar datos */
-DELIMITER //
-CREATE PROCEDURE `spAddPublisher`(IN p_COD_EDITORIAL INT, IN p_NOM_EDITORIAL VARCHAR(50), IN p_PAIS VARCHAR(50), IN p_CIUDAD VARCHAR(50), IN p_TELEFONO VARCHAR(35), IN p_DIRECCION VARCHAR(30))
-BEGIN
-  INSERT INTO editorial (COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION)
-  VALUES (p_COD_EDITORIAL, p_NOM_EDITORIAL, p_PAIS, p_CIUDAD, p_TELEFONO, p_DIRECCION);
-END //
+  CALL `spAddPublisher`(_NOM_EDITORIAL, _PAIS, _CIUDAD, _TELEFONO, _DIRECCION)
 
-CALL `spAddPublisher`(p_cod_editorial, p_nom_editorial, p_pais, p_cuidad, p_telefono, p_direccion)
-DELIMITER ;
+              /*  Actualizar datos */
+  DELIMITER $$
+  CREATE PROCEDURE `spUpdatePublisher`(IN `_COD_EDITORIAL` INT, IN `_NOM_EDITORIAL` VARCHAR(50), IN `_PAIS` VARCHAR(50), IN `_CIUDAD` VARCHAR(50),  IN `_TELEFONO` VARCHAR(35), IN `_DIRECCION` VARCHAR(30))
+  BEGIN
+    UPDATE
+      editorial
+    SET
+      NOM_EDITORIAL = _NOM_EDITORIAL, PAIS = _PAIS, CIUDAD = _CIUDAD, TELEFONO = _TELEFONO, DIRECCION = _DIRECCION
+    WHERE
+      COD_EDITORIAL = _COD_EDITORIAL ;
+  END$$
+  DELIMITER ;
 
-            /*  Actualizar datos */
-DELIMITER //
-CREATE PROCEDURE `spUpdatePublisher`(IN p_COD_EDITORIAL INT, IN p_NOM_EDITORIAL VARCHAR(50), IN p_PAIS VARCHAR(50), IN p_CIUDAD VARCHAR(50), IN p_TELEFONO VARCHAR(35), IN p_DIRECCION VARCHAR(30))
-BEGIN
-  UPDATE editorial
-  SET NOM_EDITORIAL = p_NOM_EDITORIAL, PAIS = p_PAIS, CIUDAD = p_CIUDAD, TELEFONO = p_TELEFONO, DIRECCION = p_DIRECCION
-  WHERE COD_EDITORIAL = p_COD_EDITORIAL;
-END //
+  CALL `spUpdatePublisher`(_COD_EDITORIAL, _NOM_EDITORIAL, _PAIS, _CIUDAD, _TELEFONO, _DIRECCION)
 
-CALL `spUpdatePublisher`(p_cod_editorial, p_nom_editorial, p_pais, p_cuidad, p_telefono, p_direccion)
-DELIMITER ;
+              /*  Eliminar una fila de datos por ID */
+  DELIMITER $$
+  CREATE PROCEDURE `spDeletePublisher`(IN `_COD_EDITORIAL` INT)
+  BEGIN
+    DELETE FROM editorial
+    WHERE COD_EDITORIAL = _COD_EDITORIAL;
+  END$$
+  DELIMITER ;
 
-            /*  Eliminar una fila de datos por ID */
-DELIMITER //
-CREATE PROCEDURE `spDeletePublisher`(IN id INT)
-BEGIN
-  DELETE FROM editorial
-  WHERE COD_EDITORIAL = id;
-END //
-
-CALL `spDeletePublisher`(id)
-DELIMITER ;
+  CALL `spDeletePublisher`(_COD_EDITORIAL)
 -- --------------------------------------------------------
 
---! Table structure for table `enc_prestamo`
+--! Pending Table structure for table `enc_prestamo`
 
-CREATE TABLE `enc_prestamo` (
-  `COD_ENC_PRESTAMO` int(20) NOT NULL,
-  `FECHA_PRESTAMO` date DEFAULT NULL,
-  `CANT_LIBRO` int(20) DEFAULT NULL,
-  `DNI_USUARIO` int(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CREATE TABLE `enc_prestamo` (
+    `COD_ENC_PRESTAMO` int(20) NOT NULL,
+    `FECHA_PRESTAMO` date DEFAULT NULL,
+    `CANT_LIBRO` int(20) DEFAULT NULL,
+    `DNI_USUARIO` int(20) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DELIMITER //
-CREATE PROCEDURE `spGetAllHeaders`() 
-BEGIN
-  SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo;
-END
+  DELIMITER //
+  CREATE PROCEDURE `spGetAllHeaderLoan`() 
+  BEGIN
+    SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO 
+    FROM enc_prestamo;
+  END //
+  DELIMITER ;
+  CALL `spGetAllHeaderLoan`();
 
-CALL `spGetAllHeaders`();
  // DELIMITER ;
 
-DELIMITER //
-CREATE PROCEDURE `spGetHeader` (IN p_COD_ENC_PRESTAMO INT) 
-BEGIN 
-    SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
-END
+  DELIMITER //
+  CREATE PROCEDURE `spGetHeaderLoan` (IN _COD_ENC_PRESTAMO INT) 
+  BEGIN 
+    SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO
+    FROM enc_prestamo 
+    WHERE COD_ENC_PRESTAMO = _COD_ENC_PRESTAMO; 
+  END //
+  DELIMITER ;
+  CALL `spGetHeaderLoan`(_COD_ENC_PRESTAMO)
 
-CALL `spGetHeader`(p_cod_enc_prestamo);
+  DELIMITER //
+  CREATE PROCEDURE `spAddHeaderLoan`(IN _FECHA_PRESTAMO DATE, IN _CANT_LIBRO INT, IN _DNI_USUARIO INT)
+   BEGIN
+      INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) 
+      VALUES (_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
+   END //
+  DELIMITER ;
+  CALL `spAddHeaderLoan`(_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
+
 //DELIMITER ;
 
-DELIMITER //
-CREATE PROCEDURE `spAddHeader`(IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT)
- BEGIN
-    INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) VALUES (p_FECHA_PRESTAMO, p_CANT_LIBRO, p_DNI_USUARIO);
- END
+  DELIMITER //
+  CREATE PROCEDURE `spUpdateHeaderLoan`(IN _COD_ENC_PRESTAMO INT, IN _FECHA_PRESTAMO DATE, IN _CANT_LIBRO INT, IN _DNI_USUARIO INT) 
+  BEGIN 
+    UPDATE enc_prestamo 
+    SET FECHA_PRESTAMO = _FECHA_PRESTAMO, CANT_LIBRO = _CANT_LIBRO, DNI_USUARIO = _DNI_USUARIO 
+    WHERE COD_ENC_PRESTAMO =  _COD_ENC_PRESTAMO; 
+  END //
+  DELIMITER ;
+  CALL `spUpdateHeaderLoan`(_COD_ENC_PRESTAMO, _FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
 
-CALL `spAddHeader`(p_fecha_prestamo, p_cant_libro, p_dni_usuario);
- // DELIMITER ;
+   DELIMITER //
+  CREATE PROCEDURE `spDeleteHeaderLoan`(IN _COD_ENC_PRESTAMO INT) 
+  BEGIN 
+      DELETE FROM enc_prestamo
+      WHERE COD_ENC_PRESTAMO = _COD_ENC_PRESTAMO; 
+  END //
+  DELIMITER ;
+  CALL `spDeleteHeaderLoan`(_COD_ENC_PRESTAMO)
 
-DELIMITER //
-CREATE PROCEDURE `spUpdateHeader`(IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT) 
-BEGIN 
-  UPDATE enc_prestamo SET FECHA_PRESTAMO = p_FECHA_PRESTAMO, CANT_LIBRO = p_CANT_LIBRO, DNI_USUARIO = p_DNI_USUARIO WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
-END 
-
-CALL `spUpdateHeader`(p_fecha_prestamo, p_cant_libro, p_dni_usuario);
-// DELIMITER ;
-
-DELIMITER //
-CREATE PROCEDURE `spDeleteHeader`(IN p_COD_ENC_PRESTAMO INT) 
-BEGIN 
-    DELETE FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
-END 
-
-CALL `spDeleteHeader`(p_cod_enc_prestamo)
-// DELIMITER ;
 
 -- --------------------------------------------------------
 
---! Table structure for table `genero`
+--* Table structure for table `genero`
 
-CREATE TABLE `genero` (
-  `COD_GENERO` int(20) NOT NULL,
-  `NOMBRE` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CREATE TABLE `genero` (
+    `COD_GENERO` int(20) NOT NULL,
+    `NOMBRE` varchar(50) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-          /* All Dates for table //GetAllGeners */
-DELIMITER //
-CREATE PROCEDURE `spGetAllGeners`()
-BEGIN
-  SELECT COD_GENERO, NOMBRE
-  FROM genero;
-END //
+            /* All Dates for table //GetAllGenres */
+  DELIMITER //
+  CREATE PROCEDURE `spGetAllGenre`()
+  BEGIN
+    SELECT COD_GENERO, NOMBRE
+    FROM genero;
+  END //
+  DELIMITER ;
+  CALL `spGetAllGenre`();
 
-CALL `spGetAllGeners`();
-DELIMITER ;
+            /* Buscar por ID: */
+  DELIMITER //
+  CREATE PROCEDURE `spGetGenre`(IN _COD_GENERO int(20))
+  BEGIN
+    SELECT COD_GENERO, NOMBRE
+    FROM genero
+    WHERE COD_GENERO = _COD_GENERO;
+  END //
 
-          /* Buscar por ID: */
-DELIMITER //
-CREATE PROCEDURE `spGetGener`(IN p_COD_GENERO int(20))
-BEGIN
-  SELECT COD_GENERO, NOMBRE
-  FROM genero
-  WHERE COD_GENERO = p_COD_GENERO;
-END //
+  CALL `spGetGenre`(_COD_GENERO);
+  DELIMITER ;
 
-CALL `spGetGener`(p_cod_genero);
-DELIMITER ;
+            /* Insertar datos: */
+  DELIMITER //
+  CREATE PROCEDURE `spAddGenre`(IN _NOMBRE varchar(50))
+  BEGIN
+    INSERT INTO genero (NOMBRE)
+    VALUES (_NOMBRE);
+  END //
+  DELIMITER ;
+  CALL  `spAddGenre`(_NOMBRE);
 
-          /* Insertar datos: */
-DELIMITER //
-CREATE PROCEDURE `spAddGener`(IN p_COD_GENERO int(20), IN p_NOMBRE varchar(50))
-BEGIN
-  INSERT INTO genero (COD_GENERO, NOMBRE)
-  VALUES (p_COD_GENERO, p_NOMBRE);
-END //
+            /* Actualizar datos: */
+  DELIMITER //
+  CREATE PROCEDURE `spUpdateGenre`(IN _COD_GENERO int(20), IN _NOMBRE varchar(50))
+  BEGIN
+    UPDATE genero
+    SET NOMBRE = _NOMBRE
+    WHERE COD_GENERO = _COD_GENERO;
+  END //
+  DELIMITER ;
+  CALL  `spUpdateGenre`(_COD_GENERO, _NOMBRE);
 
-CALL  `spAddGener`(p_cod_genero, p_nombre);
-DELIMITER ;
+            /* Eliminar una fila de datos por ID: */
+  DELIMITER //
+  CREATE PROCEDURE `spDeleteGenre`(IN _COD_GENERO int(20))
+  BEGIN
+    DELETE FROM genero
+    WHERE COD_GENERO = _COD_GENERO;
+  END //
 
-          /* Actualizar datos: */
-DELIMITER //
-CREATE PROCEDURE `spUpdateGener`(IN p_COD_GENERO int(20), IN p_NOMBRE varchar(50))
-BEGIN
-  UPDATE genero
-  SET NOMBRE = p_NOMBRE
-  WHERE COD_GENERO = p_COD_GENERO;
-END //
-
-CALL  `spUpdateGener`(p_nombre);
-DELIMITER ;
-
-          /* Eliminar una fila de datos por ID: */
-DELIMITER //
-CREATE PROCEDURE `spDeleteGener`(IN p_COD_GENERO int(20))
-BEGIN
-  DELETE FROM genero
-  WHERE COD_GENERO = p_COD_GENERO;
-END //
-
-CALL  `spDeleteGener`(p_cod_genero);
-DELIMITER ;
+  DELIMITER ;
+  CALL  `spDeleteGenre`(_COD_GENERO);
 
 
 
 -- --------------------------------------------------------
 
---! Table structure for table `infoautor`
+--* Table structure for table `infoautor`
 
-CREATE TABLE `infoautor` (
-  `COD_AUTOR` int(20) NOT NULL,
-  `NOM_AUTOR` varchar(40) NOT NULL,
-  `FECHA_NACIMIENTO` date NOT NULL,
-  `LUGAR_NACIMIENTO` varchar(50) NOT NULL,
-  `FECHA_MUERTE` date DEFAULT NULL,
-  `OCUPACIONES` varchar(40) NOT NULL,
-  `MOVIMIENTO_LITERARIO` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
- 
+  CREATE TABLE `infoautor` (
+    `COD_AUTOR` int(20) NOT NULL,
+    `NOM_AUTOR` varchar(40) NOT NULL,
+    `FECHA_NACIMIENTO` date NOT NULL,
+    `LUGAR_NACIMIENTO` varchar(50) NOT NULL,
+    `FECHA_MUERTE` date DEFAULT NULL,
+    `OCUPACIONES` varchar(40) NOT NULL,
+    `MOVIMIENTO_LITERARIO` varchar(50) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  
 
-DELIMITER //
-CREATE PROCEDURE  `spGetAuthor`()
- BEGIN
-SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor; 
-END
- // DELIMITER ;
-CALL `spGetAuthor`(_dni, _nom, _apell, _naci, _contra, _correo, _sexo, _estado, _cod_rol);
+  DELIMITER //
+  CREATE PROCEDURE  `spGetAllAuthor`()
+   BEGIN
+  SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor; 
+  END
+   // DELIMITER ;
+  CALL `spGetAllAuthor`();
 
-DELIMITER //
-CREATE PROCEDURE `spGetAuthorForId`(IN id INT) 
-BEGIN 
-SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor WHERE COD_AUTOR = id; END 
-// DELIMITER ;
-CALL `spGetAuthorForId`()
+  DELIMITER //
+  CREATE PROCEDURE `spGetAuthorForId`(IN _COD_AUTOR INT) 
+  BEGIN 
+    SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor 
+    WHERE COD_AUTOR   = _COD_AUTOR; 
+  END 
+  // DELIMITER ;
+  CALL `spGetAuthorForId`(_COD_AUTOR)
 
-DELIMITER //
-CREATE PROCEDURE `spInsertAuthor`(IN id INT, IN nom VARCHAR(40), IN fecha DATE, IN lugar VARCHAR(50), IN muerte DATE, IN ocup VARCHAR(40), IN mov VARCHAR(50)) 
-BEGIN 
-INSERT INTO infoautor (COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO) VALUES (id, nom, fecha, lugar, muerte, ocup, mov);
-END 
-// DELIMITER ;
-CALL `spInsertAuthor`();
+  DELIMITER //
+  CREATE PROCEDURE `spInsertAuthor`(IN `_NOM_AUTOR` VARCHAR(40), IN `_FECHA_NACIMIENTO` DATE, IN `_LUGAR_NACIMIENTO` VARCHAR(50), IN `_FECHA_MUERTE` DATE, IN `_OCUPACIONES` VARCHAR(40), IN `_MOVIMIENTO_LITERARIO` VARCHAR(50))
+  BEGIN
+    INSERT INTO infoautor (COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO)
+    VALUES (_NOM_AUTOR, _FECHA_NACIMIENTO, _LUGAR_NACIMIENTO, _FECHA_MUERTE, _OCUPACIONES, _MOVIMIENTO_LITERARIO);
+    END 
+  // DELIMITER ;
+  CALL `spInsertAuthor`(_NOM_AUTOR, _FECHA_NACIMIENTO, _LUGAR_NACIMIENTO, _FECHA_MUERTE, _OCUPACIONES, _MOVIMIENTO_LITERARIO);
 
-DELIMITER //
-CREATE PROCEDURE `spUpdateAuthor`(IN id INT, IN nom VARCHAR(40), IN fecha DATE, IN lugar VARCHAR(50), IN muerte DATE, IN ocup VARCHAR(40), IN mov VARCHAR(50)) 
-BEGIN
- UPDATE infoautor SET NOM_AUTOR = nom, FECHA_NACIMIENTO = fecha, LUGAR_NACIMIENTO = lugar, FECHA_MUERTE = muerte, OCUPACIONES = ocup, MOVIMIENTO_LITERARIO = mov WHERE COD_AUTOR = id;
- END 
- // DELIMITER ;
-CALL `spupdatefoAuthor`();
+  DELIMITER  //
+  CREATE PROCEDURE `spUpdateAuthor`(IN `_COD_AUTOR` INT, IN `_NOM_AUTOR` VARCHAR(40), IN `_FECHA_NACIMIENTO` DATE, IN `_LUGAR_NACIMIENTO` VARCHAR(50), IN `_FECHA_MUERTE` DATE, IN `_OCUPACIONES` VARCHAR(40), IN `_MOVIMIENTO_LITERARIO` VARCHAR(50))
+  BEGIN
+    UPDATE infoautor 
+    SET NOM_AUTOR = _NOM_AUTOR, FECHA_NACIMIENTO = _FECHA_NACIMIENTO, LUGAR_NACIMIENTO = _LUGAR_NACIMIENTO, FECHA_MUERTE = _FECHA_MUERTE, OCUPACIONES = _OCUPACIONES,   MOVIMIENTO_LITERARIO = _MOVIMIENTO_LITERARIO 
+    WHERE COD_AUTOR = _COD_AUTOR;
+  END 
+  // DELIMITER ;
+  CALL `spUpdateAuthor`(_COD_AUTOR, _NOM_AUTOR, _FECHA_NACIMIENTO, _LUGAR_NACIMIENTO, _FECHA_MUERTE, _OCUPACIONES, _MOVIMIENTO_LITERARIO);
 
-DELIMITER //
-CREATE PROCEDURE `spDeleteAuthor`(IN id INT) 
-BEGIN 
-DELETE FROM infoautor WHERE COD_AUTOR = id;
-END 
-// DELIMITER ;
-CALL `spDeleteAuthor`()
+  DELIMITER //
+  CREATE PROCEDURE `spDeleteAuthor`(IN _COD_AUTOR INT) 
+  BEGIN 
+    DELETE FROM infoautor 
+    WHERE COD_AUTOR = _COD_AUTOR;
+  END 
+  // DELIMITER ;
+  CALL `spDeleteAuthor`()
 
 -- --------------------------------------------------------
 
 --* Table structure for table `multa`
 
-CREATE TABLE `multa` (
-  `COD_MULTA` int(4) NOT NULL,
-  `FECHA_INICIO` date DEFAULT NULL,
-  `FECHA_FIN` date DEFAULT NULL,
-  `VALOR` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CREATE TABLE `multa` (
+    `COD_MULTA` int(4) NOT NULL,
+    `FECHA_INICIO` date DEFAULT NULL,
+    `FECHA_FIN` date DEFAULT NULL,
+    `VALOR` int(5) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DELIMITER $$
-CREATE PROCEDURE `spGetPenaltys`()
-BEGIN
-SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR FROM multa;
-END$$
-DELIMITER ;
-CALL `spGetPenaltys`()
+  DELIMITER $$
+  CREATE PROCEDURE `spGetPenaltys`()
+  BEGIN
+  SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR FROM multa;
+  END$$
+  DELIMITER ;
+  CALL `spGetPenaltys`()
 
-DELIMITER $$
-CREATE PROCEDURE `spGetPenaltysForId`(IN `_COD_MULTA` INT)
-BEGIN
-SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR
-FROM multa
-WHERE COD_MULTA = _COD_MULTA;
-END$$
-DELIMITER ;
-CALL `spGetPenaltysForId`(_COD_MULTA)
+  DELIMITER $$
+  CREATE PROCEDURE `spGetPenaltysForId`(IN `_COD_MULTA` INT)
+  BEGIN
+  SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR
+  FROM multa
+  WHERE COD_MULTA = _COD_MULTA;
+  END$$
+  DELIMITER ;
+  CALL `spGetPenaltysForId`(_COD_MULTA)
 
-DELIMITER $$
-CREATE PROCEDURE `spInsertPenaltys`(IN `_FECHA_INICIO` DATE, IN `_FECHA_FIN` DATE, IN `_VALOR` INT)
-BEGIN
-INSERT INTO multa(FECHA_INICIO,FECHA_FIN,VALOR)
-VALUES(_FECHA_INICIO,_FECHA_FIN,_VALOR);
-END$$
-DELIMITER ;
-CALL `spInsertPenaltys`(_FECHA_INICIO, _FECHA_FIN, _VALOR)
+  DELIMITER $$
+  CREATE PROCEDURE `spInsertPenaltys`(IN `_FECHA_INICIO` DATE, IN `_FECHA_FIN` DATE, IN `_VALOR` INT)
+  BEGIN
+  INSERT INTO multa(FECHA_INICIO,FECHA_FIN,VALOR)
+  VALUES(_FECHA_INICIO,_FECHA_FIN,_VALOR);
+  END$$
+  DELIMITER ;
+  CALL `spInsertPenaltys`(_FECHA_INICIO, _FECHA_FIN, _VALOR)
 
-DELIMITER $$
-CREATE PROCEDURE `spUpdatePenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
-BEGIN
-UPDATE multa
-SET FECHA_INICIO = _FECHA_INICIO, FECHA_FIN = _FECHA_FIN, VALOR = _VALOR
-WHERE COD_MULTA = _COD_MULTA;
-END$$
-DELIMITER ;
-CALL `spUpdatePenaltys`(_COD_MULTA,_FECHA_INICIO,_FECHA_FIN,_VALOR )
+  DELIMITER $$
+  CREATE PROCEDURE `spUpdatePenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
+  BEGIN
+  UPDATE multa
+  SET FECHA_INICIO = _FECHA_INICIO, FECHA_FIN = _FECHA_FIN, VALOR = _VALOR
+  WHERE COD_MULTA = _COD_MULTA;
+  END$$
+  DELIMITER ;
+  CALL `spUpdatePenaltys`(_COD_MULTA,_FECHA_INICIO,_FECHA_FIN,_VALOR )
 
-DELIMITER $$
-CREATE PROCEDURE `spDeletePenaltys`(IN _COD_MULTA INT)
-BEGIN
-DELETE FROM multa WHERE COD_MULTA = _COD_MULTA;
-END$$
-DELIMITER ;
-CALL `spDeletePenaltys`(_COD_MULTA)
+  DELIMITER $$
+  CREATE PROCEDURE `spDeletePenaltys`(IN _COD_MULTA INT)
+  BEGIN
+  DELETE FROM multa WHERE COD_MULTA = _COD_MULTA;
+  END$$
+  DELIMITER ;
+  CALL `spDeletePenaltys`(_COD_MULTA)
 -- --------------------------------------------------------
 
 --* Table structure for table `rol`
 
-CREATE TABLE `rol` (
-  `cod_rol` int(4) NOT NULL,
-  `rol` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CREATE TABLE `rol` (
+    `cod_rol` int(4) NOT NULL,
+    `rol` varchar(50) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  
+  DELIMITER $$
+  CREATE PROCEDURE `spGetRoles`()
+  BEGIN
+  SELECT cod_rol, rol FROM rol;
+  END$$
+  DELIMITER ;
+  CALL spGetRoles()
+  
+  DELIMITER $$
+  CREATE PROCEDURE `spGetRolesForId`(IN _cod_rol INT)
+  BEGIN
+  SELECT cod_rol, rol FROM rol WHERE cod_rol = _cod_rol;
+  END$$
+  DELIMITER ;
+  CALL spGetRolesForId(_cod_rol)
+  
+  DELIMITER $$
+  CREATE PROCEDURE `spInsertRoles`(IN `_rol` VARCHAR(50))
+  BEGIN
+  INSERT INTO rol (rol) VALUES (_rol);
+  END$$
+  DELIMITER ;
+  CALL spInsertRoles(_rol)
+  
+  DELIMITER $$
+  CREATE PROCEDURE `spUpdateRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
+  BEGIN
+  UPDATE rol SET rol = _rol WHERE cod_rol = _cod_rol;
+  END$$
+  DELIMITER ;
+  CALL spUpdateRoles(_cod_rol, _rol)
+  
+  DELIMITER $$
+  CREATE PROCEDURE `spDeleteRoles`(IN _cod_rol INT)
+  BEGIN
+  DELETE FROM rol WHERE cod_rol = _cod_rol;
+  END$$
+  DELIMITER ;
+  CALL spDeleteRoles(_cod_rol)
+  
+  
+-- --------------------------------------------------------
 
-DELIMITER $$
-CREATE PROCEDURE `spGetRoles`()
-BEGIN
-SELECT cod_rol, rol FROM rol;
-END$$
-DELIMITER ;
-CALL spGetRoles()
+--! Table structure for table `det_prestamo`
 
-DELIMITER $$
-CREATE PROCEDURE `spGetRolesForId`(IN _cod_rol INT)
-BEGIN
-SELECT cod_rol, rol FROM rol WHERE cod_rol = _cod_rol;
-END$$
-DELIMITER ;
-CALL spGetRolesForId(_cod_rol)
+  CREATE TABLE `det_prestamo` (
+    `COD_DETALLE` int(20) NOT NULL,
+    `DESCRIPCION` text NOT NULL,
+    `COD_LIBRO` int(20) NOT NULL,
+    `COD_ENC_PRESTAMO` int(20) NOT NULL,
+    `COD_MULTA` int(4) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DELIMITER $$
-CREATE PROCEDURE `spInsertRoles`(IN `_rol` VARCHAR(50))
-BEGIN
-INSERT INTO rol (rol) VALUES (_rol);
-END$$
-DELIMITER ;
-CALL spInsertRoles(_rol)
+DELIMITER //
 
-DELIMITER $$
-CREATE PROCEDURE `spUpdateRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
+CREATE PROCEDURE `spGetAllDetailLoans`()
 BEGIN
-UPDATE rol SET rol = _rol WHERE cod_rol = _cod_rol;
-END$$
-DELIMITER ;
-CALL spUpdateRoles(_cod_rol, _rol)
+    SELECT COD_DETALLE, DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA
+    FROM det_prestamo;
+END //
 
-DELIMITER $$
-CREATE PROCEDURE `spDeleteRoles`(IN _cod_rol INT)
-BEGIN
-DELETE FROM rol WHERE cod_rol = _cod_rol;
-END$$
 DELIMITER ;
-CALL spDeleteRoles(_cod_rol)
+CALL `spGetspGetAllDetailLoans`()
+
+DELIMITER //
+
+CREATE PROCEDURE `spGetDetailLoan`(IN id_detalle INT)
+BEGIN
+    SELECT COD_DETALLE, DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA
+    FROM det_prestamo
+    WHERE COD_DETALLE = id_detalle;
+END //
+
+DELIMITER ;
+CALL `spGetDetailLoan`(id_detalle)
+
+DELIMITER //
+
+CREATE PROCEDURE `spAddDetailLoan`(IN descripcion TEXT, IN cod_libro INT, IN cod_enc_prestamo INT, IN cod_multa INT)
+BEGIN
+    INSERT INTO det_prestamo (DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA)
+    VALUES (descripcion, cod_libro, cod_enc_prestamo, cod_multa);
+END //
+
+DELIMITER ;
+CALL `spAddDetailLoan`(descripcion,cod_libro,cod_enc_prestamo,cod_multa)
+
+DELIMITER //
+
+CREATE PROCEDURE `spUpdateDetailLoan`(IN id_detalle INT, IN descripcion TEXT, IN cod_libro INT, IN cod_enc_prestamo INT, IN cod_multa INT)
+BEGIN
+    UPDATE det_prestamo
+    SET DESCRIPCION = descripcion, COD_LIBRO = cod_libro, COD_ENC_PRESTAMO = cod_enc_prestamo, COD_MULTA = cod_multa
+    WHERE COD_DETALLE = id_detalle;
+END //
+DELIMITER ;
+CALL `spUpdateDetailLoan`(id_detalle, descripcion, cod_libro, cod_enc_prestamo, cod_multa)
+
+DELIMITER //
+
+CREATE PROCEDURE `spDeleteDetailLoan`(IN id_detalle INT)
+BEGIN
+    DELETE FROM det_prestamo
+    WHERE COD_DETALLE = id_detalle;
+END //
+DELIMITER ;
+CALL `spDeleteDetailLoan`(id_detalle)
 
 
 -- --------------------------------------------------------
+
+--
+--! Table structure for table `editorial_libros`
+
+  CREATE TABLE `editorial_libros` (
+    `COD_EDITORIAL_LIBROS` int(20) NOT NULL,
+    `COD_LIBRO` int(20) NOT NULL,
+    `COD_EDITORIAL` int(20) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DELIMITER //
+CREATE PROCEDURE `spGetAllPublishings`()
+BEGIN
+  SELECT 
+    COD_EDITORIAL_LIBROS,
+    COD_LIBRO,
+    COD_EDITORIAL
+  FROM editorial_libros;
+END //
+DELIMITER ;
+CALL `spGetAllPublishings`()
+
+DELIMITER //
+CREATE PROCEDURE `spGetPublishing`(IN id INT)
+BEGIN
+  SELECT 
+    COD_EDITORIAL_LIBROS,
+    COD_LIBRO,
+    COD_EDITORIAL
+  FROM editorial_libros
+  WHERE COD_EDITORIAL_LIBROS = id;
+END //
+DELIMITER ;
+CALL `spGetPublishing`(id)
+
+DELIMITER //
+CREATE PROCEDURE `spAddPublishing`(IN codLibro INT, IN codEditorial INT)
+BEGIN
+  INSERT INTO editorial_libros (COD_LIBRO, COD_EDITORIAL)
+  VALUES (codLibro, codEditorial);
+END //
+DELIMITER ;
+CALL `spAddPublishing`(cod_libro, cod_editorial)
+
+DELIMITER //
+CREATE PROCEDURE `spUpdatePublishing`(IN id INT, IN codLibro INT, IN codEditorial INT)
+BEGIN
+  UPDATE editorial_libros
+  SET 
+    COD_LIBRO = codLibro,
+    COD_EDITORIAL = codEditorial
+  WHERE COD_EDITORIAL_LIBROS = id;
+END //
+DELIMITER ;
+CALL `spUpdatePublishing`(id,cod_libro, cod_editorial)
+
+DELIMITER //
+CREATE PROCEDURE `spDeletePublishing`(IN id INT)
+BEGIN
+  DELETE FROM editorial_libros
+  WHERE COD_EDITORIAL_LIBROS = id;
+END //
+DELIMITER;
+CALL `spDeletePublishing`(id)
+-- --------------------------------------------------------
+
+--
+--! Table structure for table `libro`
+
+  CREATE TABLE `libro` (
+    `COD_LIBRO` int(20) NOT NULL,
+    `SIPNOPSIS` text NOT NULL,
+    `TITULO` varchar(50) NOT NULL,
+    `FECHA_PUBLICACION` date NOT NULL,
+    `NUM_SERIE` int(20) NOT NULL,
+    `COD_GENERO` int(20) NOT NULL,
+    `COD_AUTOR` int(20) NOT NULL,
+    `IMAGEN` mediumblob DEFAULT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DELIMITER //
+
+CREATE PROCEDURE `spGetAllBooks`()
+BEGIN
+    SELECT COD_LIBRO, SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR, IMAGEN
+    FROM libro;
+END //
+DELIMITER ;
+CALL `spGetAllBooks`()
+
+DELIMITER //
+
+CREATE PROCEDURE `spGetBook`(IN id_libro INT)
+BEGIN
+    SELECT COD_LIBRO, SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR, IMAGEN
+    FROM libro
+    WHERE COD_LIBRO = id_libro;
+END //
+DELIMITER ;
+CALL `spGetBook`(id_libro)
+
+DELIMITER //
+
+CREATE PROCEDURE `spAddBook`(IN sipnosis TEXT, IN titulo VARCHAR(50), IN fecha_publicacion DATE, IN num_serie INT, IN cod_genero INT, IN cod_autor INT, IN imagen MEDIUMBLOB)
+BEGIN
+    INSERT INTO libro (SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR, IMAGEN)
+    VALUES (sipnosis, titulo, fecha_publicacion, num_serie, cod_genero, cod_autor, imagen);
+END //
+DELIMITER ;
+CALL `spAddBook`(sipnosis, titulo, fecha_publicacion, num_serie, cod_genero, cod_autor, imagen MEDIUMBLOB)
+
+DELIMITER //
+
+CREATE PROCEDURE `spUpdateBook`(IN id_libro INT, IN sipnosis TEXT, IN titulo VARCHAR(50), IN fecha_publicacion DATE, IN num_serie INT, IN cod_genero INT, IN cod_autor INT, IN imagen MEDIUMBLOB)
+BEGIN
+    UPDATE libro
+    SET SIPNOPSIS = sipnosis, TITULO = titulo, FECHA_PUBLICACION = fecha_publicacion, NUM_SERIE = num_serie, COD_GENERO = cod_genero, COD_AUTOR = cod_autor, IMAGEN = imagen
+    WHERE COD_LIBRO = id_libro;
+END //
+DELIMITER ;
+CALL `spAddBook`(id_libro, sipnosis, titulo, fecha_publicacion, num_serie, cod_genero, cod_autor, imagen MEDIUMBLOB)
+
+DELIMITER //
+
+CREATE PROCEDURE `spDeleteBook`(IN id_libro INT)
+BEGIN
+    DELETE FROM libro
+    WHERE COD_LIBRO = id_libro;
+END //
+DELIMITER ;
+CALL `spDeleteBook`(id_libro)

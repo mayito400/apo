@@ -208,6 +208,50 @@ ALTER TABLE `enc_prestamo`
   ADD CONSTRAINT `enc_prestamo_ibfk_1` FOREIGN KEY (`DNI_USUARIO`) REFERENCES `datos_usuario` (`DNI_USUARIO`);
 COMMIT;
 
+
+-- AUTO_INCREMENT for table `det_prestamo`
+--
+ALTER TABLE `det_prestamo`
+  MODIFY `COD_DETALLE` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `editorial_libros`
+--
+ALTER TABLE `editorial_libros`
+  MODIFY `COD_EDITORIAL_LIBROS` int(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `libro`
+--
+ALTER TABLE `libro`
+  MODIFY `COD_LIBRO` int(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `det_prestamo`
+--
+ALTER TABLE `det_prestamo`
+  ADD CONSTRAINT `det_prestamo_ibfk_1` FOREIGN KEY (`COD_ENC_PRESTAMO`) REFERENCES `enc_prestamo` (`COD_ENC_PRESTAMO`),
+  ADD CONSTRAINT `det_prestamo_ibfk_2` FOREIGN KEY (`COD_LIBRO`) REFERENCES `libro` (`COD_LIBRO`),
+  ADD CONSTRAINT `det_prestamo_ibfk_3` FOREIGN KEY (`COD_MULTA`) REFERENCES `multa` (`COD_MULTA`);
+
+--
+-- Constraints for table `editorial_libros`
+--
+ALTER TABLE `editorial_libros`
+  ADD CONSTRAINT `editorial_libros_ibfk_1` FOREIGN KEY (`COD_EDITORIAL`) REFERENCES `editorial` (`COD_EDITORIAL`),
+  ADD CONSTRAINT `editorial_libros_ibfk_2` FOREIGN KEY (`COD_LIBRO`) REFERENCES `libro` (`COD_LIBRO`);
+
+--
+-- Constraints for table `libro`
+--
+ALTER TABLE `libro`
+  ADD CONSTRAINT `libro_ibfk_1` FOREIGN KEY (`COD_GENERO`) REFERENCES `genero` (`COD_GENERO`),
+  ADD CONSTRAINT `libro_ibfk_2` FOREIGN KEY (`COD_AUTOR`) REFERENCES `infoautor` (`COD_AUTOR`);
+COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

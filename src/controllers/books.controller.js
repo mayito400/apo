@@ -1,11 +1,11 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//* GET
-const getGenres = async (req, res) => { // GET ALL
+//! GET
+const getBooks = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllGenre`()'); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllbooks`()'); // GET = SELECT
         console.log(result);
 
         res.json(result[0]);
@@ -14,13 +14,13 @@ const getGenres = async (req, res) => { // GET ALL
         res.send(error.message);
     }
 };
-const getGenre = async (req, res) => { // Get for ID
+const getBook = async (req, res) => { // Get for ID
     try {
         console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetGenre`(?)', id); // GET = SELECT
+        const result = await connection.query('CALL `spGetBooks`(?)', id); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
@@ -29,8 +29,8 @@ const getGenre = async (req, res) => { // Get for ID
     }
 };
 
-//* POST
-const addGenre = async (req, res) => {
+//! POST
+const addBook = async (req, res) => {
     try {
         const { NOMBRE } = req.body;
 
@@ -38,10 +38,10 @@ const addGenre = async (req, res) => {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const Genre = { NOMBRE };
+        const books = { NOMBRE };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddGenre('${Genre.NOMBRE}');`);
+        const result = await connection.query(`CALL spAddBooks('${books.NOMBRE}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Genre Added" });
@@ -52,14 +52,14 @@ const addGenre = async (req, res) => {
     }
 };
 
-//* DELETE
-const deleteGenre = async (req, res) => {
+//! DELETE
+const deleteBook = async (req, res) => {
     try {
         console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query('CALL `spDeleteGenre`(?)', id);
+        const result = await connection.query('CALL `spDeleteBooks`(?)', id);
 
         res.json(result);
     } catch (error) {
@@ -68,8 +68,8 @@ const deleteGenre = async (req, res) => {
     }
 };
 
-//* PUT
-const updateGenre = async (req, res) => {
+//! PUT
+const updateBook = async (req, res) => {
     try {
         const { id } = req.params;
         const { NOMBRE } = req.body;
@@ -80,7 +80,7 @@ const updateGenre = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateGenre('${id}', '${Genre.NOMBRE}');`);
+        const result = await connection.query(`CALL spUpdateBooks('${id}', '${Genre.NOMBRE}');`);
 
 
         res.json(result);
@@ -91,9 +91,9 @@ const updateGenre = async (req, res) => {
 };
 
 export const methods = {
-    getGenres,
-    getGenre,
-    addGenre,
-    deleteGenre,
-    updateGenre
+    getBooks,
+    getBook,
+    addBook,
+    deleteBook,
+    updateBook
 };

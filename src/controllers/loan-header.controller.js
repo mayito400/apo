@@ -5,10 +5,10 @@ import { getConnection } from "../db/database"
 const getLoanHeaders = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetAllHeaders()`); // GET = SELECT
-        console.log(result);
+        const result = await connection.query(`CALL spGetAllHeaderLoan()`); // GET = SELECT
+        // console.log(result);
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -21,16 +21,16 @@ const getLoanHeader = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetHeader(?)`,id); // GET = SELECT
+        const result = await connection.query(`CALL spGetHeaderLoan(?)`,id); // GET = SELECT
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
     }
 };
 
-//! funcion de peticion POST
+//* funcion de peticion POST
 const addLoanHeader = async (req, res) => { // POST
     try {
         const { FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO } = req.body;
@@ -41,6 +41,7 @@ const addLoanHeader = async (req, res) => { // POST
 
         const LoanHeader = { FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO };
         const connection = await getConnection();
+
 
         const result=await connection.query(`CALL spAddHeader('${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.CANT_LIBRO}','${LoanHeader.DNI_USUARIO}';`);
 
@@ -60,7 +61,7 @@ const deleteLoanHeader = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query("CALL `spDeleteHeader`(?)", id);
+        const result = await connection.query("CALL `spDeleteHeaderLoan`(?)", id);
 
         res.json(result);
     } catch (error) {
@@ -68,7 +69,7 @@ const deleteLoanHeader = async (req, res) => {
         res.send(error.message);
     }
 };
-//! funcion de peticion PUT
+//* funcion de peticion PUT
 const updateLoanHeader = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,7 +81,7 @@ const updateLoanHeader = async (req, res) => {
         };
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateHeader('${id}','${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.CANT_LIBRO}','${LoanHeader.DNI_USUARIO}';`);
+        const result = await connection.query(`CALL spUpdateHeaderLoan('${id}','${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.CANT_LIBRO}','${LoanHeader.DNI_USUARIO}');`);
 
         res.json(result);
     } catch (error) {
