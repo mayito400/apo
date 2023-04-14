@@ -124,8 +124,8 @@ BEGIN
   SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo;
 END
 
- // DELIMITER ;
 CALL `spGetAllHeaders`();
+ // DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE `spGetHeader` (IN p_COD_ENC_PRESTAMO INT) 
@@ -133,8 +133,8 @@ BEGIN
     SELECT COD_ENC_PRESTAMO, FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
 END
 
+CALL `spGetHeader`(p_cod_enc_prestamo);
 //DELIMITER ;
-CALL `spGetHeader`(2)
 
 DELIMITER //
 CREATE PROCEDURE `spAddHeader`(IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT)
@@ -142,17 +142,17 @@ CREATE PROCEDURE `spAddHeader`(IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN
     INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) VALUES (p_FECHA_PRESTAMO, p_CANT_LIBRO, p_DNI_USUARIO);
  END
 
+CALL `spAddHeader`(p_fecha_prestamo, p_cant_libro, p_dni_usuario);
  // DELIMITER ;
-CALL `spAddHeader`(_fecha_prestamo, _cant_libro, _dni_usuario);
 
 DELIMITER //
-CREATE PROCEDURE `spUpdateHeader`(IN p_COD_ENC_PRESTAMO INT, IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT) 
+CREATE PROCEDURE `spUpdateHeader`(IN p_FECHA_PRESTAMO DATE, IN p_CANT_LIBRO INT, IN p_DNI_USUARIO INT) 
 BEGIN 
   UPDATE enc_prestamo SET FECHA_PRESTAMO = p_FECHA_PRESTAMO, CANT_LIBRO = p_CANT_LIBRO, DNI_USUARIO = p_DNI_USUARIO WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
 END 
 
+CALL `spUpdateHeader`(p_fecha_prestamo, p_cant_libro, p_dni_usuario);
 // DELIMITER ;
-CALL `spUpdateHeader`(_cod_enc_prestamo, _fecha_prestamo, _fecha_prestamo, _dni_usuario);
 
 DELIMITER //
 CREATE PROCEDURE `spDeleteHeader`(IN p_COD_ENC_PRESTAMO INT) 
@@ -160,8 +160,8 @@ BEGIN
     DELETE FROM enc_prestamo WHERE COD_ENC_PRESTAMO = p_COD_ENC_PRESTAMO; 
 END 
 
-// DELIMITER ;
 CALL `spDeleteHeader`(p_cod_enc_prestamo)
+// DELIMITER ;
 
 -- --------------------------------------------------------
 

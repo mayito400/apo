@@ -42,7 +42,7 @@ const addLoanHeader = async (req, res) => { // POST
         const LoanHeader = { FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddHeader('${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.CANT_LIBRO}','${LoanHeader.DNI_USUARIO}';`);
+        const result=await connection.query(`CALL spAddHeader('${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.CANT_LIBRO}','${LoanHeader.DNI_USUARIO}';`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "LoanHeader Added" });

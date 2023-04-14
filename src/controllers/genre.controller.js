@@ -29,7 +29,7 @@ const getGenre = async (req, res) => { // Get for ID
     }
 };
 
-//! POST
+//* POST
 const addGenre = async (req, res) => {
     try {
         const { NOMBRE } = req.body;
@@ -68,7 +68,7 @@ const deleteGenre = async (req, res) => {
     }
 };
 
-//! PUT
+//* PUT
 const updateGenre = async (req, res) => {
     try {
         const { id } = req.params;
