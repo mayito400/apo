@@ -575,7 +575,7 @@ CALL `spGetBook`(id_libro)
 
 DELIMITER //
 
-CREATE PROCEDURE `spAddBook`(IN sipnosis TEXT, IN titulo VARCHAR(50), IN fecha_publicacion DATE, IN num_serie INT, IN cod_genero INT, IN cod_autor INT, IN imagen MEDIUMBLOB)
+CREATE PROCEDURE `spAddBook`(IN sipnosis TEXT, IN titulo VARCHAR(50), IN fecha_publicacion DATE, IN num_serie INT, IN cod_genero INT, IN _cod_autor INT, IN imagen MEDIUMBLOB)
 BEGIN
     INSERT INTO libro (SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR, IMAGEN)
     VALUES (sipnosis, titulo, fecha_publicacion, num_serie, cod_genero, cod_autor, imagen);

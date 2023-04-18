@@ -32,16 +32,18 @@ const getDetailLoan = async (req, res) => { // Get for ID
 //! POST
 const addDetailLoan = async (req, res) => {
     try {
-        const { NOMBRE } = req.body;
+        const { DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA } = req.body;
+
+
+        const detail = { DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA };
 
         if (NOMBRE === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const books = { NOMBRE };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddDetailLoan('${books.NOMBRE}');`);
+        const result = await connection.query(`CALL spAddDetailLoan('${detail.DESCRIPCION}','${detail.DESCRIPCION}','${detail.DESCRIPCION}','${detail.DESCRIPCION}','${detail.DESCRIPCION}','${detail.DESCRIPCION}',);`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Genre Added" });

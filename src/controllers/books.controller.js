@@ -1,7 +1,7 @@
-import { getConnection } from "../db/database"
 // interacciones con la base de datos
+import { getConnection } from "../db/database"
 
-//! GET
+//* GET
 const getBooks = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
@@ -32,16 +32,16 @@ const getBook = async (req, res) => { // Get for ID
 //! POST
 const addBook = async (req, res) => {
     try {
-        const { NOMBRE } = req.body;
+        const { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR } = req.body;
+        const books = { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR };
 
-        if (NOMBRE === undefined) {
+        if (SINOPSIS === undefined || TITULO === undefined || FECHA_PUBLICACION === undefined || NUM_SERIE === undefined || _COD_GENERO === undefined || COD_AUTOR === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const books = { NOMBRE };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddBooks('${books.NOMBRE}');`);
+        const result = await connection.query(`CALL spAddBooks('${books.SINOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books._COD_GENERO}','${books.COD_AUTOR}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Genre Added" });
@@ -72,15 +72,17 @@ const deleteBook = async (req, res) => {
 const updateBook = async (req, res) => {
     try {
         const { id } = req.params;
-        const { NOMBRE } = req.body;
-        const Genre = { NOMBRE }
+        const { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR } = req.body;
+        const Genre = { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR }
 
-        if (NOMBRE === undefined) {
+        if (SINOPSIS === undefined || TITULO === undefined || FECHA_PUBLICACION === undefined || NUM_SERIE === undefined || _COD_GENERO === undefined || COD_AUTOR === undefined) {
+
            return res.status(400).json({ message: "Bad request. Please fill all field." })
-        }
 
-        const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateBooks('${id}', '${Genre.NOMBRE}');`);
+        }
+            const connection = await getConnection();
+
+        const result = await connection.query(`CALL spUpdateBooks('${id}', '${books.SINOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books._COD_GENERO}','${books.COD_AUTOR}');`);
 
 
         res.json(result);
