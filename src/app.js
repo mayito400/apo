@@ -8,7 +8,7 @@ import genreRoutes from './routes/genre.routes';
 import roleRoutes from './routes/role.routes';
 import publisherRoutes from './routes/publisher.routes';
 import authorRoutes from './routes/author.routes';
-import publisherRoutes from './routes/Publishing.routes';
+import publishingRoutes from './routes/publishing.routes'
 import booksRoutes from './routes/books.routes';
 import detailloanRoutes from './routes/detail-loan.routes';
 import fileUpload from "express-fileupload";
