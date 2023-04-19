@@ -34,7 +34,7 @@ const addBook = async (req, res) => {
     try {
         const { NOMBRE } = req.body;
 
-        if (NOMBRE === undefined) {
+        if (SINOPSIS === undefined || TITULO === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 

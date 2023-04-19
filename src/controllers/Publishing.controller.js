@@ -36,7 +36,7 @@ const addPublishing = async (req, res) => {
         const Publishing = { COD_LIBRO, COD_EDITORIAL };
 
         if (COD_LIBRO === undefined || COD_EDITORIAL === undefined) {
-           return res.status(400).json({ message: "Bad request. Please fill all field." })
+           return res.status(400).json({ message: "Bad request. Please fill all field." });
         }
 
         const connection = await getConnection();
@@ -44,7 +44,7 @@ const addPublishing = async (req, res) => {
         const result = await connection.query(`CALL spAddPublishing('${Publishing.COD_LIBRO},','${Publishing.COD_EDITORIAL},');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
-        res.json({ message: "Genre Added" });
+        res.json({ message: "Publishing Added"});
     } catch (error) {
         res.status(500);
         res.send(error.message);

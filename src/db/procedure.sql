@@ -508,13 +508,13 @@ DELIMITER ;
 CALL `spGetPublishing`(id)
 
 DELIMITER //
-CREATE PROCEDURE `spAddPublishing`(IN codLibro INT, IN codEditorial INT)
+CREATE PROCEDURE `spAddPublishing`(IN cod_editorial_libros INT,IN codLibro INT, IN codEditorial INT)
 BEGIN
   INSERT INTO editorial_libros (COD_LIBRO, COD_EDITORIAL)
   VALUES (codLibro, codEditorial);
 END //
 DELIMITER ;
-CALL `spAddPublishing`(cod_libro, cod_editorial)
+CALL `spAddPublishing`(cod_libro, cod_editorial);
 
 DELIMITER //
 CREATE PROCEDURE `spUpdatePublishing`(IN id INT, IN codLibro INT, IN codEditorial INT)
