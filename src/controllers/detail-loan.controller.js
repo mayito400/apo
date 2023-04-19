@@ -1,7 +1,7 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//! GET
+//* GET
 const getDetailLoans = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
@@ -29,24 +29,24 @@ const getDetailLoan = async (req, res) => { // Get for ID
     }
 };
 
-//! POST
+//* POST
 const addDetailLoan = async (req, res) => {
     try {
-        const { COD_DETALLE, DESCRIPCION,COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA } = req.body;
+        const { DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA } = req.body;
 
 
-        const detail = { COD_DETALLE, DESCRIPCION,COD_LIBRO,  COD_ENC_PRESTAMO, COD_MULTA };
+        const detail = { DESCRIPCION, COD_LIBRO,  COD_ENC_PRESTAMO, COD_MULTA };
 
-        if (COD_DETALLE === undefined || DESCRIPCION === undefined || COD_LIBRO === undefined || COD_ENC_PRESTAMO === undefined || COD_MULTA === undefined) {
+        if ( DESCRIPCION === undefined || COD_LIBRO === undefined || COD_ENC_PRESTAMO === undefined || COD_MULTA === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddDetailLoan('${detail.COD_DETALLE}','${detail.DESCRIPCION}','${detail.COD_LIBRO}','${detail.COD_ENC_PRESTAMO}','${detail.COD_MULTA}',);`);
+        const result = await connection.query(`CALL spAddDetailLoan('${detail.DESCRIPCION}','${detail.COD_LIBRO}','${detail.COD_ENC_PRESTAMO}','${detail.COD_MULTA}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
-        res.json({ message: "Genre Added" });
+        res.json({ message: "Detail-Loan Added" });
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -54,7 +54,7 @@ const addDetailLoan = async (req, res) => {
     }
 };
 
-//! DELETE
+//* DELETE
 const deleteDetailLoan = async (req, res) => {
     try {
         console.log(req.params);
@@ -70,20 +70,20 @@ const deleteDetailLoan = async (req, res) => {
     }
 };
 
-//! PUT
+//* PUT
 const updateDetailLoan = async (req, res) => {
     try {
         const { id } = req.params;
-        const { COD_DETALLE, DESCRIPCION,COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA } = req.body;
-        const detail = { COD_DETALLE, DESCRIPCION,COD_LIBRO,  COD_ENC_PRESTAMO, COD_MULTA };
+        const {  DESCRIPCION,COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA } = req.body;
+        const detail = {  DESCRIPCION,COD_LIBRO,  COD_ENC_PRESTAMO, COD_MULTA };
 
-        if (COD_DETALLE === undefined || DESCRIPCION === undefined || COD_LIBRO === undefined || COD_ENC_PRESTAMO === undefined || COD_MULTA === undefined) {
+        if ( DESCRIPCION === undefined || COD_LIBRO === undefined || COD_ENC_PRESTAMO === undefined || COD_MULTA === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
          }
  
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateDetailLoan('${id}', '${detail.COD_DETALLE}','${detail.DESCRIPCION}','${detail.COD_LIBRO}','${detail.COD_ENC_PRESTAMO}','${detail.COD_MULTA}',);`);
+        const result = await connection.query(`CALL spUpdateDetailLoan('${id}','${detail.DESCRIPCION}','${detail.COD_LIBRO}','${detail.COD_ENC_PRESTAMO}','${detail.COD_MULTA}');`);
 
 
         res.json(result);
