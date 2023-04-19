@@ -32,16 +32,18 @@ const getDetailLoan = async (req, res) => { // Get for ID
 //! POST
 const addDetailLoan = async (req, res) => {
     try {
-        const { NOMBRE } = req.body;
+        const { COD_DETALLE, DESCRIPCION,COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA } = req.body;
 
-        if (NOMBRE === undefined) {
+
+        const detail = { COD_DETALLE, DESCRIPCION,COD_LIBRO,  COD_ENC_PRESTAMO, COD_MULTA };
+
+        if (COD_DETALLE === undefined || DESCRIPCION === undefined || COD_LIBRO === undefined || COD_ENC_PRESTAMO === undefined || COD_MULTA === undefined) {
            return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
 
-        const books = { NOMBRE };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddDetailLoan('${books.NOMBRE}');`);
+        const result = await connection.query(`CALL spAddDetailLoan('${detail.COD_DETALLE}','${detail.DESCRIPCION}','${detail.COD_LIBRO}','${detail.COD_ENC_PRESTAMO}','${detail.COD_MULTA}',);`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Genre Added" });
@@ -72,15 +74,16 @@ const deleteDetailLoan = async (req, res) => {
 const updateDetailLoan = async (req, res) => {
     try {
         const { id } = req.params;
-        const { NOMBRE } = req.body;
-        const detail = { NOMBRE }
+        const { COD_DETALLE, DESCRIPCION,COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA } = req.body;
+        const detail = { COD_DETALLE, DESCRIPCION,COD_LIBRO,  COD_ENC_PRESTAMO, COD_MULTA };
 
-        if (NOMBRE === undefined) {
-           return res.status(400).json({ message: "Bad request. Please fill all field." })
-        }
+        if (COD_DETALLE === undefined || DESCRIPCION === undefined || COD_LIBRO === undefined || COD_ENC_PRESTAMO === undefined || COD_MULTA === undefined) {
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
+         }
+ 
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateDetailLoan('${id}', '${detail.NOMBRE}');`);
+        const result = await connection.query(`CALL spUpdateDetailLoan('${id}', '${detail.COD_DETALLE}','${detail.DESCRIPCION}','${detail.COD_LIBRO}','${detail.COD_ENC_PRESTAMO}','${detail.COD_MULTA}',);`);
 
 
         res.json(result);
