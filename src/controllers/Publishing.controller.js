@@ -1,11 +1,11 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//! GET
+//* GET
 const getPublishings = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllPublishing`()'); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllPublishings`()'); // GET = SELECT
         console.log(result);
 
         res.json(result[0]);
@@ -29,7 +29,7 @@ const getPublishing = async (req, res) => { // Get for ID
     }
 };
 
-//! POST
+//* POST
 const addPublishing = async (req, res) => {
     try {
         const { COD_LIBRO, COD_EDITORIAL } = req.body;
@@ -41,7 +41,7 @@ const addPublishing = async (req, res) => {
 
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddPublishing('${Publishing.COD_LIBRO},','${Publishing.COD_EDITORIAL},');`);
+        const result = await connection.query(`CALL spAddPublishing('${Publishing.COD_LIBRO}','${Publishing.COD_EDITORIAL}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Publishing Added"});
@@ -52,7 +52,7 @@ const addPublishing = async (req, res) => {
     }
 };
 
-//! DELETE
+//* DELETE
 const deletePublishing = async (req, res) => {
     try {
         console.log(req.params);
@@ -68,7 +68,7 @@ const deletePublishing = async (req, res) => {
     }
 };
 
-//! PUT
+//* PUT
 const updatePublishing = async (req, res) => {
     try {
         const { id } = req.params;
@@ -81,7 +81,7 @@ const updatePublishing = async (req, res) => {
 
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddPublishing('${id},''${Publishing.COD_LIBRO},','${Publishing.COD_EDITORIAL},');`);
+        const result = await connection.query(`CALL spUpdatePublishing('${id}','${Publishing.COD_LIBRO}','${Publishing.COD_EDITORIAL}');`);
 
 
         res.json(result);

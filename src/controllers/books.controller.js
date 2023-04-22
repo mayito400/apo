@@ -33,16 +33,17 @@ const getBook = async (req, res) => { // Get for ID
 const addBook = async (req, res) => {
     try {
         const { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR } = req.body;
-        const books = { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR };
-        
+
+
+        const book = { SINOPSIS,TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR };
+
         if (SINOPSIS === undefined || TITULO === undefined || FECHA_PUBLICACION === undefined || NUM_SERIE === undefined || COD_GENERO === undefined || COD_AUTOR === undefined) {
-            
-             return res.status(400).json({ message: "Bad request. Please fill all field." })
-            
-            }
-            const connection = await getConnection();
-            
-            const result = await connection.query(`CALL spAddBook('${books.SINOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books.COD_GENERO}','${books.COD_AUTOR}');`);
+           return res.status(400).json({ message: "Bad request. Please fill all field." })
+        }
+ 
+        const connection = await getConnection();
+
+        const result = await connection.query(`CALL spAddBook('${book.SINOPSIS}','${book.TITULO}','${book.FECHA_PUBLICACION}','${book.NUM_SERIE}','${book.COD_GENERO}','${book.COD_AUTOR}');`);
 
          //res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Book Added" });
@@ -53,14 +54,14 @@ const addBook = async (req, res) => {
     }
 };
 
-//! DELETE
+//* DELETE
 const deleteBook = async (req, res) => {
     try {
         console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query('CALL `spDeleteBooks`(?)', id);
+        const result = await connection.query('CALL `spDeleteBook`(?)', id);
 
         res.json(result);
     } catch (error) {
@@ -73,17 +74,17 @@ const deleteBook = async (req, res) => {
 const updateBook = async (req, res) => {
     try {
         const { id } = req.params;
-        const { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR } = req.body;
-        const Genre = { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR }
+        const { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR } = req.body;
+        const books = { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR }
 
-        if (SINOPSIS === undefined || TITULO === undefined || FECHA_PUBLICACION === undefined || NUM_SERIE === undefined || _COD_GENERO === undefined || COD_AUTOR === undefined) {
+        if (SINOPSIS === undefined || TITULO === undefined || FECHA_PUBLICACION === undefined || NUM_SERIE === undefined || COD_GENERO === undefined || COD_AUTOR === undefined) {
 
            return res.status(400).json({ message: "Bad request. Please fill all field." })
 
         }
             const connection = await getConnection();
 
-        const result = await connection.query(`CALL spUpdateBooks('${id}', '${books.SINOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books._COD_GENERO}','${books.COD_AUTOR}');`);
+        const result = await connection.query(`CALL spUpdateBook('${id}', '${books.SINOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books.COD_GENERO}','${books.COD_AUTOR}');`);
 
 
         res.json(result);

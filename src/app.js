@@ -11,6 +11,7 @@ import authorRoutes from './routes/author.routes';
 import publishingRoutes from './routes/publishing.routes'
 import booksRoutes from './routes/books.routes';
 import detailloanRoutes from './routes/detail-loan.routes';
+import imagebookRoutes from './routes/imagebook.routes'
 import fileUpload from "express-fileupload";
 // Enviroment Config
 import message from "./config/message";
@@ -38,6 +39,7 @@ app.use('/api/author',authorRoutes);
 app.use('/api/publishing',publishingRoutes);
 app.use('/api/books', booksRoutes);
 app.use('/api/detail-loan', detailloanRoutes);
+app.use('/api/imagebook', imagebookRoutes);
 // app.use('/api/template',templateRoutes);
 
 export default app;
