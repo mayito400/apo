@@ -540,7 +540,7 @@ CALL `spDeletePublishing`(_COD_EDITORIAL_LIBROS);
 -- --------------------------------------------------------
 
 --
---! Table structure for table `libro`
+--* Table structure for table `libro`
 
   CREATE TABLE `libro` (
     `COD_LIBRO` int(20) NOT NULL,

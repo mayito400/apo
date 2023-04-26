@@ -42,4 +42,14 @@ app.use('/api/detail-loan', detailloanRoutes);
 app.use('/api/imagebook', imagebookRoutes);
 // app.use('/api/template',templateRoutes);
 
+/* Para subir los archivos de imagen de los libros  */
+app.post('/', ( req, res )=>{
+     const File = req.files.file
+        File.mv(`./controllers/imagebook/${File.name}`, err =>{
+                if(err) return res.status(500).send({message : err})
+
+                return res.status(200).send({message : 'File Upload'});
+        })
+})
+
 export default app;
