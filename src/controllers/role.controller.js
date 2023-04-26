@@ -20,7 +20,7 @@ const getRole = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetRolesForId(${id})`); // GET = SELECT
+        const result = await connection.query(`CALL spGetRole(${id})`); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
@@ -41,7 +41,7 @@ const addRole = async (req, res) => {
         const Role = { rol };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spInsertRoles('${Role.rol}')`);
+        const result = await connection.query(`CALL spAddRoles('${Role.rol}')`);
 
         // res.json(result); //Ver informacion completa de la consulta
         res.json({ message: "Role Added" });
@@ -59,7 +59,7 @@ const deleteRole = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spDeleteRoles(${id})`);
+        const result = await connection.query(`CALL spDeleteRole(${id})`);
 
         res.json(result);
     } catch (error) {
@@ -80,7 +80,7 @@ const updateRole = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateRoles(${id},'${Role.rol}')`);
+        const result = await connection.query(`CALL spUpdateRol(${id},'${Role.rol}')`);
 
         res.json(result);
     } catch (error) {

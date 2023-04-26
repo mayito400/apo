@@ -5,7 +5,7 @@ import getConnection from "../db/database";
 const getimagebooks = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllImageBook`()'); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllBooks`()'); // GET = SELECT
         console.log(result);
 
         res.json(result[0]);

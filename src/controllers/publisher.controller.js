@@ -5,7 +5,7 @@ import { getConnection } from "../db/database"
 const getPublishers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllPublisher`()'); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllPublishers`()'); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
