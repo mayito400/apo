@@ -5,7 +5,7 @@ import { getConnection } from "../db/database"
 const getAuthors = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL spGetAllAuthor()'); // GET = SELECT
+        const result = await connection.query('CALL spGetAllAuthors()'); // GET = SELECT
         console.log(result);
 
         res.json(result[0]);
@@ -20,7 +20,7 @@ const getAuthor = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetAuthorForId(${id})`); // GET = SELECT
+        const result = await connection.query(`CALL spGetAuthor(${id})`); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
@@ -41,7 +41,7 @@ const addAuthor = async (req, res) => {
         const Author = { NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spInsertAuthor('${Author.NOM_AUTOR}', '${Author.FECHA_NACIMIENTO}', '${Author.LUGAR_NACIMIENTO}', '${Author.FECHA_MUERTE}', '${Author.OCUPACIONES}', '${Author.MOVIMIENTO_LITERARIO}')`);
+        const result = await connection.query(`CALL spAddAuthor('${Author.NOM_AUTOR}', '${Author.FECHA_NACIMIENTO}', '${Author.LUGAR_NACIMIENTO}', '${Author.FECHA_MUERTE}', '${Author.OCUPACIONES}', '${Author.MOVIMIENTO_LITERARIO}')`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Author Added" });

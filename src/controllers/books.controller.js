@@ -5,8 +5,7 @@ import { getConnection } from "../db/database"
 const getBooks = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllbooks`()'); // GET = SELECT
-        console.log(result);
+        const result = await connection.query('CALL `spGetAllbooks`()');
 
         res.json(result[0]);
     } catch (error) {
@@ -16,11 +15,14 @@ const getBooks = async (req, res) => { // GET ALL
 };
 const getBook = async (req, res) => { // Get for ID
     try {
-        console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetBooks`(?)', id); // GET = SELECT
+        const result = await connection.query('CALL `spGetBook`(?)', id); // GET = SELECT
+
+        if (result[0][0] === undefined) {
+            return res.status(404).json({ message: "El libro ingresado no existe" })
+        }
 
         res.json(result[0]);
     } catch (error) {
@@ -29,66 +31,137 @@ const getBook = async (req, res) => { // Get for ID
     }
 };
 
-//! POST
+//* POST
 const addBook = async (req, res) => {
     try {
-        const { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR } = req.body;
-        const books = { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR };
-        if (SINOPSIS === undefined || TITULO === undefined || FECHA_PUBLICACION === undefined || NUM_SERIE === undefined || _COD_GENERO === undefined || COD_AUTOR === undefined) {
+        const { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR } = req.body;
 
-           return res.status(400).json({ message: "Bad request. Please fill all field." })
+        const book = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR };
+
+        if (SIPNOPSIS === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese la SINOPSIS del libro" })
+        }
+
+        if (TITULO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el TITULO del libro" })
+        }
+
+        if (FECHA_PUBLICACION === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese la FECHA DE PUBLICACION del libro" })
+        }
+
+        if (NUM_SERIE === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el NUMERO DE SERIE del libro" })
+        }
+
+        if (COD_GENERO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el GENERO del libro" })
+        }
+
+        if (COD_AUTOR === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el AUTOR del libro" })
         }
 
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddBooks('${books.SINOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books._COD_GENERO}','${books.COD_AUTOR}');`);
+        await connection.query(`CALL spAddBook('${book.SIPNOPSIS}','${book.TITULO}','${book.FECHA_PUBLICACION}','${book.NUM_SERIE}','${book.COD_GENERO}','${book.COD_AUTOR}');`);
 
-        // res.json(result); //* Ver informacion completa de la consulta
-        res.json({ message: "Genre Added" });
+        res.status(201).json({ message: "Libro añadido" });
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
-        console.log(error);
+
+        switch (error.errno) {
+            case 1062:
+                return res.status(400).json({ message: "El libro ingresado ya existe" })
+            case 1452:
+                return res.status(400).json({ message: "Revise que el genero y autor estén registrados" })
+
+            default:
+                return res.status(500).send(error.message)
+        }
+
     }
 };
 
-//! DELETE
+//* DELETE
 const deleteBook = async (req, res) => {
     try {
-        console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query('CALL `spDeleteBooks`(?)', id);
+        const result = await connection.query('CALL `spDeleteBook`(?)', id);
 
-        res.json(result);
+        switch (result.affectedRows) {
+            case 0:
+                return res.status(400).json({ message: "Libro no existente" })
+
+            case 1:
+                return res.status(202).json({ message: "Libro eliminado" })
+
+            default:
+                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
+        }
+
     } catch (error) {
         res.status(500);
         res.send(error.message);
     }
 };
 
-//! PUT
+//* PUT
 const updateBook = async (req, res) => {
     try {
         const { id } = req.params;
-        const { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR } = req.body;
-        const Genre = { SINOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, _COD_GENERO, COD_AUTOR }
+        const { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR } = req.body;
+        const books = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR }
 
-        if (SINOPSIS === undefined || TITULO === undefined || FECHA_PUBLICACION === undefined || NUM_SERIE === undefined || _COD_GENERO === undefined || COD_AUTOR === undefined) {
-
-           return res.status(400).json({ message: "Bad request. Please fill all field." })
-
+        if (SIPNOPSIS === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese la SINOPSIS del libro" })
         }
-            const connection = await getConnection();
 
-        const result = await connection.query(`CALL spUpdateBooks('${id}', '${books.SINOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books._COD_GENERO}','${books.COD_AUTOR}');`);
+        if (TITULO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el TITULO del libro" })
+        }
 
+        if (FECHA_PUBLICACION === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese la FECHA DE PUBLICACION del libro" })
+        }
 
-        res.json(result);
+        if (NUM_SERIE === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el NUMERO DE SERIE del libro" })
+        }
+
+        if (COD_GENERO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el GENERO del libro" })
+        }
+
+        if (COD_AUTOR === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el AUTOR del libro" })
+        }
+        const connection = await getConnection();
+
+        const result = await connection.query(`CALL spUpdateBook('${id}', '${books.SIPNOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books.COD_GENERO}','${books.COD_AUTOR}');`);
+
+        switch (result.affectedRows) {
+            case 0:
+                return res.status(400).json({ message: "Libro no existente" })
+
+            case 1:
+                return res.status(202).json({ message: "Datos del libro actualizados" });
+
+            default:
+                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
+        }
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        switch (error.errno) {
+            case 1062:
+                return res.status(400).json({ message: "El libro ingresado ya existe" })
+
+            case 1452:
+                return res.status(400).json({ message: "Revise que el genero y autor estén registrados" })
+
+            default:
+                return res.status(500).send(error.message)
+        }
     }
 };
 

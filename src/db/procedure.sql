@@ -53,13 +53,13 @@
 
               /* Seleccionar todos los datos de la tabla */
   DELIMITER $$
-  CREATE PROCEDURE `spGetAllPublisher`()
+  CREATE PROCEDURE `spGetAllPublishers`()
   BEGIN
     SELECT COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION
     FROM editorial;
   END$$
   DELIMITER ;
-  CALL `spGetAllPublisher`()
+  CALL `spGetAllPublishers`()
 
              /* Realizar la búsqueda por ID */
   DELIMITER $$
@@ -111,7 +111,7 @@
   CALL `spDeletePublisher`(_COD_EDITORIAL)
 -- --------------------------------------------------------
 
---! Pending Table structure for table `enc_prestamo`
+--* Pending Table structure for table `enc_prestamo`
 
   CREATE TABLE `enc_prestamo` (
     `COD_ENC_PRESTAMO` int(20) NOT NULL,
@@ -186,7 +186,8 @@
   DELIMITER //
   CREATE PROCEDURE `spGetAllGenre`()
   BEGIN
-    SELECT COD_GENERO, NOMBRE
+    SELECT COD_GENERO,
+           NOMBRE
     FROM genero;
   END //
   DELIMITER ;
@@ -254,30 +255,30 @@
   
 
   DELIMITER //
-  CREATE PROCEDURE  `spGetAllAuthor`()
+  CREATE PROCEDURE  `spGetAllAuthors`()
    BEGIN
   SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor; 
   END
    // DELIMITER ;
-  CALL `spGetAllAuthor`();
+  CALL `spGetAllAuthors`();
 
   DELIMITER //
-  CREATE PROCEDURE `spGetAuthorForId`(IN _COD_AUTOR INT) 
+  CREATE PROCEDURE `spGetAuthor`(IN _COD_AUTOR INT) 
   BEGIN 
     SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor 
     WHERE COD_AUTOR   = _COD_AUTOR; 
   END 
   // DELIMITER ;
-  CALL `spGetAuthorForId`(_COD_AUTOR)
+  CALL `spGetAuthor`(_COD_AUTOR)
 
   DELIMITER //
-  CREATE PROCEDURE `spInsertAuthor`(IN `_NOM_AUTOR` VARCHAR(40), IN `_FECHA_NACIMIENTO` DATE, IN `_LUGAR_NACIMIENTO` VARCHAR(50), IN `_FECHA_MUERTE` DATE, IN `_OCUPACIONES` VARCHAR(40), IN `_MOVIMIENTO_LITERARIO` VARCHAR(50))
+  CREATE PROCEDURE `spAddAuthor`(IN `_NOM_AUTOR` VARCHAR(40), IN `_FECHA_NACIMIENTO` DATE, IN `_LUGAR_NACIMIENTO` VARCHAR(50), IN `_FECHA_MUERTE` DATE, IN `_OCUPACIONES` VARCHAR(40), IN `_MOVIMIENTO_LITERARIO` VARCHAR(50))
   BEGIN
     INSERT INTO infoautor (COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO)
     VALUES (_NOM_AUTOR, _FECHA_NACIMIENTO, _LUGAR_NACIMIENTO, _FECHA_MUERTE, _OCUPACIONES, _MOVIMIENTO_LITERARIO);
     END 
   // DELIMITER ;
-  CALL `spInsertAuthor`(_NOM_AUTOR, _FECHA_NACIMIENTO, _LUGAR_NACIMIENTO, _FECHA_MUERTE, _OCUPACIONES, _MOVIMIENTO_LITERARIO);
+  CALL `spAddAuthor`(_NOM_AUTOR, _FECHA_NACIMIENTO, _LUGAR_NACIMIENTO, _FECHA_MUERTE, _OCUPACIONES, _MOVIMIENTO_LITERARIO);
 
   DELIMITER  //
   CREATE PROCEDURE `spUpdateAuthor`(IN `_COD_AUTOR` INT, IN `_NOM_AUTOR` VARCHAR(40), IN `_FECHA_NACIMIENTO` DATE, IN `_LUGAR_NACIMIENTO` VARCHAR(50), IN `_FECHA_MUERTE` DATE, IN `_OCUPACIONES` VARCHAR(40), IN `_MOVIMIENTO_LITERARIO` VARCHAR(50))
@@ -318,41 +319,41 @@
   CALL `spGetPenaltys`()
 
   DELIMITER $$
-  CREATE PROCEDURE `spGetPenaltysForId`(IN `_COD_MULTA` INT)
+  CREATE PROCEDURE `spGetPenalty`(IN `_COD_MULTA` INT)
   BEGIN
   SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR
   FROM multa
   WHERE COD_MULTA = _COD_MULTA;
   END$$
   DELIMITER ;
-  CALL `spGetPenaltysForId`(_COD_MULTA)
+  CALL `spGetPenalty`(_COD_MULTA)
 
   DELIMITER $$
-  CREATE PROCEDURE `spInsertPenaltys`(IN `_FECHA_INICIO` DATE, IN `_FECHA_FIN` DATE, IN `_VALOR` INT)
+  CREATE PROCEDURE `spAddPenalty`(IN `_FECHA_INICIO` DATE, IN `_FECHA_FIN` DATE, IN `_VALOR` INT)
   BEGIN
   INSERT INTO multa(FECHA_INICIO,FECHA_FIN,VALOR)
   VALUES(_FECHA_INICIO,_FECHA_FIN,_VALOR);
   END$$
   DELIMITER ;
-  CALL `spInsertPenaltys`(_FECHA_INICIO, _FECHA_FIN, _VALOR)
+  CALL `spAddPenalty`(_FECHA_INICIO, _FECHA_FIN, _VALOR)
 
   DELIMITER $$
-  CREATE PROCEDURE `spUpdatePenaltys`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
+  CREATE PROCEDURE `spUpdatePenalty`(IN _COD_MULTA INT, IN _FECHA_INICIO DATE, IN _FECHA_FIN DATE, IN _VALOR INT)
   BEGIN
   UPDATE multa
   SET FECHA_INICIO = _FECHA_INICIO, FECHA_FIN = _FECHA_FIN, VALOR = _VALOR
   WHERE COD_MULTA = _COD_MULTA;
   END$$
   DELIMITER ;
-  CALL `spUpdatePenaltys`(_COD_MULTA,_FECHA_INICIO,_FECHA_FIN,_VALOR )
+  CALL `spUpdatePenalty`(_COD_MULTA,_FECHA_INICIO,_FECHA_FIN,_VALOR )
 
   DELIMITER $$
-  CREATE PROCEDURE `spDeletePenaltys`(IN _COD_MULTA INT)
+  CREATE PROCEDURE `spDeletePenalty`(IN _COD_MULTA INT)
   BEGIN
   DELETE FROM multa WHERE COD_MULTA = _COD_MULTA;
   END$$
   DELIMITER ;
-  CALL `spDeletePenaltys`(_COD_MULTA)
+  CALL `spDeletePenalty`(_COD_MULTA)
 -- --------------------------------------------------------
 
 --* Table structure for table `rol`
@@ -363,7 +364,7 @@
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
   
   DELIMITER $$
-  CREATE PROCEDURE `spGetRoles`()
+  CREATE PROCEDURE `spGetAllRoles`()
   BEGIN
   SELECT cod_rol, rol FROM rol;
   END$$
@@ -371,41 +372,36 @@
   CALL spGetRoles()
   
   DELIMITER $$
-  CREATE PROCEDURE `spGetRolesForId`(IN _cod_rol INT)
+  CREATE PROCEDURE `spGetRole`(IN _cod_rol INT)
   BEGIN
   SELECT cod_rol, rol FROM rol WHERE cod_rol = _cod_rol;
   END$$
   DELIMITER ;
-  CALL spGetRolesForId(_cod_rol)
+  CALL `spGetRole`(_cod_rol)
   
   DELIMITER $$
-  CREATE PROCEDURE `spInsertRoles`(IN `_rol` VARCHAR(50))
+  CREATE PROCEDURE `spAddRole`(IN `_rol` VARCHAR(50))
   BEGIN
   INSERT INTO rol (rol) VALUES (_rol);
   END$$
   DELIMITER ;
-  CALL spInsertRoles(_rol)
+  CALL spAddRole(_rol)
   
   DELIMITER $$
-  CREATE PROCEDURE `spUpdateRoles`(IN _cod_rol INT, IN _rol VARCHAR(50))
+  CREATE PROCEDURE `spUpdateRole`(IN _cod_rol INT, IN _rol VARCHAR(50))
   BEGIN
   UPDATE rol SET rol = _rol WHERE cod_rol = _cod_rol;
   END$$
   DELIMITER ;
-  CALL spUpdateRoles(_cod_rol, _rol)
+  CALL `spUpdateRole`(_cod_rol, _rol)
   
-  DELIMITER $$
-  CREATE PROCEDURE `spDeleteRoles`(IN _cod_rol INT)
-  BEGIN
-  DELETE FROM rol WHERE cod_rol = _cod_rol;
-  END$$
-  DELIMITER ;
-  CALL spDeleteRoles(_cod_rol)
+  
+  CALL `spDeleteRole`(_cod_rol)
   
   
 -- --------------------------------------------------------
 
---! Table structure for table `det_prestamo`
+--* Table structure for table `det_prestamo`
 
   CREATE TABLE `det_prestamo` (
     `COD_DETALLE` int(20) NOT NULL,
@@ -419,7 +415,7 @@ DELIMITER //
 
 CREATE PROCEDURE `spGetAllDetailLoans`()
 BEGIN
-    SELECT COD_DETALLE, DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, _COD_MULTA
+    SELECT COD_DETALLE, DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA
     FROM det_prestamo;
 END //
 
@@ -428,9 +424,9 @@ CALL `spGetspGetAllDetailLoans`()
 
 DELIMITER //
 
-CREATE PROCEDURE `spGetDetailLoan`(IN COD_DETALLE INT)
+CREATE PROCEDURE `spGetDetailLoan`(IN _COD_DETALLE INT)
 BEGIN
-    SELECT COD_DETALLE, DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, _COD_MULTA
+    SELECT COD_DETALLE, DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA
     FROM det_prestamo
     WHERE COD_DETALLE = _COD_DETALLE;
 END //
@@ -440,29 +436,29 @@ CALL `spGetDetailLoan`(_COD_DETALLE)
 
 DELIMITER //
 
-CREATE PROCEDURE `spAddDetailLoan`(IN descripcion TEXT, IN cod_libro INT, IN _cod_enc_prestamo INT, IN _cod_multa INT)
+CREATE PROCEDURE `spAddDetailLoan`(IN _DESCRIPCION TEXT, IN _COD_LIBRO INT, IN _COD_ENC_PRESTAMO INT, IN _COD_MULTA INT)
 BEGIN
-    INSERT INTO det_prestamo (DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, _COD_MULTA)
-    VALUES (DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, _COD_MULTA);
+    INSERT INTO det_prestamo (DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, COD_MULTA)
+    VALUES (_DESCRIPCION, _COD_LIBRO, _COD_ENC_PRESTAMO, _COD_MULTA);
 END //
 
 DELIMITER ;
-CALL `spAddDetailLoan`(DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, _COD_MULTA)
+CALL `spAddDetailLoan`(_DESCRIPCION, _COD_LIBRO, _COD_ENC_PRESTAMO, _COD_MULTA)
 
 DELIMITER //
 
-CREATE PROCEDURE `spUpdateDetailLoan`(IN id_detalle INT, IN descripcion TEXT, IN cod_libro INT, IN _cod_enc_prestamo INT, IN _cod_multa INT)
+CREATE PROCEDURE `spUpdateDetailLoan`(IN _COD_DETALLE INT, IN _DESCRIPCION TEXT, IN _COD_LIBRO INT, IN _COD_ENC_PRESTAMO INT, IN _COD_MULTA INT)
 BEGIN
     UPDATE det_prestamo
-    SET DESCRIPCION = _DESCRIPCION, COD_LIBRO = _COD_LIBRO, COD_ENC_PRESTAMO = _COD_ENC_PRESTAMO, _COD_MULTA = _COD_MULTA
+    SET DESCRIPCION = _DESCRIPCION, COD_LIBRO = _COD_LIBRO, COD_ENC_PRESTAMO = _COD_ENC_PRESTAMO, COD_MULTA = _COD_MULTA
     WHERE COD_DETALLE = _COD_DETALLE;
 END //
 DELIMITER ;
-CALL `spUpdateDetailLoan`(_COD_DETALLE, DESCRIPCION, COD_LIBRO, COD_ENC_PRESTAMO, _COD_MULTA)
+CALL `spUpdateDetailLoan`(_COD_DETALLE, _DESCRIPCION, _COD_LIBRO, _COD_ENC_PRESTAMO, _COD_MULTA)
 
 DELIMITER //
 
-CREATE PROCEDURE `spDeleteDetailLoan`(IN COD_DETALLE INT)
+CREATE PROCEDURE `spDeleteDetailLoan`(IN _COD_DETALLE INT)
 BEGIN
     DELETE FROM det_prestamo
     WHERE COD_DETALLE = _COD_DETALLE;
@@ -474,7 +470,7 @@ CALL `spDeleteDetailLoan`(_COD_DETALLE)
 -- --------------------------------------------------------
 
 --
---! Table structure for table `editorial_libros`
+--* Table structure for table `editorial_libros`
 
   CREATE TABLE `editorial_libros` (
     `COD_EDITORIAL_LIBROS` int(20) NOT NULL,
@@ -488,67 +484,67 @@ BEGIN
   SELECT 
     COD_EDITORIAL_LIBROS,
     COD_LIBRO,
-    _COD_EDITORIAL
+    COD_EDITORIAL
   FROM editorial_libros;
 END //
 DELIMITER ;
 CALL `spGetAllPublishings`()
 
 DELIMITER //
-CREATE PROCEDURE `spGetPublishing`(IN id INT)
+CREATE PROCEDURE `spGetPublishing`(IN _COD_EDITORIAL_LIBROS INT)
 BEGIN
   SELECT 
     COD_EDITORIAL_LIBROS,
     COD_LIBRO,
-    _COD_EDITORIAL
+    COD_EDITORIAL
   FROM editorial_libros
-  WHERE COD_EDITORIAL_LIBROS = id;
+  WHERE COD_EDITORIAL_LIBROS = _COD_EDITORIAL_LIBROS;
 END //
 DELIMITER ;
-CALL `spGetPublishing`(id)
+CALL `spGetPublishing`(_COD_EDITORIAL_LIBROS)
 
 DELIMITER //
-CREATE PROCEDURE `spAddPublishing`(IN cod_editorial_libros INT,IN cod_libro INT, IN _cod_editorial INT)
+CREATE PROCEDURE `spAddPublishing`(IN _COD_LIBRO INT, IN _COD_EDITORIAL INT)
 BEGIN
-  INSERT INTO editorial_libros (COD_LIBRO, _COD_EDITORIAL)
-  VALUES (id_libro, _cod_editorial);
+  INSERT INTO editorial_libros (COD_LIBRO, COD_EDITORIAL)
+  VALUES (_COD_LIBRO, _COD_EDITORIAL);
 END //
 DELIMITER ;
-CALL `spAddPublishing`(id_libro, _cod_editorial);
+CALL `spAddPublishing`(_COD_LIBRO, _COD_EDITORIAL);
 
 DELIMITER //
-CREATE PROCEDURE `spUpdatePublishing`(IN id INT, IN cod_libro INT, IN _cod_editorial INT)
+CREATE PROCEDURE `spUpdatePublishing`(IN _COD_EDITORIAL_LIBROS INT,IN _COD_LIBRO INT, IN _COD_EDITORIAL INT)
 BEGIN
   UPDATE editorial_libros
   SET 
-    COD_LIBRO = id_libro,
-    _COD_EDITORIAL = _cod_editorial
-  WHERE COD_EDITORIAL_LIBROS = id;
+    COD_LIBRO = _COD_LIBRO,
+    COD_EDITORIAL = _COD_EDITORIAL
+  WHERE COD_EDITORIAL_LIBROS = _COD_EDITORIAL_LIBROS;
 END //
 DELIMITER ;
-CALL `spUpdatePublishing`(id, id_libro,  _cod_editorial)
+CALL `spUpdatePublishing`(_COD_EDITORIAL_LIBROS, _COD_LIBRO, _COD_EDITORIAL)
 
 DELIMITER //
-CREATE PROCEDURE `spDeletePublishing`(IN id INT)
+CREATE PROCEDURE `spDeletePublishing`(IN _COD_EDITORIAL_LIBROS INT)
 BEGIN
   DELETE FROM editorial_libros
-  WHERE COD_EDITORIAL_LIBROS = id;
+  WHERE COD_EDITORIAL_LIBROS = _COD_EDITORIAL_LIBROS ;
 END //
-DELIMITER;
-CALL `spDeletePublishing`(id)
+DELIMITER ;
+CALL `spDeletePublishing`(_COD_EDITORIAL_LIBROS);
 -- --------------------------------------------------------
 
 --
---! Table structure for table `libro`
+--* Table structure for table `libro`
 
   CREATE TABLE `libro` (
     `COD_LIBRO` int(20) NOT NULL,
     `SIPNOPSIS` text NOT NULL,
-    `TITULO` varchar(50) NOT NULL,
+    `TITULO`    text NOT NULL,
     `FECHA_PUBLICACION` date NOT NULL,
     `NUM_SERIE` int(20) NOT NULL,
     `COD_GENERO` int(20) NOT NULL,
-    `COD_AUTOR` int(20) NOT NULL,
+    `COD_AUTOR` int(20) NOT NULL
     `IMAGEN` mediumblob DEFAULT NULL
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -564,42 +560,53 @@ CALL `spGetAllBooks`()
 
 DELIMITER //
 
-CREATE PROCEDURE `spGetBook`(IN id_libro INT)
+CREATE PROCEDURE `spGetBook`(IN _COD_LIBRO INT)
 BEGIN
-    SELECT COD_LIBRO, SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR
+    SELECT COD_LIBRO,
+          SIPNOPSIS,
+          TITULO,
+          FECHA_PUBLICACION,
+          NUM_SERIE,
+          COD_GENERO,
+          COD_AUTOR
     FROM libro
-    WHERE COD_LIBRO = cod_libro;
+    WHERE COD_LIBRO = _COD_LIBRO;
 END //
 DELIMITER ;
-CALL `spGetBook`(cod_libro)
+CALL `spGetBook`(_COD_LIBRO)
 
 DELIMITER //
 
-CREATE PROCEDURE `spAddBook`(IN SINOPSIS TEXT, IN TITULO VARCHAR(50), IN FECHA_PUBLICACION DATE, IN NUM_SERIE INT, IN _COD_GENERO INT, IN COD_AUTOR INT)
-BEGIN
-    INSERT INTO libro (SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, _COD_AUTOR)
-    VALUES (sipnosis, titulo, fecha_publicacion, num_serie, cod_genero, _cod_autor);
-END //
+CREATE PROCEDURE `spAddBook`(IN `_SIPNOPSIS` TEXT, IN `_TITULO` TEXT, IN `_FECHA_PUBLICACION` DATE, IN `_NUM_SERIE` INT, IN `_COD_GENERO` INT, IN `_COD_AUTOR` INT) 
+ BEGIN
+  INSERT 
+  INTO libro (SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR) VALUES (_SIPNOPSIS, _TITULO, _FECHA_PUBLICACION, _NUM_SERIE, _COD_GENERO, _COD_AUTOR); 
+  END //
 DELIMITER ;
-CALL `spAddBook`(sipnosis, titulo, fecha_publicacion, num_serie, cod_genero, cod_autor)
+CALL `spAddBook`(_SIPNOPSIS, _TITULO, _FECHA_PUBLICACION, _NUM_SERIE, _COD_GENERO, _COD_AUTOR)
 
 DELIMITER //
 
-CREATE PROCEDURE `spUpdateBook`(IN COD_LIBRO INT, IN SINOPSIS TEXT, IN TITULO VARCHAR(50), IN FECHA_PUBLICACION DATE, IN NUM_SERIE INT, IN COD_GENERO INT, IN COD_AUTOR INT)
+CREATE PROCEDURE `spUpdateBook`(IN _COD_LIBRO INT, IN _SIPNOPSIS TEXT, IN _TITULO TEXT, IN _FECHA_PUBLICACION DATE, IN _NUM_SERIE INT, IN _COD_GENERO INT, IN _COD_AUTOR INT)
 BEGIN
     UPDATE libro
-    SET SIPNOPSIS = sipnosis, TITULO = titulo, FECHA_PUBLICACION = fecha_publicacion, NUM_SERIE = num_serie, COD_GENERO = cod_genero, COD_AUTOR = _cod_autor 
-    WHERE COD_LIBRO = cod_libro;
+    SET SIPNOPSIS= _SIPNOPSIS,
+      TITULO = _TITULO,
+      FECHA_PUBLICACION = _FECHA_PUBLICACION,
+      NUM_SERIE = _NUM_SERIE,
+      COD_GENERO = _COD_GENERO,
+      COD_AUTOR = _COD_AUTOR
+    WHERE COD_LIBRO = _COD_LIBRO;
 END //
 DELIMITER ;
-CALL `spAddBook`(cod_libro, sipnosis, titulo, fecha_publicacion, num_serie, cod_genero, cod_autor )
+CALL `spUpdateBook`(_COD_LIBRO, _SIPNOPSIS, _TITULO, _FECHA_PUBLICACION, _NUM_SERIE, _COD_GENERO, _COD_AUTOR);
 
 DELIMITER //
 
-CREATE PROCEDURE `spDeleteBook`(IN cod_libro INT)
+CREATE PROCEDURE `spDeleteBook`(IN _COD_LIBRO INT)
 BEGIN
     DELETE FROM libro
-    WHERE COD_LIBRO = id_libro;
+    WHERE COD_LIBRO = _COD_LIBRO;
 END //
 DELIMITER ;
-CALL `spDeleteBook`(cod_libro)
+CALL `spDeleteBook`(_COD_LIBRO)

@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Genesis",
-    "dateExported": "2023-04-09T22:10:47.229Z",
+    "dateExported": "2023-05-10T07:44:40.341Z",
     "version": "1.1",
     "folders": [
         {
@@ -33,6 +33,13 @@
             "sortNum": 20000
         },
         {
+            "_id": "3f5670fa-5084-4cb5-83b5-a86ef3ca673b",
+            "name": "publishing",
+            "containerId": "",
+            "created": "2023-04-23T22:17:51.450Z",
+            "sortNum": 21250
+        },
+        {
             "_id": "89c31e1a-7ed5-4958-9db8-194a7266db88",
             "name": "loan header *",
             "containerId": "",
@@ -54,8 +61,15 @@
             "sortNum": 30000
         },
         {
+            "_id": "508632fe-310a-4b16-8588-06cd5a832036",
+            "name": "book *",
+            "containerId": "",
+            "created": "2023-05-10T06:46:53.470Z",
+            "sortNum": 35000
+        },
+        {
             "_id": "6263e7ac-6e16-44ef-ac7d-a06679cc42f5",
-            "name": "genre",
+            "name": "genre *",
             "containerId": "",
             "created": "2023-03-13T19:46:58.981Z",
             "sortNum": 40000
@@ -110,6 +124,25 @@
             "tests": []
         },
         {
+            "_id": "b0ab0e2b-262e-4dac-b37d-84a435d7a59d",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "3f5670fa-5084-4cb5-83b5-a86ef3ca673b",
+            "name": "Get publishing for ID",
+            "url": "http://localhost:3000/api/publishing/5",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-04-23T22:17:51.450Z",
+            "modified": "2023-04-23T22:26:40.320Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "  {\n    \"COD_EDITORIAL_LIBROS\": 1,\n    \"COD_LIBRO\": 3,\n    \"COD_EDITORIAL\": 8\n  }\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
             "_id": "2b27e84c-c1f7-41a8-8e3a-ce9ec553e6a0",
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "68c66b20-0ca8-4bed-b05c-9ad5b4ad5af1",
@@ -154,6 +187,25 @@
             "modified": "2023-04-06T04:01:58.671Z",
             "headers": [],
             "params": [],
+            "tests": []
+        },
+        {
+            "_id": "6ef8b21b-bc9c-4eae-b3c1-fbc00f9438de",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "3f5670fa-5084-4cb5-83b5-a86ef3ca673b",
+            "name": "Get All publishings",
+            "url": "http://localhost:3000/api/publishing/",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-04-23T22:17:51.451Z",
+            "modified": "2023-04-23T22:23:26.871Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"COD_EDITORIAL_LIBROS\": 1,\n    \"COD_LIBRO\": 3,\n    \"COD_EDITORIAL\": 8\n  }",
+                "form": []
+            },
             "tests": []
         },
         {
@@ -209,6 +261,25 @@
             "body": {
                 "type": "json",
                 "raw": "{\n  \"FECHA_PRESTAMO\": \"2011-11-12\",\n  \"CANT_LIBRO\": 1,\n  \"DNI_USUARIO\": 1045856213\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "b405fa0d-3d28-4852-8398-21258184f7ec",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "3f5670fa-5084-4cb5-83b5-a86ef3ca673b",
+            "name": "Post publishing",
+            "url": "http://localhost:3000/api/publishing/",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-04-23T22:17:51.452Z",
+            "modified": "2023-04-23T22:22:20.397Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"COD_LIBRO\": 3,\n    \"COD_EDITORIAL\": 8\n  }",
                 "form": []
             },
             "tests": []
@@ -271,6 +342,25 @@
             "tests": []
         },
         {
+            "_id": "e09a5f63-47e6-4303-aaa5-10d9a3a1f46d",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "3f5670fa-5084-4cb5-83b5-a86ef3ca673b",
+            "name": "Delete publishing",
+            "url": "http://localhost:3000/api/publishing/28",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-04-23T22:17:51.453Z",
+            "modified": "2023-04-23T22:23:36.925Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"COD_EDITORIAL_LIBROS\": 1,\n    \"COD_LIBRO\": 3,\n    \"COD_EDITORIAL\": 8\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
             "_id": "1f95889e-afd2-4877-9156-aecd35a06dc8",
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "68c66b20-0ca8-4bed-b05c-9ad5b4ad5af1",
@@ -328,6 +418,25 @@
             "tests": []
         },
         {
+            "_id": "89fe2e1c-67a5-46d8-88f1-8ab0b385eb93",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "3f5670fa-5084-4cb5-83b5-a86ef3ca673b",
+            "name": "Update publishing",
+            "url": "http://localhost:3000/api/publishing/28",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-04-23T22:17:51.454Z",
+            "modified": "2023-04-23T22:23:18.155Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"COD_LIBRO\": 4,\n    \"COD_EDITORIAL\": 8\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
             "_id": "046bbbbc-ff4c-4b9d-bd30-455c4ddc4f02",
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "8afe5d94-9e3d-4f01-bc37-2f81cb7014ba",
@@ -342,6 +451,20 @@
             "tests": []
         },
         {
+            "_id": "d11dd4b5-a8ac-419f-858c-28ef10f8e101",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
+            "name": "get book",
+            "url": "http://localhost:3000/api/books/",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-05-10T06:46:53.470Z",
+            "modified": "2023-05-10T06:47:33.698Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
             "_id": "5aeda065-a06a-4da8-9c0c-c2fdfca7acee",
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "8afe5d94-9e3d-4f01-bc37-2f81cb7014ba",
@@ -350,7 +473,21 @@
             "method": "GET",
             "sortNum": 65000,
             "created": "2023-04-06T05:01:50.627Z",
-            "modified": "2023-04-06T05:08:18.863Z",
+            "modified": "2023-05-10T06:46:36.967Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "63f0a7ef-5446-4865-9009-41bb471c218e",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
+            "name": "Get books for id",
+            "url": "http://localhost:3000/api/books/3",
+            "method": "GET",
+            "sortNum": 65000,
+            "created": "2023-05-10T06:46:53.471Z",
+            "modified": "2023-05-10T07:04:42.709Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -370,6 +507,25 @@
             "body": {
                 "type": "json",
                 "raw": "{\n  \"NOM_AUTOR\": \"Roberto Bolaño Ávalos\",\n  \"FECHA_NACIMIENTO\": \"1953-04-28\",\n  \"FECHA_MUERTE\": \"2003-07-15\",\n  \"LUGAR_NACIMIENTO\": \"Santiago, Chile\",\n  \"OCUPACIONES\": \"Escritor, poeta y crítico literario\",\n  \"MOVIMIENTO_LITERARIO\": \"Infrarrealismo\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "de03a32d-9a5f-4ca7-b5e4-70969569b195",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
+            "name": "Add book",
+            "url": "http://localhost:3000/api/books/",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2023-05-10T06:46:53.472Z",
+            "modified": "2023-05-10T07:25:50.531Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"SIPNOPSIS\": \"Se conoce por «juego de guerra» aquel que recrea y simula un enfrentamiento armado a cualquier nivel, sujetándose a reglas para el desarrollo del mismo. El alemán Udo Berger es campeón de esta disciplina en su país. Los juegos de guerra son al tiempo su profesión y su obsesión; ocupan su vida e invaden su pensamiento a todas horas. Incluso durante el viaje que realiza con su novia Ingeborg a la Costa Brava, donde él había veraneado en su infancia, se hace instalar una gran mesa en la habitación del hotel de alemanes, Charly y Hanna, que les introducirán a un mundo oculto tras las playas y el sol. Un mundo poblado por personajes de dudosa reputación, pasados oscuros y futuros aún más enigmáticos.\",\n    \"TITULO\": \"El Tercer Reich\",\n    \"FECHA_PUBLICACION\": \"2010-04-15T05:00:00.000Z\",\n    \"NUM_SERIE\": 0,\n    \"COD_GENERO\": 7,\n    \"COD_AUTOR\": 7\n  }",
                 "form": []
             },
             "tests": []
@@ -403,6 +559,25 @@
             "body": {
                 "type": "json",
                 "raw": "{\n  \"NOM_AUTOR\": \"Rafael Chaparro Madiedo\",\n  \"FECHA_NACIMIENTO\": \"1963-12-23T05:00:00.000Z\",\n  \"LUGAR_NACIMIENTO\": \"Bogota, Colombia\",\n  \"FECHA_MUERTE\": \"1995-04-18T05:00:00.000Z\",\n  \"OCUPACIONES\": \"Escritor,novelista,periodista,poeta\",\n  \"MOVIMIENTO_LITERARIO\": \"Post-Boom\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "d0ab08af-d122-4fbf-9338-c5d4d23a30b5",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
+            "name": "Update book",
+            "url": "http://localhost:3000/api/books/4",
+            "method": "PUT",
+            "sortNum": 80000,
+            "created": "2023-05-10T06:46:53.474Z",
+            "modified": "2023-05-10T07:40:08.005Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"SIPNOPSIS\": \"Se conoce por «juego de guerra» aquel que recrea y simula un enfrentamiento armado a cualquier nivel, sujetándose a reglas para el desarrollo del mismo. El alemán Udo Berger es campeón de esta disciplina en su país. Los juegos de guerra son al tiempo su profesión y su obsesión; ocupan su vida e invaden su pensamiento a todas horas. Inclupersonajes de dudosa reputación, pasados oscuros y futuros aún más enigmáticos.\",\n    \"TITULO\": \"El ch\",\n    \"FECHA_PUBLICACION\": \"2010-04-15\",\n    \"NUM_SERIE\": 0,\n    \"COD_GENERO\": 1,\n    \"COD_AUTOR\": 10\n}",
                 "form": []
             },
             "tests": []
@@ -493,6 +668,25 @@
             "tests": []
         },
         {
+            "_id": "d1b436aa-9039-46ee-99c8-2c33e1c2cf59",
+            "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
+            "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
+            "name": "Delete book",
+            "url": "http://localhost:3000/api/books/3",
+            "method": "DELETE",
+            "sortNum": 90000,
+            "created": "2023-05-10T06:46:53.475Z",
+            "modified": "2023-05-10T07:14:17.464Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"SIPNOPSIS\": \"Se conoce por «juego de guerra» aquel que recrea y simula un enfrentamiento armado a cualquier nivel, sujetándose a reglas para el desarrollo del mismo. El alemán Udo Berger es campeón de esta disciplina en su país. Los juegos de guerra son al tiempo su profesión y su obsesión; ocupan su vida e invaden su pensamiento a todas horas. Incluso durante el viaje que realiza con su novia Ingeborg a la Costa Brava, donde él había veraneado en su infancia, se hace instalar una gran mesa en la habitación del hotel de alemanes, Charly y Hanna, que les introducirán a un mundo oculto tras las playas y el sol. Un mundo poblado por personajes de dudosa reputación, pasados oscuros y futuros aún más enigmáticos.\",\n    \"TITULO\": \"El Tercer Reich\",\n    \"FECHA_PUBLICACION\": \"2010-04-15T05:00:00.000Z\",\n    \"NUM_SERIE\": 0,\n    \"COD_GENERO\": 1,\n    \"COD_AUTOR\": 9\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
             "_id": "f8583de3-0302-444e-8406-4f9d8fb6f412",
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e4549915-1818-4bc1-bf90-80e3790f85cc",
@@ -501,7 +695,7 @@
             "method": "GET",
             "sortNum": 100000,
             "created": "2023-03-27T20:49:53.043Z",
-            "modified": "2023-03-27T20:49:57.802Z",
+            "modified": "2023-04-17T22:08:19.960Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -525,11 +719,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e4549915-1818-4bc1-bf90-80e3790f85cc",
             "name": "getUser",
-            "url": "http://localhost:3000/api/user/1020402543",
+            "url": "http://localhost:3000/api/user/1234567",
             "method": "GET",
             "sortNum": 110000,
             "created": "2023-03-27T20:50:21.211Z",
-            "modified": "2023-03-27T20:50:30.445Z",
+            "modified": "2023-05-09T18:15:22.709Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -553,11 +747,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e4549915-1818-4bc1-bf90-80e3790f85cc",
             "name": "deleteUser",
-            "url": "http://localhost:3000/api/user/12345",
+            "url": "http://localhost:3000/api/user/1200",
             "method": "DELETE",
             "sortNum": 115000,
             "created": "2023-03-27T21:02:02.125Z",
-            "modified": "2023-03-27T21:05:01.916Z",
+            "modified": "2023-05-09T08:07:49.647Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -581,16 +775,16 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e4549915-1818-4bc1-bf90-80e3790f85cc",
             "name": "addUser",
-            "url": "http://localhost:3000/api/user/1458",
+            "url": "http://localhost:3000/api/user/",
             "method": "POST",
             "sortNum": 120000,
             "created": "2023-03-27T20:51:23.566Z",
-            "modified": "2023-03-28T19:13:12.643Z",
+            "modified": "2023-05-09T08:03:55.423Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n      \"DNI_USUARIO\": 1458,\n      \"NOM_USUARIO\": \"2\",\n      \"APELL_USUARIO\": \"2\",\n      \"FECHA_NAC\": \"2005-02-19\",\n      \"CONTRASEÑA\": \"2\",\n      \"CORREO\": \"2\",\n      \"SEXO\": \"2\",\n      \"ESTADO\": \"2\",\n      \"COD_ROL\": 2\n    }",
+                "raw": "{\n      \"DNI_USUARIO\": 1200,\n      \"NOM_USUARIO\": \"antonio\",\n      \"APELL_USUARIO\": \"Felipe\",\n      \"FECHA_NAC\": \"2005-02-19\",\n      \"CONTRASEÑA\": \"aefakgbjadgaf\",\n      \"CORREO\": \"@gmail\",\n      \"SEXO\": \"Masculino\",\n      \"ESTADO\": \"ACTIVO\",\n      \"COD_ROL\": 1\n    }",
                 "form": []
             },
             "tests": []
@@ -619,11 +813,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e4549915-1818-4bc1-bf90-80e3790f85cc",
             "name": "updateUser",
-            "url": "http://localhost:3000/api/user/1",
+            "url": "http://localhost:3000/api/user/1088",
             "method": "PUT",
             "sortNum": 130000,
             "created": "2023-03-27T21:10:13.969Z",
-            "modified": "2023-03-28T21:53:40.953Z",
+            "modified": "2023-05-09T08:38:22.234Z",
             "headers": [],
             "params": [],
             "body": {
