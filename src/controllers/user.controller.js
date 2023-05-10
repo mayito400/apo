@@ -5,7 +5,7 @@ import { getConnection } from "../db/database"
 const getUsers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetAllUsers()`); // GET = SELECT
+        const result = await connection.query(`CALL spGetAllUsers()`);
 
         res.json(result[0]);
     } catch (error) {
@@ -83,7 +83,7 @@ const addUser = async (req, res) => { // POST
 
         switch (error.errno) {
             case 1062:
-                return res.status(400).json({ msg: "El DNI ingresado ya existe" })
+                return res.status(400).json({ message: "El DNI ingresado ya existe" })
 
             default:
                 return res.status(500).send(error.message)
@@ -102,13 +102,13 @@ const deleteUser = async (req, res) => {
 
         switch (result.affectedRows) {
             case 0:
-                return res.status(400).json({ msg: "Usuario no existente" })
+                return res.status(400).json({ message: "Usuario no existente" })
 
             case 1:
-                return res.status(202).json({ msg: "Usuario eliminado" })
+                return res.status(202).json({ message: "Usuario eliminado" })
 
             default:
-                return res.status(404).json({ msg: "Error, intentelo nuevamente mas tarde" })
+                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
         }
 
     } catch (error) {
@@ -161,17 +161,17 @@ const updateUser = async (req, res) => {
 
         switch (result.affectedRows) {
             case 0:
-                return res.status(400).json({ msg: "Usuario no existente" })
+                return res.status(400).json({ message: "Usuario no existente" })
 
             case 1:
                 return res.status(202).json({ message: "Datos del usuario actualizados" });
 
             default:
-                return res.status(404).json({ msg: "Error, intentelo nuevamente mas tarde" })
+                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
         }
     } catch (error) {
         res.status(500);
-        res.send(error);
+        res.send(error.message);
     }
 };
 
