@@ -15,11 +15,17 @@ const getPublishers = async (req, res) => { // GET ALL
 };
 const getPublisher = async (req, res) => { // Get for ID
     try {
-        // console.log(req.params);
+        
         const { id } = req.params;
 
         const connection = await getConnection();
         const result = await connection.query("CALL `spGetPublisher`(?)", id); // GET = SELECT
+
+        if(result[0][0] === undefined){
+            return res.status(404).json({ message: "Publisher No encontrado" });
+
+
+        }
 
         res.json(result[0]);
     } catch (error) {
@@ -33,14 +39,28 @@ const addPublisher = async (req, res) => {
     try {
         const { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
 
-        if (NOM_EDITORIAL === undefined || PAIS === undefined || CIUDAD === undefined || TELEFONO === undefined || DIRECCION === undefined) {
+        if (NOM_EDITORIAL === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
+
+        if ( PAIS === undefined) {
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
+        }
+
+        if (CIUDAD === undefined) {
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
+        }
+
+        if (TELEFONO === undefined) {
+            return res.status(400).json({ message: "Bad request. Please fill all field." })
+        }
+
+       
 
         const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddPublisher('${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
+         await connection.query(`CALL spAddPublisher('${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
 
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Publisher Added" });
