@@ -54,7 +54,7 @@ const addPublisher = async (req, res) => {
 //* DELETE
 const deletePublisher = async (req, res) => {
     try {
-        // console.log(req.params);
+        
         const { id } = req.params;
 
         const connection = await getConnection();
