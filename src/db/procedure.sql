@@ -53,13 +53,13 @@
 
               /* Seleccionar todos los datos de la tabla */
   DELIMITER $$
-  CREATE PROCEDURE `spGetAllPublisher`()
+  CREATE PROCEDURE `spGetAllPublishers`()
   BEGIN
     SELECT COD_EDITORIAL, NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION
     FROM editorial;
   END$$
   DELIMITER ;
-  CALL `spGetAllPublisher`()
+  CALL `spGetAllPublishers`()
 
              /* Realizar la búsqueda por ID */
   DELIMITER $$
@@ -147,8 +147,8 @@
       INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) 
       VALUES (_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
    END //
-  DELIMITER ;
-  CALL `spAddHeaderLoan`(_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
+   DELIMITER ;
+  CALL `spAddHeaderLoan `(_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
 
 //DELIMITER ;
 
@@ -255,12 +255,12 @@
   
 
   DELIMITER //
-  CREATE PROCEDURE  `spGetAllAuthor`()
+  CREATE PROCEDURE  `spGetAllAuthors`()
    BEGIN
   SELECT COD_AUTOR, NOM_AUTOR, FECHA_NACIMIENTO, LUGAR_NACIMIENTO, FECHA_MUERTE, OCUPACIONES, MOVIMIENTO_LITERARIO FROM infoautor; 
   END
    // DELIMITER ;
-  CALL `spGetAllAuthor`();
+  CALL `spGetAllAuthors`();
 
   DELIMITER //
   CREATE PROCEDURE `spGetAuthor`(IN _COD_AUTOR INT) 
@@ -377,7 +377,7 @@
   SELECT cod_rol, rol FROM rol WHERE cod_rol = _cod_rol;
   END$$
   DELIMITER ;
-  CALL spGetRolesForId(_cod_rol)
+  CALL `spGetRole`(_cod_rol)
   
   DELIMITER $$
   CREATE PROCEDURE `spAddRole`(IN `_rol` VARCHAR(50))
@@ -385,7 +385,7 @@
   INSERT INTO rol (rol) VALUES (_rol);
   END$$
   DELIMITER ;
-  CALL spInsertRoles(_rol)
+  CALL spAddRole(_rol)
   
   DELIMITER $$
   CREATE PROCEDURE `spUpdateRole`(IN _cod_rol INT, IN _rol VARCHAR(50))
@@ -393,15 +393,15 @@
   UPDATE rol SET rol = _rol WHERE cod_rol = _cod_rol;
   END$$
   DELIMITER ;
-  CALL `spUpdateRole`(_cod_rol, _rol)
+  CALL spUpdateRoles(_cod_rol, _rol)
   
   DELIMITER $$
-  CREATE PROCEDURE `spDeleteRole`(IN _cod_rol INT)
+  CREATE PROCEDURE `spDeleteRoles`(IN _cod_rol INT)
   BEGIN
   DELETE FROM rol WHERE cod_rol = _cod_rol;
   END$$
   DELIMITER ;
-  CALL `spDeleteRole`(_cod_rol)
+  CALL spDeleteRoles(_cod_rol)
   
   
 -- --------------------------------------------------------
@@ -533,9 +533,9 @@ DELIMITER //
 CREATE PROCEDURE `spDeletePublishing`(IN _COD_EDITORIAL_LIBROS INT)
 BEGIN
   DELETE FROM editorial_libros
-  WHERE COD_EDITORIAL_LIBROS = _COD_EDITORIAL_LIBROS;
+  WHERE COD_EDITORIAL_LIBROS = _COD_EDITORIAL_LIBROS ;
 END //
-DELIMITER;
+DELIMITER ;
 CALL `spDeletePublishing`(_COD_EDITORIAL_LIBROS);
 -- --------------------------------------------------------
 

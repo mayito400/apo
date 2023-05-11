@@ -8,11 +8,12 @@ import genreRoutes from './routes/genre.routes';
 import roleRoutes from './routes/role.routes';
 import publisherRoutes from './routes/publisher.routes';
 import authorRoutes from './routes/author.routes';
-import publishingRoutes from './routes/publishing.routes'
+import publishingRoutes from './routes/Publishing.routes';
 import booksRoutes from './routes/books.routes';
 import detailloanRoutes from './routes/detail-loan.routes';
 import imagebookRoutes from './routes/imagebook.routes'
 import fileUpload from "express-fileupload";
+
 // Enviroment Config
 import message from "./config/message";
 import enviroment from "./config/enviroment";
@@ -28,6 +29,7 @@ app.set("PORT",process.env.PORT || 4321);
 app.use(morgan('dev'));
 app.use(express.json()); // especifica que el servidor entienda json
 app.use(fileUpload());
+
 // Routes
 app.use('/api/user',userRoutes);
 app.use('/api/loan-header',loanHeaderRoutes);
@@ -42,7 +44,7 @@ app.use('/api/detail-loan', detailloanRoutes);
 app.use('/api/imagebook', imagebookRoutes);
 // app.use('/api/template',templateRoutes);
 
-/* Para subir los archivos de imagen de los libros  */
+/* Para subir los archivos de imagen de los libros */
 app.post('/', ( req, res )=>{
      const File = req.files.file
         File.mv(`./controllers/imagebook/${File.name}`, err =>{

@@ -20,7 +20,7 @@ const getPenalty = async (req, res) => { // Get for ID
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetPenaltysForId(${id})`); // GET = SELECT
+        const result = await connection.query(`CALL spGetPenalty(${id})`); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
@@ -41,7 +41,7 @@ const addPenalty = async (req, res) => { // POST
         const Penalty = { FECHA_INICIO, FECHA_FIN, VALOR }
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spInsertPenaltys('${FECHA_INICIO}', '${FECHA_FIN}', ${VALOR})`);
+        const result = await connection.query(`CALL spAddPenalty('${FECHA_INICIO}', '${FECHA_FIN}', ${VALOR})`);
 
         // res.json(result); //! Ver informacion completa de la consulta
         res.json({ message: "Penalty Added" });
@@ -59,7 +59,7 @@ const deletePenalty = async (req, res) => {
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spDeletePenaltys(${id})`);
+        const result = await connection.query(`CALL spDeletePenalty(${id})`);
 
         res.json(result);
     } catch (error) {
@@ -80,7 +80,7 @@ const updatePenalty = async (req, res) => {
         };
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdatePenaltys(${id},'${FECHA_INICIO}','${FECHA_FIN}',${VALOR})`);
+        const result = await connection.query(`CALL spUpdatePenalty(${id},'${FECHA_INICIO}','${FECHA_FIN}',${VALOR})`);
 
         res.json(result);
     } catch (error) {

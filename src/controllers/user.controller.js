@@ -5,10 +5,9 @@ import { getConnection } from "../db/database"
 const getUsers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetAllUsers()`); // GET = SELECT
-        console.log(result);
+        const result = await connection.query(`CALL spGetAllUsers()`);
 
-        res.json(result);
+        res.json(result[0]);
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -16,13 +15,17 @@ const getUsers = async (req, res) => { // GET ALL
 };
 const getUser = async (req, res) => { // Get for DNI
     try {
-        console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
         const result = await connection.query(`CALL spGetUser(${id})`); // GET = SELECT
 
-        res.json(result[0]);
+        if (result[0][0] === undefined) {
+            return res.status(404).json({ message: "El usuario ingresado no existe" })
+        }
+
+        res.json(result[0])
+
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -35,33 +38,79 @@ const addUser = async (req, res) => { // POST
         const { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
         const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
 
-        if (DNI_USUARIO === undefined || NOM_USUARIO === undefined || APELL_USUARIO === undefined || FECHA_NAC === undefined || CONTRASEÑA === undefined || CORREO === undefined || SEXO === undefined || ESTADO === undefined || COD_ROL === undefined) {
-            return res.status(400).json({ message: "Bad request. Please fill all field." })
+        if (DNI_USUARIO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su DNI" })
+        }
+
+        if (NOM_USUARIO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su NOMBRE" })
+        }
+
+        if (APELL_USUARIO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese sus APELLIDOS" })
+        }
+
+        if (FECHA_NAC === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su FECHA DE NACIMIENTO" })
+        }
+
+        if (CONTRASEÑA === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su CONTRASEÑA" })
+        }
+
+        if (CORREO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su CORREO ELECTRONICO" })
+        }
+
+        if (SEXO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su SEXO" })
+        }
+
+        if (ESTADO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su ESTADO" })
+        }
+
+        if (COD_ROL === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su ROL" })
         }
 
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spAddUser('${user.DNI_USUARIO}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
-        // res.json(user)
-        // res.json(result); 
-        res.json({ message: "User Added" });
+        await connection.query(`CALL spAddUser('${user.DNI_USUARIO}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
+
+        res.status(201).json({ message: "Usuario añadido" });
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
-        console.log(error);
+
+        switch (error.errno) {
+            case 1062:
+                return res.status(400).json({ message: "El DNI ingresado ya existe" })
+
+            default:
+                return res.status(500).send(error.message)
+        }
+
     }
 };
 
 //* DELETE
 const deleteUser = async (req, res) => {
     try {
-        console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
         const result = await connection.query("CALL `spDeleteUser`(?)", id);
 
-        res.json(result);
+        switch (result.affectedRows) {
+            case 0:
+                return res.status(400).json({ message: "Usuario no existente" })
+
+            case 1:
+                return res.status(202).json({ message: "Usuario eliminado" })
+
+            default:
+                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
+        }
+
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -72,20 +121,57 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const {  NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
-        const user = {  NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
+        const { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
+        const user = { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
 
-        if (NOM_USUARIO === undefined || APELL_USUARIO === undefined || FECHA_NAC === undefined || CONTRASEÑA === undefined || CORREO === undefined || SEXO === undefined || ESTADO === undefined || COD_ROL === undefined) {
-            return res.status(400).json({ message: "Bad request. Please fill all field." })
-        };
+        if (NOM_USUARIO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su NOMBRE" })
+        }
+
+        if (APELL_USUARIO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese sus APELLIDOS" })
+        }
+
+        if (FECHA_NAC === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su FECHA DE NACIMIENTO" })
+        }
+
+        if (CONTRASEÑA === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su CONTRASEÑA" })
+        }
+
+        if (CORREO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su CORREO ELECTRONICO" })
+        }
+
+        if (SEXO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su SEXO" })
+        }
+
+        if (ESTADO === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su ESTADO" })
+        }
+
+        if (COD_ROL === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su ROL" })
+        }
 
         const connection = await getConnection();
         const result = await connection.query(`CALL spUpdateUser('${id}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
 
-        res.json(result);
+        switch (result.affectedRows) {
+            case 0:
+                return res.status(400).json({ message: "Usuario no existente" })
+
+            case 1:
+                return res.status(202).json({ message: "Datos del usuario actualizados" });
+
+            default:
+                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
+        }
     } catch (error) {
         res.status(500);
-        res.send(error);
+        res.send(error.message);
     }
 };
 

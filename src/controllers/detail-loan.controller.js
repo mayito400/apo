@@ -1,7 +1,7 @@
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
-//* GET
+// GET
 const getDetailLoans = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
