@@ -161,13 +161,13 @@ const updateUser = async (req, res) => {
 
         switch (result.affectedRows) {
             case 0:
-                return res.status(400).json({ message: "Usuario no existente" })
+                return res.status(400).json({ message: "Usuario no existente" });
 
             case 1:
                 return res.status(202).json({ message: "Datos del usuario actualizados" });
 
             default:
-                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
+                return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" });
         }
     } catch (error) {
         res.status(500);

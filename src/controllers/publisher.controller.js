@@ -99,7 +99,6 @@ const deletePublisher = async (req, res) => {
                 
             }
 
-    
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -133,6 +132,15 @@ const updatePublisher = async (req, res) => {
         const connection = await getConnection();
 
         const result = await connection.query(`CALL spUpdatePublisher('${id}','${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
+
+        switch (result.affectedRows) {
+            case 0:
+                return res.status(400).json({ message: "Sin ningun resgistro del EDITORIAL."});
+            case 1:
+                return res.status(202).json({ message: " genero  Actualizado correctamente"});
+            default:
+                return res.status(404).json({ message: "Error intente de nuevo mas tarde."});
+        }
 
         
     } catch (error) {
