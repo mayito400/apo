@@ -9,8 +9,7 @@ const getUsers = async (req, res) => { // GET ALL
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message)
     }
 };
 const getUser = async (req, res) => { // Get for DNI
@@ -20,6 +19,7 @@ const getUser = async (req, res) => { // Get for DNI
         const connection = await getConnection();
         const result = await connection.query(`CALL spGetUser(${id})`); // GET = SELECT
 
+        // Valida si el recurso devuelto está vacio
         if (result[0][0] === undefined) {
             return res.status(404).json({ message: "El usuario ingresado no existe" })
         }
@@ -27,8 +27,7 @@ const getUser = async (req, res) => { // Get for DNI
         res.json(result[0])
 
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message)
     }
 };
 
@@ -36,8 +35,10 @@ const getUser = async (req, res) => { // Get for DNI
 const addUser = async (req, res) => { // POST
     try {
         const { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
+
         const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
 
+        // Valida si los campos de la peticion están llenos o no
         if (DNI_USUARIO === undefined) {
             return res.status(400).json({ message: "Por favor ingrese su DNI" })
         }
@@ -81,8 +82,9 @@ const addUser = async (req, res) => { // POST
         res.status(201).json({ message: "Usuario añadido" });
     } catch (error) {
 
+        // Manejo de errores sql
         switch (error.errno) {
-            case 1062:
+            case 1062: // En caso de que se intente crear un recurso ya existente
                 return res.status(400).json({ message: "El DNI ingresado ya existe" })
 
             default:
@@ -100,6 +102,7 @@ const deleteUser = async (req, res) => {
         const connection = await getConnection();
         const result = await connection.query("CALL `spDeleteUser`(?)", id);
 
+        // Valida si el recuros a sido eliminado
         switch (result.affectedRows) {
             case 0:
                 return res.status(400).json({ message: "Usuario no existente" })
@@ -112,8 +115,7 @@ const deleteUser = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message)
     }
 };
 
@@ -124,6 +126,7 @@ const updateUser = async (req, res) => {
         const { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
         const user = { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
 
+        // Valida si los campos de la peticion están llenos o no
         if (NOM_USUARIO === undefined) {
             return res.status(400).json({ message: "Por favor ingrese su NOMBRE" })
         }
@@ -159,6 +162,7 @@ const updateUser = async (req, res) => {
         const connection = await getConnection();
         const result = await connection.query(`CALL spUpdateUser('${id}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
 
+        // Valida si el recuros a sido eliminado
         switch (result.affectedRows) {
             case 0:
                 return res.status(400).json({ message: "Usuario no existente" })
@@ -170,8 +174,14 @@ const updateUser = async (req, res) => {
                 return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
         }
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        // Manejo de errores sql
+        switch (error.errno) {
+            case 1062: // En caso de que se intente crear un recurso ya existente
+                return res.status(400).json({ message: "El DNI ingresado ya existe" })
+
+            default:
+                return res.status(500).send(error.message)
+        }
     }
 };
 
