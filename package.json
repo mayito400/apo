@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "creacion de la api-rest de proyecto genesis",
   "main": "index.js",
+
   "scripts": {
     "dev": "set NODE_ENV=developer& nodemon --exec npm run babel-node src/index.js",
     "qa": "set NODE_ENV=qa& nodemon --exec npm run babel-node src/index.js",

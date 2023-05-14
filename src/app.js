@@ -8,7 +8,7 @@ import genreRoutes from './routes/genre.routes';
 import roleRoutes from './routes/role.routes';
 import publisherRoutes from './routes/publisher.routes';
 import authorRoutes from './routes/author.routes';
-import publishingRoutes from './routes/publishing.routes'
+import publishingRoutes from './routes/Publishing.routes';
 import booksRoutes from './routes/books.routes';
 import detailloanRoutes from './routes/detail-loan.routes';
 import imagebookRoutes from './routes/imagebook.routes'

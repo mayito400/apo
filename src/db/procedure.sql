@@ -147,8 +147,8 @@
       INSERT INTO enc_prestamo (FECHA_PRESTAMO, CANT_LIBRO, DNI_USUARIO) 
       VALUES (_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
    END //
-  DELIMITER ;
-  CALL `spAddHeaderLoan`(_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
+   DELIMITER ;
+  CALL `spAddHeaderLoan `(_FECHA_PRESTAMO, _CANT_LIBRO, _DNI_USUARIO);
 
 //DELIMITER ;
 
@@ -319,7 +319,7 @@
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
   DELIMITER $$
-  CREATE PROCEDURE `spGetPenaltys`()
+  CREATE PROCEDURE `spGetAllPenaltys`()
   BEGIN
   SELECT COD_MULTA, FECHA_INICIO, FECHA_FIN, VALOR FROM multa;
   END$$
@@ -401,10 +401,15 @@
   UPDATE rol SET rol = _rol WHERE cod_rol = _cod_rol;
   END$$
   DELIMITER ;
-  CALL `spUpdateRole`(_cod_rol, _rol)
+  CALL spUpdateRoles(_cod_rol, _rol)
   
-  
-  CALL `spDeleteRole`(_cod_rol)
+  DELIMITER $$
+  CREATE PROCEDURE `spDeleteRoles`(IN _cod_rol INT)
+  BEGIN
+  DELETE FROM rol WHERE cod_rol = _cod_rol;
+  END$$
+  DELIMITER ;
+  CALL spDeleteRoles(_cod_rol)
   
   
 -- --------------------------------------------------------
