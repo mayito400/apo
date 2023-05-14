@@ -20,6 +20,7 @@ const getBook = async (req, res) => { // Get for ID
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetBook`(?)', id); // GET = SELECT
 
+        // Valida si el recurso devuelto está vacio
         if (result[0][0] === undefined) {
             return res.status(404).json({ message: "El libro ingresado no existe" })
         }
@@ -38,6 +39,7 @@ const addBook = async (req, res) => {
 
         const book = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR };
 
+        // Valida si los campos de la peticion están llenos o no
         if (SIPNOPSIS === undefined) {
             return res.status(400).json({ message: "Por favor ingrese la SINOPSIS del libro" })
         }
@@ -69,10 +71,11 @@ const addBook = async (req, res) => {
         res.status(201).json({ message: "Libro añadido" });
     } catch (error) {
 
+        // Manejo de errores sql
         switch (error.errno) {
-            case 1062:
+            case 1062: // En caso de que se intente crear un recurso ya existente
                 return res.status(400).json({ message: "El libro ingresado ya existe" })
-            case 1452:
+            case 1452: // En caso de ingresar id de foreign key no existente
                 return res.status(400).json({ message: "Revise que el genero y autor estén registrados" })
 
             default:
@@ -90,6 +93,7 @@ const deleteBook = async (req, res) => {
         const connection = await getConnection();
         const result = await connection.query('CALL `spDeleteBook`(?)', id);
 
+        // Valida si el recuros a sido eliminado
         switch (result.affectedRows) {
             case 0:
                 return res.status(400).json({ message: "Libro no existente" })
@@ -114,6 +118,7 @@ const updateBook = async (req, res) => {
         const { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR } = req.body;
         const books = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, COD_GENERO, COD_AUTOR }
 
+        // Valida si los campos de la peticion están llenos o no
         if (SIPNOPSIS === undefined) {
             return res.status(400).json({ message: "Por favor ingrese la SINOPSIS del libro" })
         }
@@ -141,6 +146,7 @@ const updateBook = async (req, res) => {
 
         const result = await connection.query(`CALL spUpdateBook('${id}', '${books.SIPNOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books.COD_GENERO}','${books.COD_AUTOR}');`);
 
+         // Valida si el recuros a sido actualizado
         switch (result.affectedRows) {
             case 0:
                 return res.status(400).json({ message: "Libro no existente" })
@@ -152,11 +158,12 @@ const updateBook = async (req, res) => {
                 return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde" })
         }
     } catch (error) {
+        // Manejo de errores sql
         switch (error.errno) {
-            case 1062:
+            case 1062: // En caso de que se intente crear un recurso ya existente
                 return res.status(400).json({ message: "El libro ingresado ya existe" })
 
-            case 1452:
+            case 1452: // En caso de ingresar un id de foreign key no existente
                 return res.status(400).json({ message: "Revise que el genero y autor estén registrados" })
 
             default:
