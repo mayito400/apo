@@ -15,7 +15,6 @@ const getPenaltys = async (req, res) => { // GET ALL
 
 const getPenalty = async (req, res) => { // Get for ID
     try {
-        console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
