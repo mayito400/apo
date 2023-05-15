@@ -5,12 +5,11 @@ import { getConnection } from "../db/database"
 const getPublishers = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllPublishers`()'); // GET = SELECT
+        const result = await connection.query('CALL `spGetAllPublisher`()'); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 const getPublisher = async (req, res) => { // Get for ID
@@ -21,16 +20,14 @@ const getPublisher = async (req, res) => { // Get for ID
         const connection = await getConnection();
         const result = await connection.query("CALL `spGetPublisher`(?)", id); // GET = SELECT
 
+        //Valida el campo devuelto si esta vacio.
         if(result[0][0] === undefined){
             return res.status(404).json({ message: "Publisher No encontrado" });
-
-
         }
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).res.send(error.message);
     }
 };
 
@@ -40,6 +37,7 @@ const addPublisher = async (req, res) => {
         const { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
         const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION };
 
+        //Valida si los campos estan vacios o no 
         if (NOM_EDITORIAL === undefined) {
             return res.status(400).json({ message: "Por favor ingrese el Nombre del EDITORIAL." })
         }
@@ -62,15 +60,21 @@ const addPublisher = async (req, res) => {
          await connection.query(`CALL spAddPublisher('${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
 
 
-      res.status(201)({ message: "Publisher Added" });
+      res.status(201)({ message: "Editorial Añadido" });
     } catch (error) {
      
+            // Manejo de errores sql
             switch (error.errno) {
-                case 100:
-                return res.status(400).json({ message: "Editorial Ya ha sido publicado "});
+
+                //En caso de que  ya exista
+                case 1062:
+                return res.status(400).json({ message: "Editorial Ya ha publicado"});
+
+                case 1060:
+                return res.status(400).json({ message: "Editorial Ya ha publicado"});
 
                 default:
-                    return res.status(500).send(error.message);
+                    return res.status(500).send(error);
             }
     }
 };
@@ -84,6 +88,7 @@ const deletePublisher = async (req, res) => {
         const connection = await getConnection();
         const result = await connection.query(`CALL spDeletePublisher(${id})`);
         
+            //valida si  ha sido eliminado
             switch (result.affectedRows) {
                 case 0:
                 
@@ -100,8 +105,7 @@ const deletePublisher = async (req, res) => {
             }
 
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 
@@ -112,6 +116,7 @@ const updatePublisher = async (req, res) => {
         const { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION } = req.body;
         const Publisher = { NOM_EDITORIAL, PAIS, CIUDAD, TELEFONO, DIRECCION }
 
+        //Valida si los campos estan vacios o no 
         if (NOM_EDITORIAL === undefined) {
             return res.status(400).json({ message: "Bad request. Please fill all field." })
         }
@@ -133,19 +138,30 @@ const updatePublisher = async (req, res) => {
 
         const result = await connection.query(`CALL spUpdatePublisher('${id}','${Publisher.NOM_EDITORIAL}','${Publisher.PAIS}','${Publisher.CIUDAD}','${Publisher.TELEFONO}','${Publisher.DIRECCION}');`);
 
+        //Valida si ya a sido actualizado
         switch (result.affectedRows) {
             case 0:
-                return res.status(400).json({ message: "Sin ningun resgistro del EDITORIAL."});
+                return res.status(400).json({ message: "Sin ningun resgistro del editorial."});
             case 1:
-                return res.status(202).json({ message: " genero  Actualizado correctamente"});
+                return res.status(202).json({ message: "Editorial  Actualizado correctamente."});
             default:
-                return res.status(404).json({ message: "Error intente de nuevo mas tarde."});
+                return res.status(404).json({ message: "Error, intente de nuevo mas tarde."});
         }
 
         
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+
+              // Manejo de errores sql
+              switch (error.errno) {
+
+                  // En caso de que ya exista
+                case 1062: 
+                    return res.status(400).json({ message: "El editorial ingresado ya existe" });
+    
+                default:
+                    return res.status(500).send(error.message);
+            }
+
     }
 };
 

@@ -6,12 +6,11 @@ const getLoanHeaders = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
         const result = await connection.query(`CALL spGetAllHeaderLoan()`); // GET = SELECT
-        // console.log(result);
+        
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 
@@ -23,15 +22,14 @@ const getLoanHeader = async (req, res) => { // Get for ID
         const connection = await getConnection();
         const result = await connection.query(`CALL spGetHeaderLoan(?)`,id); // GET = SELECT
 
-        if (result[0][0] === undefined) {
-            
+        //Valida el campo devuelto si esta vacio.
+        if (result[0][0] === undefined) { 
             return res.status(404).json({ message: "El Prestamo No se encontró"});
         }
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 
@@ -95,8 +93,7 @@ const deleteLoanHeader = async (req, res) => {
         } 
     
     }catch (error) {
-            res.status(500);
-            res.send(error.message);
+            res.status(500).send(error.message);
         }
 
     };
@@ -136,8 +133,7 @@ const updateLoanHeader = async (req, res) => {
         }
         
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 
