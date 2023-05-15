@@ -162,7 +162,7 @@ const updateUser = async (req, res) => {
         const connection = await getConnection();
         const result = await connection.query(`CALL spUpdateUser('${id}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
 
-        // Valida si el recuros a sido eliminado
+        // Valida si el recuros a sido actualizado
         switch (result.affectedRows) {
             case 0:
                 return res.status(400).json({ message: "Usuario no existente" });
