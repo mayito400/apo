@@ -150,7 +150,6 @@ const updatePublisher = async (req, res) => {
 
         
     } catch (error) {
-
               // Manejo de errores sql
               switch (error.errno) {
 

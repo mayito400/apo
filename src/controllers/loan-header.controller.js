@@ -1,3 +1,4 @@
+
 import { getConnection } from "../db/database"
 // interacciones con la base de datos
 
@@ -56,9 +57,12 @@ const addLoanHeader = async (req, res) => { // POST
 
         res.status(201).json({ message: "Prestamo  Realizado" });
     } catch (error) {
-
+        //Manejo de errores sql
         switch (error.errno) {
-            case 2000: 
+            case 1062: //En caso de que se intente crear un recurso ya existente
+                return res.status(400).json({ message:  "El Prestamo ya ha sido realizado."});
+
+             case 1060: 
                 return res.status(400).json({ message:  "El Prestamo ya ha sido realizado."});
         
             default:
