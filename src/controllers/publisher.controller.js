@@ -100,8 +100,7 @@ const deletePublisher = async (req, res) => {
             
                 default:
 
-                    return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde"});
-                
+                    return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde"}); 
             }
 
     } catch (error) {
