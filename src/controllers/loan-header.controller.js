@@ -84,7 +84,7 @@ const deleteLoanHeader = async (req, res) => {
         switch (result.affectedRows) {
             case 0:
                 
-            return res.status(400).json({ message: "Prestamo no ELIMINADO"});
+            return res.status(400).json({ message: "Prestamo no ELIMINADO."});
         
             case 1:
 
@@ -92,7 +92,7 @@ const deleteLoanHeader = async (req, res) => {
 
             default:
             
-            return res.status(500).send(error.message);
+            return res.status(500).json({message : " Error, intenta de nuevo mas tarde"});
 
         } 
     

@@ -6,26 +6,27 @@ const getPublishings = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetAllPublishings`()'); // GET = SELECT
-        console.log(result);
+       
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 const getPublishing = async (req, res) => { // Get for ID
     try {
-        console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetPublishing`(?)', id); // GET = SELECT
 
+        if(result[0][0] === undefined){
+            return res.status(404).json({message: "Editorial de prestamo no econtrado."});
+        }
+
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 

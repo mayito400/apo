@@ -10,8 +10,7 @@ const getGenres = async (req, res) => { // GET ALL
 
         res.json(result[0]);
     }   catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 const getGenre = async (req, res) => { // Get for ID
@@ -21,15 +20,15 @@ const getGenre = async (req, res) => { // Get for ID
 
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetGenre`(?)', id); // GET = SELECT
-        
+
+        //Valida el campo devuelto si esta vacio.
         if(result[0][0] === undefined){
-            return res.status(404).json({ message: "Genero No ENCONTRADO. Intenta de nuevo"})
+            return res.status(404).json({ message: "Genero no encotrado. Intenta de nuevo"});
         }
 
         res.json(result[0]);
     }   catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 
@@ -40,21 +39,26 @@ const addGenre = async (req, res) => {
         const Genre = { NOMBRE };
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spAddGenre('${Genre.NOMBRE}');`);
+         await connection.query(`CALL spAddGenre('${Genre.NOMBRE}');`);
 
-
+        //Valida si los campos estan vacios o no 
         if (NOMBRE === undefined) {
            return res.status(404).json({ message: "Escriba el nombre del GENERO." })
         }
          
         res.status(201).json({ message: "Genero AGREGADO" });
     } catch (error) {
-
+        // Manejo de errores sql
         switch (error.errno) {
-            case 300:
-                return res.status(404).json({ message: "Genero ya ha sido agregado."})
+
+            //En caso de que ya exista
+            case 1062:
+                return res.status(404).json({ message: "Genero ya ha sido agregado."});
+
+                case 1060:
+                return res.status(404).json({ message: "Genero ya ha sido agregado."});
             default:
-                return 
+                 res.status(500).send(error.message);
         }
     }
 };
@@ -62,26 +66,25 @@ const addGenre = async (req, res) => {
 //* DELETE
 const deleteGenre = async (req, res) => {
     try {
-        
         const { id } = req.params;
 
         const connection = await getConnection();
         const result = await connection.query('CALL `spDeleteGenre`(?)', id);
 
-        switch (result.affetedRows) {
+        //Valida si ha sido eliminado
+        switch (result.affectedRows) {
             case 0:
-                return res.status(404).json({ message: "Error al borrar un GENERO."});
+           return res.status(404).json({message : "Genero no existe"});
 
-            case 1:
-                return res.status(202).json({ message: "ELIMINADO"});
-
-            default:
-                return res.status(400).json({ message: "Error Intenta de nuevo mas tarde"});
-        }
+           case 1:
+               return res.status(202).json({ message: "Eliminado"});
+       
+           default:
+               return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde"}); 
+       }
 
     }   catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
 
@@ -92,6 +95,7 @@ const updateGenre = async (req, res) => {
         const { NOMBRE } = req.body;
         const Genre = { NOMBRE };
 
+        //Valida si los campos estan vacios o no 
         if (NOMBRE === undefined) {
            return res.status(400).json({ message: "Escriba el nombre del GENERO." })
         }
@@ -99,18 +103,32 @@ const updateGenre = async (req, res) => {
         const connection = await getConnection();
         const result = await connection.query(`CALL spUpdateGenre('${id}', '${Genre.NOMBRE}');`);
 
-        switch (result.affetedRows) {
+        //Valida si ya a sido actualizado
+      switch (result.affectedRows) {
+
+        //Manejo de errores sql
             case 0:
-                return res.status(400).json({ message: "No se encontró el GENERO." })
-            case 1:
-                return res.status(202).json({ message: "Genero actulizado correctamente."})
-            default:
-                return res.status(404).json({ message: "Error intenta de nuevo mas tarde."})
-        }
+           return res.status(404).json({message : "Sin ningun registro"});
+
+           case 1:
+               return res.status(202).json({ message: "Actualizado"});
+       
+           default:
+               return res.status(404).json({ message: "Error, intentelo nuevamente mas tarde"}); 
+       }
         
     }   catch (error) {
-        res.status(500);
-        res.send(error.message);
+       
+        // Manejo de errores sql
+        switch (error.errno) {
+
+            // En caso de que ya exista
+          case 1062: 
+              return res.status(400).json({ message: "El Genero ingresado ya existe" });
+
+          default:
+              return res.status(500).send(error.message);
+        }
     }
 };
 

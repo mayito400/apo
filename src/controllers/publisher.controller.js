@@ -90,10 +90,9 @@ const deletePublisher = async (req, res) => {
         
             //valida si  ha sido eliminado
             switch (result.affectedRows) {
-                case 0:
+                 case 0:
+                return res.status(404).json({message : "Genero no existe"});
                 
-                    return res.status(400).json({ message: "Editorial no existente"});
-
                 case 1:
                     
                     return res.status(202).json({ message: "Eliminado"});
