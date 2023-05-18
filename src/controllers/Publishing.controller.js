@@ -21,7 +21,7 @@ const getPublishing = async (req, res) => { // Get for ID
         const result = await connection.query('CALL `spGetPublishing`(?)', id); // GET = SELECT
 
         if(result[0][0] === undefined){
-            return res.status(404).json({message: "Editorial de prestamo no econtrado."});
+            return res.status(404).json({message: "Editorial de libro no econtrado."});
         }
 
         res.json(result[0]);
@@ -36,20 +36,38 @@ const addPublishing = async (req, res) => {
         const { COD_LIBRO, COD_EDITORIAL } = req.body;
         const Publishing = { COD_LIBRO, COD_EDITORIAL };
 
-        if (COD_LIBRO === undefined || COD_EDITORIAL === undefined) {
-           return res.status(400).json({ message: "Bad request. Please fill all field." });
+        if (COD_LIBRO === undefined) {
+           return res.status(400).json({ message: "Por favot ingrese el codigo del libro." });
         }
+
+        if (COD_EDITORIAL === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese el codigo del editorial." });
+         }
 
         const connection = await getConnection();
 
         const result = await connection.query(`CALL spAddPublishing('${Publishing.COD_LIBRO}','${Publishing.COD_EDITORIAL}');`);
 
-        // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: "Publishing Added"});
+
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
-        console.log(error);
+
+        switch (error.errno) {
+            case 1062:
+                return res.status(404).json({message: "  "})
+
+            case 1060:
+        
+            default:
+                
+        }
+
+
+
+
+
+        res.status(500).send(error.message);
+        
     }
 };
 
