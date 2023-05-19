@@ -124,7 +124,7 @@ const updateGenre = async (req, res) => {
 
             // En caso de que ya exista
           case 1062: 
-              return res.status(400).json({ message: "El Genero ingresado ya existe" });
+              return res.status(400).json({ message: "El Genero ingresado ya existe y actualizado" });
 
           default:
               return res.status(500).send(error.message);
