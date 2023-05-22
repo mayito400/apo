@@ -6,7 +6,6 @@ const getPublishings = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetAllPublishings`()'); // GET = SELECT
-       
 
         res.json(result[0]);
     } catch (error) {
@@ -106,7 +105,6 @@ const updatePublishing = async (req, res) => {
          if (COD_EDITORIAL === undefined) {
              return res.status(400).json({ message: "Por favor ingrese el codigo del editorial." });
           }
-
 
         const connection = await getConnection();
          const result = await connection.query(`CALL spUpdatePublishing('${id}','${Publishing.COD_LIBRO}','${Publishing.COD_EDITORIAL}');`);

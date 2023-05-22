@@ -6,7 +6,6 @@ const getGenres = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetAllGenre`()'); // GET = SELECT
-        console.log(result);
 
         res.json(result[0]);
     }   catch (error) {
@@ -15,7 +14,6 @@ const getGenres = async (req, res) => { // GET ALL
 };
 const getGenre = async (req, res) => { // Get for ID
     try {
-        
         const { id } = req.params;
 
         const connection = await getConnection();

@@ -6,7 +6,6 @@ const getDetailLoans = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
         const result = await connection.query('CALL `spGetAllDetailLoans`()'); // GET = SELECT
-        console.log(result);
 
         res.json(result[0]);
     } catch (error) {
@@ -15,7 +14,6 @@ const getDetailLoans = async (req, res) => { // GET ALL
 };
 const getDetailLoan = async (req, res) => { // Get for ID
     try {
-        console.log(req.params);
         const { id } = req.params;
 
         const connection = await getConnection();
@@ -23,7 +21,6 @@ const getDetailLoan = async (req, res) => { // Get for ID
 
         //Valida el campo devuelto si esta vacio
         if(result[0][0] === undefined){
-
             return res.status(404).json({message : "Detalle de prestamo no encontrado."})
         }
 
