@@ -1,6 +1,12 @@
-// Routes
 import express from "express";
 import morgan from "morgan";
+// import multerUpload from "./middlewares/multer.js";
+
+// Enviroment Config
+import message from "./config/message";
+import enviroment from "./config/enviroment";
+
+// Import routes
 import userRoutes from './routes/user.routes';
 import loanHeaderRoutes from './routes/loan-header.routes';
 import penaltyRoutes from './routes/penalty.routes';
@@ -11,11 +17,8 @@ import authorRoutes from './routes/author.routes';
 import publishingRoutes from './routes/Publishing.routes';
 import booksRoutes from './routes/books.routes';
 import detailloanRoutes from './routes/detail-loan.routes';
-import imagebookRoutes from './routes/imagebook.routes'
+import imagebookRoutes from './routes/imagebook.routes';
 
-// Enviroment Config
-import message from "./config/message";
-import enviroment from "./config/enviroment";
 //---------------------------------------------
 
 
@@ -27,6 +30,7 @@ app.set("PORT",process.env.PORT || 4321);
 // middlewares: funciones intermedias para que la aplicacion funcione
 app.use(morgan('dev'));
 app.use(express.json()); // especifica que el servidor entienda json
+// app.use(multerUpload.single('file'))
 
 // Routes
 app.use('/api/user',userRoutes);

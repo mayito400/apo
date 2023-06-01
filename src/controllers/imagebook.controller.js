@@ -1,36 +1,19 @@
 // interacciones con la base de datos
 import getConnection from "../db/database";
-import multer from "multer";
-import path from 'path';
-
-const MIMETYPES = ['image/jpeg', 'image/png']
-
-const multerUpload = multer({
-    dest: path.join(__dirname,'../uploads'),
-    // Funcion de filtrado por tipo de archivo
-    fileFilter: (req, file, cb)=>{
-        if (MIMETYPES.includes(file.mimetype)) cb(null, true)
-        else cb(new Error({message: `Solo se pueden subir imagenes del tipo ${MIMETYPES.join(' ')}`}))
-    },
-    // limite de 10mb por archivo
-    limits:{
-        fieldSize: 10000000
-    }
-});
 
 //! GET
 const getimagebooks = async (req, res) => { // GET ALL
     try {
         const connection = await getConnection();
-        const result = await connection.query('CALL `spGetAllBooks`()'); // GET = SELECT
-        console.log(result);
+        const result = await connection.query(`CALL spGetAllImageBooks()`); // GET = SELECT
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error.message);
     }
 };
+// const result = await connection.query('CALL `spGetAllImageBooks`()'); // GET = SELECT
+
 const getimagebook = async (req, res) => { // Get for ID
     try {
         console.log(req.params);
@@ -41,8 +24,7 @@ const getimagebook = async (req, res) => { // Get for ID
 
         res.json(result[0]);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error);
     }
 };
 
@@ -63,8 +45,7 @@ const addimagebook = async (req, res) => {
         // res.json(result); //* Ver informacion completa de la consulta
         res.json({ message: " Added" });
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error);
         console.log(error);
     }
 };
@@ -80,8 +61,7 @@ const deleteimagebook = async (req, res) => {
 
         res.json(result);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error);
     }
 };
 
@@ -97,13 +77,12 @@ const updateimagebook = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdate('${id}', '${NOMBRE}');`);
+        const result = await connection.query(`CALL spUpdateImageBook('${id}', '${NOMBRE}');`);
 
 
         res.json(result);
     } catch (error) {
-        res.status(500);
-        res.send(error.message);
+        res.status(500).send(error);
     }
 };
 
@@ -112,6 +91,5 @@ export const methods = {
     getimagebook,
     addimagebook,
     deleteimagebook,
-    updateimagebook,
-    multerUpload
+    updateimagebook
 };
