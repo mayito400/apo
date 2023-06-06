@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import fileUpload from "express-fileupload";
 // import multerUpload from "./middlewares/multer.js";
 
 // Enviroment Config
@@ -18,7 +19,6 @@ import publishingRoutes from './routes/Publishing.routes';
 import booksRoutes from './routes/books.routes';
 import detailloanRoutes from './routes/detail-loan.routes';
 import imagebookRoutes from './routes/imagebook.routes';
-
 //---------------------------------------------
 
 
@@ -30,6 +30,12 @@ app.set("PORT",process.env.PORT || 4321);
 // middlewares: funciones intermedias para que la aplicacion funcione
 app.use(morgan('dev'));
 app.use(express.json()); // especifica que el servidor entienda json
+app.use(fileUpload({
+    createParentPath: false,
+    limits:{fileSize: 20 * 1024 * 1024},
+    abortOnLimit: true,
+    responseOnLimit: "El archivo es demasiado grande"
+}))
 // app.use(multerUpload.single('file'))
 
 // Routes
