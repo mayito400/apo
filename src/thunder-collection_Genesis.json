@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Genesis",
-    "dateExported": "2023-05-10T07:44:40.341Z",
+    "dateExported": "2023-06-08T01:18:51.614Z",
     "version": "1.1",
     "folders": [
         {
@@ -26,13 +26,6 @@
             "sortNum": 15000
         },
         {
-            "_id": "68c66b20-0ca8-4bed-b05c-9ad5b4ad5af1",
-            "name": "publisher *",
-            "containerId": "",
-            "created": "2023-03-11T07:34:24.044Z",
-            "sortNum": 20000
-        },
-        {
             "_id": "3f5670fa-5084-4cb5-83b5-a86ef3ca673b",
             "name": "publishing",
             "containerId": "",
@@ -54,11 +47,18 @@
             "sortNum": 25000
         },
         {
+            "_id": "68c66b20-0ca8-4bed-b05c-9ad5b4ad5af1",
+            "name": "publisher *",
+            "containerId": "",
+            "created": "2023-03-11T07:34:24.044Z",
+            "sortNum": 30000
+        },
+        {
             "_id": "8afe5d94-9e3d-4f01-bc37-2f81cb7014ba",
             "name": "author *",
             "containerId": "",
             "created": "2023-03-13T00:03:19.386Z",
-            "sortNum": 30000
+            "sortNum": 32500
         },
         {
             "_id": "508632fe-310a-4b16-8588-06cd5a832036",
@@ -100,11 +100,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e67bf505-ecf3-440c-8916-87b3bbea3126",
             "name": "Get rol for ID",
-            "url": "http://localhost:3000/api/role/1",
+            "url": "http://localhost:3000/api/role/2",
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-03-28T21:10:34.447Z",
-            "modified": "2023-03-28T22:02:04.284Z",
+            "modified": "2023-05-15T03:34:23.804Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -236,12 +236,12 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-03-28T21:10:34.449Z",
-            "modified": "2023-04-06T02:21:35.062Z",
+            "modified": "2023-05-15T03:46:59.032Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"rol\": \"author\"\n}",
+                "raw": "{\n  \"rol\": \"autho\"\n}",
                 "form": []
             },
             "tests": []
@@ -274,12 +274,12 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-04-23T22:17:51.452Z",
-            "modified": "2023-04-23T22:22:20.397Z",
+            "modified": "2023-05-24T22:53:10.566Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n    \"COD_LIBRO\": 3,\n    \"COD_EDITORIAL\": 8\n  }",
+                "raw": "{\n    \"COD_LIBRO\": 1,\n    \"COD_EDITORIAL\": 3\n  }",
                 "form": []
             },
             "tests": []
@@ -308,16 +308,16 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e67bf505-ecf3-440c-8916-87b3bbea3126",
             "name": "Delete rol",
-            "url": "http://localhost:3000/api/role/8",
+            "url": "http://localhost:3000/api/role/12",
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-03-28T21:10:34.450Z",
-            "modified": "2023-04-06T02:23:15.794Z",
+            "modified": "2023-05-15T03:52:07.690Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "  {\n    \"NOM_EDITORIAL\": \"Let\",\n    \"PAIS\":\"Veneela\",\n    \"CIUDAD\": \"Caas\",\n    \"TELEFONO\": \"(324) 2345 434\",\n    \"DIRECCION\": null\n  }\n",
+                "raw": "{\n  \"rol\": \"autho\"\n}",
                 "form": []
             },
             "tests": []
@@ -384,16 +384,16 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e67bf505-ecf3-440c-8916-87b3bbea3126",
             "name": "Update rol",
-            "url": "http://localhost:3000/api/role/8",
+            "url": "http://localhost:3000/api/role/9",
             "method": "PUT",
             "sortNum": 50000,
             "created": "2023-03-28T21:10:34.451Z",
-            "modified": "2023-04-06T02:22:55.130Z",
+            "modified": "2023-05-15T03:59:25.358Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"rol\": \"nn\"\n}\n",
+                "raw": "{\n  \"rol\": \"user\"\n}\n",
                 "form": []
             },
             "tests": []
@@ -469,11 +469,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "8afe5d94-9e3d-4f01-bc37-2f81cb7014ba",
             "name": "Get author for id",
-            "url": "http://localhost:3000/api/author/5",
+            "url": "http://localhost:3000/api/author/7",
             "method": "GET",
             "sortNum": 65000,
             "created": "2023-04-06T05:01:50.627Z",
-            "modified": "2023-05-10T06:46:36.967Z",
+            "modified": "2023-05-14T03:34:08.948Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -483,11 +483,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
             "name": "Get books for id",
-            "url": "http://localhost:3000/api/books/3",
+            "url": "http://localhost:3000/api/books/",
             "method": "GET",
             "sortNum": 65000,
             "created": "2023-05-10T06:46:53.471Z",
-            "modified": "2023-05-10T07:04:42.709Z",
+            "modified": "2023-06-08T00:59:31.769Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -501,12 +501,12 @@
             "method": "POST",
             "sortNum": 70000,
             "created": "2023-03-13T19:42:56.195Z",
-            "modified": "2023-04-06T05:07:05.224Z",
+            "modified": "2023-05-14T06:23:15.235Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"NOM_AUTOR\": \"Roberto Bolaño Ávalos\",\n  \"FECHA_NACIMIENTO\": \"1953-04-28\",\n  \"FECHA_MUERTE\": \"2003-07-15\",\n  \"LUGAR_NACIMIENTO\": \"Santiago, Chile\",\n  \"OCUPACIONES\": \"Escritor, poeta y crítico literario\",\n  \"MOVIMIENTO_LITERARIO\": \"Infrarrealismo\"\n}",
+                "raw": "{\n  \"NOM_AUTOR\": \"Roberto Valos\",\n  \"FECHA_NACIMIENTO\": \"1953-04-28\",\n  \"FECHA_MUERTE\": \"2003-07-15\",\n  \"LUGAR_NACIMIENTO\": \"Santiago, Chile\",\n  \"OCUPACIONES\": \"Escritor, poeta y crítico literario\",\n  \"MOVIMIENTO_LITERARIO\": \"Infrarrealismo\"\n}",
                 "form": []
             },
             "tests": []
@@ -520,13 +520,44 @@
             "method": "POST",
             "sortNum": 70000,
             "created": "2023-05-10T06:46:53.472Z",
-            "modified": "2023-05-10T07:25:50.531Z",
+            "modified": "2023-06-06T16:48:56.356Z",
             "headers": [],
             "params": [],
             "body": {
-                "type": "json",
-                "raw": "{\n    \"SIPNOPSIS\": \"Se conoce por «juego de guerra» aquel que recrea y simula un enfrentamiento armado a cualquier nivel, sujetándose a reglas para el desarrollo del mismo. El alemán Udo Berger es campeón de esta disciplina en su país. Los juegos de guerra son al tiempo su profesión y su obsesión; ocupan su vida e invaden su pensamiento a todas horas. Incluso durante el viaje que realiza con su novia Ingeborg a la Costa Brava, donde él había veraneado en su infancia, se hace instalar una gran mesa en la habitación del hotel de alemanes, Charly y Hanna, que les introducirán a un mundo oculto tras las playas y el sol. Un mundo poblado por personajes de dudosa reputación, pasados oscuros y futuros aún más enigmáticos.\",\n    \"TITULO\": \"El Tercer Reich\",\n    \"FECHA_PUBLICACION\": \"2010-04-15T05:00:00.000Z\",\n    \"NUM_SERIE\": 0,\n    \"COD_GENERO\": 7,\n    \"COD_AUTOR\": 7\n  }",
-                "form": []
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "SIPNOPSIS",
+                        "value": "asfasfasf"
+                    },
+                    {
+                        "name": "TITULO",
+                        "value": "asfasfa"
+                    },
+                    {
+                        "name": "FECHA_PUBLICACION",
+                        "value": "2001-01-01"
+                    },
+                    {
+                        "name": "NUM_SERIE",
+                        "value": "0"
+                    },
+                    {
+                        "name": "COD_GENERO",
+                        "value": "3"
+                    },
+                    {
+                        "name": "COD_AUTOR",
+                        "value": "9"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "IMAGEN",
+                        "value": "c:\\Users\\xanti\\OneDrive\\Escritorio\\eva1.png"
+                    }
+                ]
             },
             "tests": []
         },
@@ -549,11 +580,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "8afe5d94-9e3d-4f01-bc37-2f81cb7014ba",
             "name": "Update Author",
-            "url": "http://localhost:3000/api/author/3",
+            "url": "http://localhost:3000/api/author/5",
             "method": "PUT",
             "sortNum": 80000,
             "created": "2023-03-13T20:05:05.831Z",
-            "modified": "2023-04-06T05:33:10.471Z",
+            "modified": "2023-05-14T06:37:19.346Z",
             "headers": [],
             "params": [],
             "body": {
@@ -568,17 +599,59 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
             "name": "Update book",
-            "url": "http://localhost:3000/api/books/4",
+            "url": "http://localhost:3000/api/books/8",
             "method": "PUT",
             "sortNum": 80000,
             "created": "2023-05-10T06:46:53.474Z",
-            "modified": "2023-05-10T07:40:08.005Z",
-            "headers": [],
+            "modified": "2023-06-08T00:59:25.198Z",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*",
+                    "isDisabled": true
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)",
+                    "isDisabled": true
+                }
+            ],
             "params": [],
             "body": {
-                "type": "json",
-                "raw": "{\n    \"SIPNOPSIS\": \"Se conoce por «juego de guerra» aquel que recrea y simula un enfrentamiento armado a cualquier nivel, sujetándose a reglas para el desarrollo del mismo. El alemán Udo Berger es campeón de esta disciplina en su país. Los juegos de guerra son al tiempo su profesión y su obsesión; ocupan su vida e invaden su pensamiento a todas horas. Inclupersonajes de dudosa reputación, pasados oscuros y futuros aún más enigmáticos.\",\n    \"TITULO\": \"El ch\",\n    \"FECHA_PUBLICACION\": \"2010-04-15\",\n    \"NUM_SERIE\": 0,\n    \"COD_GENERO\": 1,\n    \"COD_AUTOR\": 10\n}",
-                "form": []
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "SIPNOPSIS",
+                        "value": "mlsxnjvnjvjndsvbfbzdb"
+                    },
+                    {
+                        "name": "TITULO",
+                        "value": "prueba"
+                    },
+                    {
+                        "name": "FECHA_PUBLICACION",
+                        "value": "2011-11-08"
+                    },
+                    {
+                        "name": "NUM_SERIE",
+                        "value": "0"
+                    },
+                    {
+                        "name": "COD_GENERO",
+                        "value": "1"
+                    },
+                    {
+                        "name": "COD_AUTOR",
+                        "value": "9"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "IMAGEN",
+                        "value": "c:\\Users\\xanti\\OneDrive\\Escritorio\\eva2.png"
+                    }
+                ]
             },
             "tests": []
         },
@@ -653,11 +726,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "8afe5d94-9e3d-4f01-bc37-2f81cb7014ba",
             "name": "Delete author",
-            "url": "http://localhost:3000/api/author/3",
+            "url": "http://localhost:3000/api/author/21",
             "method": "DELETE",
             "sortNum": 90000,
             "created": "2023-04-06T05:36:04.409Z",
-            "modified": "2023-04-06T05:38:57.605Z",
+            "modified": "2023-05-14T06:30:41.190Z",
             "headers": [],
             "params": [],
             "body": {
@@ -672,11 +745,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "508632fe-310a-4b16-8588-06cd5a832036",
             "name": "Delete book",
-            "url": "http://localhost:3000/api/books/3",
+            "url": "http://localhost:3000/api/books/26",
             "method": "DELETE",
             "sortNum": 90000,
             "created": "2023-05-10T06:46:53.475Z",
-            "modified": "2023-05-10T07:14:17.464Z",
+            "modified": "2023-06-07T20:15:19.206Z",
             "headers": [],
             "params": [],
             "body": {
@@ -737,7 +810,7 @@
             "method": "GET",
             "sortNum": 110000,
             "created": "2023-03-29T18:24:09.800Z",
-            "modified": "2023-03-29T19:20:31.309Z",
+            "modified": "2023-05-14T16:47:05.621Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -761,11 +834,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "a452d8be-7a52-4429-8fdd-431c39df13c6",
             "name": "deletePenalty",
-            "url": "http://localhost:3000/api/penalty/10",
+            "url": "http://localhost:3000/api/penalty/1",
             "method": "DELETE",
             "sortNum": 115000,
             "created": "2023-03-29T18:24:09.801Z",
-            "modified": "2023-03-29T19:22:17.793Z",
+            "modified": "2023-05-15T02:46:51.217Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -798,12 +871,12 @@
             "method": "POST",
             "sortNum": 120000,
             "created": "2023-03-29T18:24:09.802Z",
-            "modified": "2023-03-29T19:49:20.502Z",
+            "modified": "2023-05-14T16:58:38.416Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"FECHA_INICIO\": \"2023-08-03\",\n  \"FECHA_FIN\": \"2023-12-04\",\n  \"VALOR\": 5078\n}",
+                "raw": "{\n  \"FECHA_INICIO\": \"2023-08-03\",\n  \"FECHA_IN\": \"2023-12-04\",\n  \"VALOR\": 5078\n}",
                 "form": []
             },
             "tests": []
@@ -832,11 +905,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "a452d8be-7a52-4429-8fdd-431c39df13c6",
             "name": "updatePenalty",
-            "url": "http://localhost:3000/api/penalty/3",
+            "url": "http://localhost:3000/api/penalty/6",
             "method": "PUT",
             "sortNum": 130000,
             "created": "2023-03-29T18:24:09.803Z",
-            "modified": "2023-03-29T19:48:25.523Z",
+            "modified": "2023-05-15T03:04:15.406Z",
             "headers": [],
             "params": [],
             "body": {
