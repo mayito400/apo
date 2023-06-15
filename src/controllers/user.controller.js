@@ -17,7 +17,7 @@ const getUser = async (req, res) => { // Get for DNI
         const { id } = req.params;
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spGetUser(${id})`); // GET = SELECT
+        const result = await connection.query(`CALL spGetUser('${id}')`); // GET = SELECT
 
         // Valida si el recurso devuelto está vacio
         if (result[0][0] === undefined) {
@@ -26,7 +26,7 @@ const getUser = async (req, res) => { // Get for DNI
 
         res.json(result[0])
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error)
     }
 };
 
