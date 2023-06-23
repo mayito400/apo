@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Genesis",
-    "dateExported": "2023-06-08T01:18:51.614Z",
+    "dateExported": "2023-06-23T05:16:47.708Z",
     "version": "1.1",
     "folders": [
         {
@@ -792,11 +792,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "e4549915-1818-4bc1-bf90-80e3790f85cc",
             "name": "getUser",
-            "url": "http://localhost:3000/api/user/1234567",
+            "url": "http://localhost:3000/api/user/1",
             "method": "GET",
             "sortNum": 110000,
             "created": "2023-03-27T20:50:21.211Z",
-            "modified": "2023-05-09T18:15:22.709Z",
+            "modified": "2023-06-23T05:01:14.224Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -852,12 +852,12 @@
             "method": "POST",
             "sortNum": 120000,
             "created": "2023-03-27T20:51:23.566Z",
-            "modified": "2023-05-09T08:03:55.423Z",
+            "modified": "2023-06-19T23:50:32.647Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n      \"DNI_USUARIO\": 1200,\n      \"NOM_USUARIO\": \"antonio\",\n      \"APELL_USUARIO\": \"Felipe\",\n      \"FECHA_NAC\": \"2005-02-19\",\n      \"CONTRASEÑA\": \"aefakgbjadgaf\",\n      \"CORREO\": \"@gmail\",\n      \"SEXO\": \"Masculino\",\n      \"ESTADO\": \"ACTIVO\",\n      \"COD_ROL\": 1\n    }",
+                "raw": "{\n      \"DNI_USUARIO\": 12312,\n      \"NOM_USUARIO\": \"antonio\",\n      \"APELL_USUARIO\": \"Felipe\",\n      \"FECHA_NAC\": \"2005-02-19\",\n      \"CONTRASEÑA\": \"aefakgbjadgaf\",\n      \"CORREO\": \"hagdhasd@gmail\",\n      \"SEXO\": \"Masculino\",\n      \"ESTADO\": \"ACTIVO\",\n      \"COD_ROL\": 1\n    }",
                 "form": []
             },
             "tests": []
@@ -890,12 +890,12 @@
             "method": "PUT",
             "sortNum": 130000,
             "created": "2023-03-27T21:10:13.969Z",
-            "modified": "2023-05-09T08:38:22.234Z",
+            "modified": "2023-06-23T05:16:33.660Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "  {\n    \"NOM_USUARIO\": \"4\",\n    \"APELL_USUARIO\": \"21\",\n    \"FECHA_NAC\": \"2005-02-11\",\n    \"CONTRASEÑA\": \"4\",\n    \"CORREO\": \"srecss@saf\",\n    \"SEXO\": \"2\",\n    \"ESTADO\": \"5\",\n    \"COD_ROL\": 1\n  }",
+                "raw": "  {\n    \"NOM_USUARIO\": \"4\",\n    \"APELL_USUARIO\": \"21\",\n    \"FECHA_NAC\": \"2005-02-11\",\n    \"CONTRASEA\": \"4\",\n    \"CORREO\": \"srecss@saf\",\n    \"SEXO\": \"2\",\n    \"ESTADO\": \"5\",\n    \"COD_ROL\": 1\n  }",
                 "form": []
             },
             "tests": []

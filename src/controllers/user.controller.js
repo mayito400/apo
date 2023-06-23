@@ -33,9 +33,9 @@ const getUser = async (req, res) => { // Get for DNI
 //* POST
 const addUser = async (req, res) => { // POST
     try {
-        const { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
+        const { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASENA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
 
-        const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
+        const user = { DNI_USUARIO, NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASENA, CORREO, SEXO, ESTADO, COD_ROL };
 
         // Valida si los campos de la peticion están llenos o no
         if (DNI_USUARIO === undefined) {
@@ -54,8 +54,8 @@ const addUser = async (req, res) => { // POST
             return res.status(400).json({ message: "Por favor ingrese su FECHA DE NACIMIENTO" })
         }
 
-        if (CONTRASEÑA === undefined) {
-            return res.status(400).json({ message: "Por favor ingrese su CONTRASEÑA" })
+        if (CONTRASENA === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su CONTRASENA" })
         }
 
         if (CORREO === undefined) {
@@ -76,9 +76,9 @@ const addUser = async (req, res) => { // POST
 
         const connection = await getConnection();
 
-        await connection.query(`CALL spAddUser('${user.DNI_USUARIO}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
+        await connection.query(`CALL spAddUser('${user.DNI_USUARIO}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASENA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
 
-        res.status(201).json({ message: "Usuario añadido" });
+        res.status(201).json({ message: "Usuario aNadido" });
     } catch (error) {
 
         // Manejo de errores sql
@@ -122,8 +122,8 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
-        const user = { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASEÑA, CORREO, SEXO, ESTADO, COD_ROL };
+        const { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASENA, CORREO, SEXO, ESTADO, COD_ROL } = req.body;
+        const user = { NOM_USUARIO, APELL_USUARIO, FECHA_NAC, CONTRASENA, CORREO, SEXO, ESTADO, COD_ROL };
 
         // Valida si los campos de la peticion están llenos o no
         if (NOM_USUARIO === undefined) {
@@ -138,8 +138,8 @@ const updateUser = async (req, res) => {
             return res.status(400).json({ message: "Por favor ingrese su FECHA DE NACIMIENTO" })
         }
 
-        if (CONTRASEÑA === undefined) {
-            return res.status(400).json({ message: "Por favor ingrese su CONTRASEÑA" })
+        if (CONTRASENA === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese su CONTRASENA" })
         }
 
         if (CORREO === undefined) {
@@ -159,7 +159,7 @@ const updateUser = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateUser('${id}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASEÑA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
+        const result = await connection.query(`CALL spUpdateUser('${id}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASENA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
 
         // Valida si el recuros a sido actualizado
         switch (result.affectedRows) {
