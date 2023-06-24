@@ -78,7 +78,7 @@ const addUser = async (req, res) => { // POST
 
         await connection.query(`CALL spAddUser('${user.DNI_USUARIO}','${user.NOM_USUARIO}','${user.APELL_USUARIO}','${user.FECHA_NAC}','${user.CONTRASENA}','${user.CORREO}','${user.SEXO}','${user.ESTADO}','${user.COD_ROL}');`);
 
-        res.status(201).json({ message: "Usuario aNadido" });
+        res.status(201).json({ message: "Usuario añadido" });
     } catch (error) {
 
         // Manejo de errores sql
