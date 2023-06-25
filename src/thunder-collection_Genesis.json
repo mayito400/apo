@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Genesis",
-    "dateExported": "2023-06-23T05:16:47.708Z",
+    "dateExported": "2023-06-25T22:02:37.126Z",
     "version": "1.1",
     "folders": [
         {
@@ -114,11 +114,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "89c31e1a-7ed5-4958-9db8-194a7266db88",
             "name": "Get loan header for ID",
-            "url": "http://localhost:3000/api/loan-header/5",
+            "url": "http://localhost:3000/api/loan-header/2",
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-04-06T02:15:46.172Z",
-            "modified": "2023-04-06T04:04:28.642Z",
+            "modified": "2023-06-25T21:52:19.211Z",
             "headers": [],
             "params": [],
             "tests": []
@@ -255,12 +255,12 @@
             "method": "POST",
             "sortNum": 30000,
             "created": "2023-04-06T02:15:46.174Z",
-            "modified": "2023-04-06T03:59:42.692Z",
+            "modified": "2023-06-25T21:53:24.714Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"FECHA_PRESTAMO\": \"2011-11-12\",\n  \"CANT_LIBRO\": 1,\n  \"DNI_USUARIO\": 1045856213\n}",
+                "raw": "{\n  \"FECHA_PRESTAMO\": \"2011-11-12\",\n  \"ESTADO\": 1,\n  \"DNI_USUARIO\": 100\n}",
                 "form": []
             },
             "tests": []
@@ -327,11 +327,11 @@
             "colId": "05dbd113-e565-4a20-8ed2-85a7fcfdfdf4",
             "containerId": "89c31e1a-7ed5-4958-9db8-194a7266db88",
             "name": "Delete loan header",
-            "url": "http://localhost:3000/api/loan-header/5",
+            "url": "http://localhost:3000/api/loan-header/2",
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-04-06T02:15:46.175Z",
-            "modified": "2023-04-06T04:04:21.557Z",
+            "modified": "2023-06-25T21:54:16.766Z",
             "headers": [],
             "params": [],
             "body": {
@@ -407,12 +407,12 @@
             "method": "PUT",
             "sortNum": 50000,
             "created": "2023-04-06T02:15:46.176Z",
-            "modified": "2023-04-06T04:08:46.926Z",
+            "modified": "2023-06-25T21:53:54.573Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"FECHA_PRESTAMO\": \"0000-00-00\",\n  \"CANT_LIBRO\": 0,\n  \"DNI_USUARIO\": 1045856213\n}",
+                "raw": "{\n  \"FECHA_PRESTAMO\": \"0000-00-00\",\n  \"ESTADO\": 78512,\n  \"DNI_USUARIO\": 1045856213\n}",
                 "form": []
             },
             "tests": []
@@ -520,7 +520,7 @@
             "method": "POST",
             "sortNum": 70000,
             "created": "2023-05-10T06:46:53.472Z",
-            "modified": "2023-06-06T16:48:56.356Z",
+            "modified": "2023-06-25T21:03:34.591Z",
             "headers": [],
             "params": [],
             "body": {
@@ -533,7 +533,7 @@
                     },
                     {
                         "name": "TITULO",
-                        "value": "asfasfa"
+                        "value": "Mainook"
                     },
                     {
                         "name": "FECHA_PUBLICACION",
@@ -550,6 +550,10 @@
                     {
                         "name": "COD_AUTOR",
                         "value": "9"
+                    },
+                    {
+                        "name": "EDITORIAL",
+                        "value": "GHJK"
                     }
                 ],
                 "files": [
@@ -603,7 +607,7 @@
             "method": "PUT",
             "sortNum": 80000,
             "created": "2023-05-10T06:46:53.474Z",
-            "modified": "2023-06-08T00:59:25.198Z",
+            "modified": "2023-06-25T21:07:14.930Z",
             "headers": [
                 {
                     "name": "Accept",
@@ -644,6 +648,10 @@
                     {
                         "name": "COD_AUTOR",
                         "value": "9"
+                    },
+                    {
+                        "name": "EDITORIAL",
+                        "value": "GOLO LIBROS"
                     }
                 ],
                 "files": [
@@ -852,12 +860,12 @@
             "method": "POST",
             "sortNum": 120000,
             "created": "2023-03-27T20:51:23.566Z",
-            "modified": "2023-06-19T23:50:32.647Z",
+            "modified": "2023-06-23T08:02:56.141Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n      \"DNI_USUARIO\": 12312,\n      \"NOM_USUARIO\": \"antonio\",\n      \"APELL_USUARIO\": \"Felipe\",\n      \"FECHA_NAC\": \"2005-02-19\",\n      \"CONTRASEÑA\": \"aefakgbjadgaf\",\n      \"CORREO\": \"hagdhasd@gmail\",\n      \"SEXO\": \"Masculino\",\n      \"ESTADO\": \"ACTIVO\",\n      \"COD_ROL\": 1\n    }",
+                "raw": "{\n      \"DNI_USUARIO\": 1020402543,\n      \"NOM_USUARIO\": \"Santiago\",\n      \"APELL_USUARIO\": \"Rendon\",\n      \"FECHA_NAC\": \"2005-01-03\",\n      \"CONTRASENA\": \"facil\",\n      \"CORREO\": \"srendon@gmail\",\n      \"SEXO\": \"Masculino\",\n      \"ESTADO\": \"ACTIVO\",\n      \"COD_ROL\": 2\n    }",
                 "form": []
             },
             "tests": []
