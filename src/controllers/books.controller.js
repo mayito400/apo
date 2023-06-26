@@ -35,7 +35,7 @@ const getBook = async (req, res) => { // Get for ID
 //* POST
 const addBook = async (req, res) => {
     try {
-        const { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, EDITORIAL, COD_GENERO, COD_AUTOR } = req.body;
+        const { SIPNOPSIS, TITULO, FECHA_PUBLICACION, CANTIDAD_LIBRO, EDITORIAL, COD_GENERO, COD_AUTOR } = req.body;
 
         // Se requiere la imagen y se parsea a base64
         const { IMAGEN } = req.files;
@@ -55,7 +55,7 @@ const addBook = async (req, res) => {
             return res.status(400).json({ message: "Por favor ingrese la FECHA DE PUBLICACION del libro" })
         }
 
-        if (NUM_SERIE === undefined) {
+        if (CANTIDAD_LIBRO === undefined) {
             return res.status(400).json({ message: "Por favor ingrese el NUMERO DE SERIE del libro" })
         }
 
@@ -79,11 +79,11 @@ const addBook = async (req, res) => {
             return res.status(400).json({ message: 'Por favor ingrese la PORTADA del libro' });
         }
 
-        const book = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, EDITORIAL, COD_GENERO, COD_AUTOR };
+        const book = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, CANTIDAD_LIBRO, EDITORIAL, COD_GENERO, COD_AUTOR };
 
         const connection = await getConnection();
 
-        await connection.query(`CALL spAddBook('${book.SIPNOPSIS}','${book.TITULO}','${book.FECHA_PUBLICACION}','${book.NUM_SERIE}','${book.EDITORIAL}','${book.COD_GENERO}','${book.COD_AUTOR}','${imagenBase64}');`);
+        await connection.query(`CALL spAddBook('${book.SIPNOPSIS}','${book.TITULO}','${book.FECHA_PUBLICACION}','${book.CANTIDAD_LIBRO}','${book.EDITORIAL}','${book.COD_GENERO}','${book.COD_AUTOR}','${imagenBase64}');`);
 
         res.status(201).json({ message: 'Libro añadido' });
     } catch (error) {
@@ -132,7 +132,7 @@ const deleteBook = async (req, res) => {
 const updateBook = async (req, res) => {
     try {
         const { id } = req.params;
-        const { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, EDITORIAL, COD_GENERO, COD_AUTOR } = req.body;
+        const { SIPNOPSIS, TITULO, FECHA_PUBLICACION, CANTIDAD_LIBRO, EDITORIAL, COD_GENERO, COD_AUTOR } = req.body;
 
         // Se requiere la imagen y se parsea a base64
         const { IMAGEN } = req.files;
@@ -152,7 +152,7 @@ const updateBook = async (req, res) => {
             return res.status(400).json({ message: "Por favor ingrese la FECHA DE PUBLICACION del libro" })
         }
 
-        if (NUM_SERIE === undefined) {
+        if (CANTIDAD_LIBRO === undefined) {
             return res.status(400).json({ message: "Por favor ingrese el NUMERO DE SERIE del libro" })
         }
 
@@ -168,11 +168,11 @@ const updateBook = async (req, res) => {
             return res.status(400).json({ message: "Por favor ingrese el AUTOR del libro" })
         }
 
-        const books = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, NUM_SERIE, EDITORIAL, COD_GENERO, COD_AUTOR }
+        const books = { SIPNOPSIS, TITULO, FECHA_PUBLICACION, CANTIDAD_LIBRO, EDITORIAL, COD_GENERO, COD_AUTOR }
 
         const connection = await getConnection();
 
-        const result = await connection.query(`CALL spUpdateBook('${id}', '${books.SIPNOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.NUM_SERIE}','${books.EDITORIAL}','${books.COD_GENERO}','${books.COD_AUTOR}','${imagenBase64}');`);
+        const result = await connection.query(`CALL spUpdateBook('${id}', '${books.SIPNOPSIS}','${books.TITULO}','${books.FECHA_PUBLICACION}','${books.CANTIDAD_LIBRO}','${books.EDITORIAL}','${books.COD_GENERO}','${books.COD_AUTOR}','${imagenBase64}');`);
 
         // Valida si el recuros a sido actualizado
         switch (result.affectedRows) {
