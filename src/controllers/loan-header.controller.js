@@ -35,11 +35,15 @@ const getLoanHeader = async (req, res) => { // Get for ID
 //* funcion de peticion POST
 const addLoanHeader = async (req, res) => { // POST
     try {
-        const { FECHA_PRESTAMO, ESTADO, DNI_USUARIO } = req.body;
-        const LoanHeader = { FECHA_PRESTAMO, ESTADO, DNI_USUARIO };
+        const { FECHA_PRESTAMO, FECHA_DEVOLUCION, ESTADO, DNI_USUARIO } = req.body;
+        const LoanHeader = { FECHA_PRESTAMO, FECHA_DEVOLUCION, ESTADO, DNI_USUARIO };
 
         if (FECHA_PRESTAMO === undefined) {
             return res.status(400).json({ message: "Por favor ingrese la FECHAS DE PRESTAMO." });
+        }
+
+        if (FECHA_DEVOLUCION === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese la FECHA DE DEVOLUCION." });
         }
 
         if (ESTADO === undefined) {
@@ -51,7 +55,7 @@ const addLoanHeader = async (req, res) => { // POST
         }
 
         const connection = await getConnection();
-        await connection.query(`CALL spAddHeaderLoan('${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.ESTADO}','${LoanHeader.DNI_USUARIO}');`);
+        await connection.query(`CALL spAddHeaderLoan('${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.FECHA_DEVOLUCION}','${LoanHeader.ESTADO}','${LoanHeader.DNI_USUARIO}');`);
 
         res.status(201).json({ message: "Prestamo  Realizado" });
     } catch (error) {
@@ -101,11 +105,15 @@ const deleteLoanHeader = async (req, res) => {
 const updateLoanHeader = async (req, res) => {
     try {
         const { id } = req.params;
-        const { FECHA_PRESTAMO, ESTADO, DNI_USUARIO } = req.body;
-        const LoanHeader = { FECHA_PRESTAMO, ESTADO, DNI_USUARIO }
+        const { FECHA_PRESTAMO, FECHA_DEVOLUCION, ESTADO, DNI_USUARIO } = req.body;
+        const LoanHeader = { FECHA_PRESTAMO, FECHA_DEVOLUCION, ESTADO, DNI_USUARIO }
 
         if (FECHA_PRESTAMO === undefined) {
             return res.status(400).json({ message: "Por favor ingrese la FECHAS DE PRESTAMO." });
+        }
+
+        if (FECHA_DEVOLUCION === undefined) {
+            return res.status(400).json({ message: "Por favor ingrese la FECHA DE DEVOLUCION." });
         }
 
         if (ESTADO === undefined) {
@@ -117,7 +125,7 @@ const updateLoanHeader = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const result = await connection.query(`CALL spUpdateHeaderLoan('${id}','${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.ESTADO}','${LoanHeader.DNI_USUARIO}');`);
+        const result = await connection.query(`CALL spUpdateHeaderLoan('${id}','${LoanHeader.FECHA_PRESTAMO}','${LoanHeader.FECHA_DEVOLUCION}','${LoanHeader.ESTADO}','${LoanHeader.DNI_USUARIO}');`);
 
         switch (result.affectedRows) {
             case 0:
