@@ -1,6 +1,0 @@
-crea 5 procedimientos almacenados, la primera que seleccione todos los datos de una tabla, la segunda que realice la busqueda por id, la tercera para insertar datos, la cuarta que actualice los datos, la quinta para eliminar una fila de datos por id... Hazlo sin usar * en los select,con los mismos datos y tamaños, con una sintaxis MySQL y todo con la siguiente tabla:
-
-CREATE TABLE `image_book` (
-    `COD_LIBRO` int(20) NOT NULL,
-    `IMAGEN` mediumblob DEFAULT NULL
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
