@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "set NODE_ENV=developer& nodemon --exec npm run babel-node src/index.js",
     "qa": "set NODE_ENV=qa& nodemon --exec npm run babel-node src/index.js",
-    "start": "set NODE_ENV=production& nodemon --exec npm run babel-node src/index.js",
-    "babel-node": "babel-node --presets=@babel/preset-env"
+    "babel-node": "babel-node --presets=@babel/preset-env",
+    "start": "set NODE_ENV=production& node dist/index.js --exec babel-node",
+    "build":"babel src --out-dir dist"
   },
   "author": "santiRendon",
   "license": "ISC",
